@@ -1,7 +1,12 @@
 import React from 'react';
+import { TyphoGraphy } from 'components/common';
 
 const hello = () => {
-  return <div>HELLO</div>;
+  return (
+    <div>
+      <TyphoGraphy type="Title">HELLO</TyphoGraphy>
+    </div>
+  );
 };
 
 export default hello;

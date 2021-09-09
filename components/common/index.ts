@@ -1,0 +1,1 @@
+export { TyphoGraphy } from './TyphoGraphy';
