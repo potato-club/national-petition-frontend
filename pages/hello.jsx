@@ -1,10 +1,10 @@
 import React from 'react';
-import { TyphoGraphy } from 'components/common';
+import { Title } from 'components/app/hello/Title';
 
 const hello = () => {
   return (
     <div>
-      <TyphoGraphy type="Title">HELLO</TyphoGraphy>
+      <Title />
     </div>
   );
 };
