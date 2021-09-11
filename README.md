@@ -1,34 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 청와대 국민청원 소통방 - 프론트엔드
 
-## Getting Started
+개발을 진행하기 전에 아래의 내용을 꼭 숙지해주세요
 
-First, run the development server:
+# 규칙
 
-```bash
-npm run dev
-# or
-yarn dev
+- 텍스트를 적을 때는 TyphoGraphy 컴포넌트를 사용합니다
+  - 텍스트 사이즈, 폰트 일관화 때문
+- 칼라를 입힐때는 무조건 customColor에서 입혀주세요
+  - 브랜드 컬러외의 컬러는 사용하면 안되기 때문
+- 항상 page컴포넌트에서는 최상단에 LayoutContainer를 선언해주세요
+  - 공통적으로 수정해야하는 컴포넌트가 있을 떄 일일히 수정하는 것을 방지하기 위해서
+- 디자인 시안을 보면 알 수 있겠지만 배경을 제외한 사용자와의 상호작용이 발생하는 컴포넌트는 가운데에 1178px안에서만 배치가 가능합니다
+- 변수명은 항상 알아보기 쉽게 지어주고 camelcase를 사용해주세요
+
+# 코드리뷰
+
+- 모든 코드를 리뷰하지는 않지만 무조건 따로 브랜치를 따서 pull-request에 올린뒤에 main브랜치에 적용합니다
+- 코드를 짜다가 애매한게 있다면 일단 그대로 pr을 올리고 슬랙에 코드리뷰 요청을 합니다
+- pr은 왠만해선 한글로 작성합니다
+
+# 질문이 있다면?
+
+- 모든 질문은 조장에게 갠톡을 보내는 것이 아닌, 졸프 슬랙 채널에 공유합니다
+
+# 커밋
+
+```
+커밋을 할 때
+수정사항은 [FIX] 000수정
+추가사항은 [ADD] 000추가
+와 같은 방법으로 커밋해주세요
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 폴더구조
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+| 아직 초기단계라 현재 있는 폴더들만 설명해드릴게요
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- pages
+  - next.js는 pages폴더에서 라우팅을 자체적으로 해주기 때문에 page를 담당하는 컴포넌트만 존재해야합니다
+  - 여기서 쓰이는 컴포넌트는 소문자로 선언해줍니다
+- components
+  - 만약 pages컴포넌트에서 해당page만 쓰는 컴포넌트는 [해당페이지폴더명] - 컴포넌트작성 구조로 해주세요
+  - common폴더는 별개로 모두가 사용하는 공용컴포넌트가 묶여 있는 폴더입니다
+- constants
+  - 상수로 고정적으로 쓰이는 값들은 여기서 지정해줍니다
