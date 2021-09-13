@@ -5,6 +5,7 @@ const registration = () => {
   return (
     <LayoutContainer>
       <Box />
+      푸쉬중..
     </LayoutContainer>
   );
 };
