@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import styled from '@emotion/styled';
 
-type TyphoGraphyProps = {
+type TypoGraphyProps = {
   type?:
     | 'Title'
     | 'h1'
@@ -18,7 +18,7 @@ type TyphoGraphyProps = {
   fontHeight?: string;
 };
 
-type StyledTyphoGraphyProps = {
+type StyledTypoGraphyProps = {
   type: '48' | '24' | '22' | '20' | '18' | '14' | '12' | '10' | '8';
   color?: string;
   textAlign?: 'left' | 'center' | 'right';
@@ -26,7 +26,7 @@ type StyledTyphoGraphyProps = {
   fontHeight?: string;
 };
 
-export const TyphoGraphy: React.FC<TyphoGraphyProps> = ({
+export const TypoGraphy: React.FC<TypoGraphyProps> = ({
   children,
   type,
   color,
@@ -60,18 +60,18 @@ export const TyphoGraphy: React.FC<TyphoGraphyProps> = ({
   }, [type]);
 
   return (
-    <TyphoGraphyText
+    <TypoGraphyText
       type={changeTypeFontSize}
       color={color || '#333333'}
       textAlign={textAlign || 'left'}
       fontWeight={fontWeight || 'normal'}
       fontHeight={fontHeight || 'normal'}>
       {children}
-    </TyphoGraphyText>
+    </TypoGraphyText>
   );
 };
 
-const TyphoGraphyText = styled.div<StyledTyphoGraphyProps>`
+const TypoGraphyText = styled.div<StyledTypoGraphyProps>`
   font-size: ${(props) => props.type}px;
   color: ${(props) => props.color};
   text-align: ${(props) => props.textAlign};
