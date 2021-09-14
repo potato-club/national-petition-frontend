@@ -1,1 +1,1 @@
-export { TyphoGraphy } from './TypoGraphy';
+export { TypoGraphy } from './TypoGraphy';
