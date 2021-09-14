@@ -26,7 +26,7 @@ type StyledTyphoGraphyProps = {
   fontHeight?: string;
 };
 
-export const TyphoGraphy: React.FC<TyphoGraphyProps> = ({
+export const TypoGraphy: React.FC<TyphoGraphyProps> = ({
   children,
   type,
   color,
