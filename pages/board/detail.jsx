@@ -1,14 +1,16 @@
 import React from 'react';
 import { LayoutContainer, TypoGraphy } from 'components/common';
 import styled from '@emotion/styled';
-import { customColor } from 'constants';
+import { customColor } from 'constants/index';
 
 const detail = () => {
   return (
     <LayoutContainer>
       <IntroHeader />
       <Container>
-        <TypoGraphy>WOW</TypoGraphy>
+        <TypoGraphy type="Head" color={customColor.skyBlue}>
+          WOW
+        </TypoGraphy>
       </Container>
     </LayoutContainer>
   );
@@ -24,7 +26,7 @@ const Container = styled.div`
 `;
 
 const IntroHeader = styled.div`
-  background-color: #082e59;
+  background-color: ${customColor.deepBlue};
   width: 100vw;
   height: 480px;
 `;
