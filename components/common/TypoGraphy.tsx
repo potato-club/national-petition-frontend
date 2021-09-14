@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 type TypoGraphyProps = {
   type?:
+    | 'Head'
     | 'Title'
     | 'h1'
     | 'h2'
@@ -19,7 +20,7 @@ type TypoGraphyProps = {
 };
 
 type StyledTypoGraphyProps = {
-  type: '48' | '24' | '22' | '20' | '18' | '14' | '12' | '10' | '8';
+  type: '48' | '32' | '24' | '22' | '20' | '18' | '14' | '12' | '10' | '8';
   color?: string;
   textAlign?: 'left' | 'center' | 'right';
   fontWeight?: string;
@@ -36,8 +37,10 @@ export const TypoGraphy: React.FC<TypoGraphyProps> = ({
 }) => {
   const changeTypeFontSize = useMemo(() => {
     switch (type) {
-      case 'Title':
+      case 'Head':
         return '48';
+      case 'Title':
+        return '32';
       case 'h1':
         return '24';
       case 'h2':
