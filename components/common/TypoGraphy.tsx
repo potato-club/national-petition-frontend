@@ -20,7 +20,18 @@ type TypoGraphyProps = {
 };
 
 type StyledTypoGraphyProps = {
-  type: '48' | '32' | '24' | '22' | '20' | '18' | '14' | '12' | '10' | '8';
+  type:
+    | '48'
+    | '32'
+    | '24'
+    | '22'
+    | '20'
+    | '18'
+    | '14'
+    | '12'
+    | '10'
+    | '8'
+    | '16';
   color?: string;
   textAlign?: 'left' | 'center' | 'right';
   fontWeight?: string;
@@ -50,15 +61,15 @@ export const TypoGraphy: React.FC<TypoGraphyProps> = ({
       case 'h4':
         return '18';
       case 'body1':
-        return '14';
+        return '16';
       case 'body2':
-        return '12';
+        return '14';
       case 'sm1':
         return '10';
       case 'sm2':
         return '8';
       default:
-        return '14';
+        return '16';
     }
   }, [type]);
 
