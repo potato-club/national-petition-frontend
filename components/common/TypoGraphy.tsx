@@ -20,7 +20,18 @@ type TypoGraphyProps = {
 };
 
 type StyledTypoGraphyProps = {
-  type: '48' | '32' | '24' | '22' | '20' | '18' | '14' | '12' | '10' | '8';
+  type:
+    | '48'
+    | '32'
+    | '24'
+    | '22'
+    | '20'
+    | '18'
+    | '14'
+    | '12'
+    | '10'
+    | '8'
+    | '16';
   color?: string;
   textAlign?: 'left' | 'center' | 'right';
   fontWeight?: string;
