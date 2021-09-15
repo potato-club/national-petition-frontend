@@ -1,0 +1,1 @@
+export { scrapApi } from './scrapApi';
