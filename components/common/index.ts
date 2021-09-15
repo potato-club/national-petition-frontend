@@ -1,1 +1,2 @@
-export { TyphoGraphy } from './TyphoGraphy';
+export { TypoGraphy } from './TypoGraphy';
+export { LayoutContainer } from './LayoutContainer';
