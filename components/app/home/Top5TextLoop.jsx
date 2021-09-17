@@ -25,7 +25,7 @@ export const Top5TextLoop = () => {
         </TypoGraphy>
       </Top5Title>
       <Top5ItemBox>
-        <TextLoop>
+        <TextLoop mask={true} interval={5000}>
           <ItemWrapper>
             <ItemRanking>
               <TypoGraphy
