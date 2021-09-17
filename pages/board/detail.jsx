@@ -8,7 +8,7 @@ import {
   RecommandButton,
   CommentAddForm,
   CommentItem,
-  ApplyItem,
+  CommnetList,
 } from 'components/app/board/detail';
 
 const detail = ({ detailInfo }) => {
@@ -106,8 +106,7 @@ const detail = ({ detailInfo }) => {
         <CommentInputForm>
           <CommentAddForm />
         </CommentInputForm>
-        <CommentItem />
-        <ApplyItem />
+        <CommnetList />
       </Container>
     </LayoutContainer>
   );

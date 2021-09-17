@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
 import { customColor } from 'constants/index';
 import { BsArrowReturnRight } from 'react-icons/bs';
-import { RiArrowDownSFill } from 'react-icons/ri';
+import { CommentAddForm } from './CommentAddForm';
 
 export const ApplyItem = () => {
+  const [AddApplyVisible, setAddApplyVisible] = useState(false);
+
   return (
     <Wrapper>
       <Side>
@@ -30,7 +32,7 @@ export const ApplyItem = () => {
           </TypoGraphy>
         </Content>
         <ButtonForm>
-          <Button>
+          <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
             <BsArrowReturnRight
               size="16"
               color={customColor.gray}
@@ -41,6 +43,11 @@ export const ApplyItem = () => {
             </TypoGraphy>
           </Button>
         </ButtonForm>
+        {AddApplyVisible && (
+          <AddApplyWrapper>
+            <CommentAddForm />
+          </AddApplyWrapper>
+        )}
       </ItemContainer>
     </Wrapper>
   );
@@ -49,7 +56,10 @@ export const ApplyItem = () => {
 const Wrapper = styled.div`
   background-color: ${customColor.grayBg};
   display: flex;
-  padding: 16px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-right: 16px;
+  padding-left: 32px;
   border-bottom: 1px solid ${customColor.grayBg};
   margin-bottom: 16px;
 `;
@@ -76,4 +86,8 @@ const Button = styled.div`
   display: flex;
   cursor: pointer;
   margin-right: 16px;
+`;
+
+const AddApplyWrapper = styled.div`
+  padding: 16px;
 `;
