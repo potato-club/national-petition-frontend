@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { LayoutContainer, TypoGraphy } from 'components/common/index';
+import { LayoutContainer, TypoGraphy, Header } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { Top5TextLoop } from 'components/app/home';
 const home = () => {
   return (
     <LayoutContainer>
-      {/* Header 자리*/}
+      <Header />
       <Container>
         <Title>
           <TypoGraphy type="Head" color={customColor.white} textAlign="center">
