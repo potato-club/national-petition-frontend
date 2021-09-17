@@ -1,1 +1,1 @@
-export { Top5TextLoop } from './top5TextLoop';
+export { Top5TextLoop } from './Top5TextLoop';

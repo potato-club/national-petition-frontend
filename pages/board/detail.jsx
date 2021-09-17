@@ -4,7 +4,11 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { scrapApi } from 'apis';
 import { FaUserEdit } from 'react-icons/fa';
-import { RecommandButton } from 'components/app/board/detail';
+import {
+  RecommandButton,
+  CommentAddForm,
+  CommentItem,
+} from 'components/app/board/detail';
 
 const detail = ({ detailInfo }) => {
   return (
@@ -98,11 +102,10 @@ const detail = ({ detailInfo }) => {
           <RecommandButton type="like" />
           <RecommandButton type="unlike" />
         </RecommandWrapper>
-        <CommandForm>
-          <TypoGraphy type="body1" color={customColor.black}>
-            댓글
-          </TypoGraphy>
-        </CommandForm>
+        <CommentInputForm>
+          <CommentAddForm />
+        </CommentInputForm>
+        <CommentItem />
       </Container>
     </LayoutContainer>
   );
@@ -203,9 +206,9 @@ const RecommandWrapper = styled.div`
   /* border: 1px solid; */
 `;
 
-const CommandForm = styled.div`
+const CommentInputForm = styled.div`
   margin-top: 32px;
-  padding: 16px;
+  margin-bottom: 32px;
   /* border: 1px solid; */
 `;
 
