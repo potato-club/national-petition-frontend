@@ -2,3 +2,5 @@
 export { RecommandButton } from './RecommandButton';
 export { CommentAddForm } from './CommentAddForm';
 export { CommentItem } from './CommentItem';
+export { ApplyItem } from './ApplyItem';
+export { CommnetList } from './CommnetList';
