@@ -1,7 +1,7 @@
 import React from 'react';
 import { LayoutContainer, TypoGraphy } from 'components/common';
 import styled from '@emotion/styled';
-import { customColor } from 'constants'; // 현재 안됨
+import { customColor } from 'constants/index';
 
 const add = () => {
   return (
@@ -70,11 +70,11 @@ const Button = styled.button`
   ${(props) =>
     props.add &&
     `
-    background:#082E59;
+    background:${customColor.deepBlue};
     color:white;
     &:hover {
     /* transform: scale(1.1); */
-    background-color: #041e3c;
+    opacity: 0.9;
     }
   `}
   ${(props) =>
@@ -82,8 +82,9 @@ const Button = styled.button`
     `
     background-color: white;
     &:hover {
-    background-color: #082E59;
+    background-color: ${customColor.deepBlue};
     color:white;
+    opacity: 0.9;
     }
     `}
 `;
