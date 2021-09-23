@@ -6,6 +6,7 @@ import { customColor } from 'constants/index';
 const add = () => {
   return (
     <LayoutContainer>
+      <IntroHeader />
       <FormBox>
         <InputContentBox>
           <TypoGraphy type="h1" fontWeight="bold">
@@ -32,10 +33,18 @@ const add = () => {
 
 const FormBox = styled.form`
   user-select: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -406px;
+  margin-left: -589px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
+  background-color: white;
 `;
 const Input = styled.input`
   width: 1178px;
@@ -43,23 +52,25 @@ const Input = styled.input`
   background-color: #f6f6f6;
   border: 1px solid gray;
   margin-bottom: 16px;
+  border-radius: 4px;
+  font-size: 18px;
 `;
-const InputContentBox = styled.div`
-  margin-top: 40px;
-`;
+const InputContentBox = styled.div``;
 const OpinionInput = styled.textarea`
   width: 1178px;
   height: 500px;
-  font-size: 18px;
+  font-size: 20px;
   background-color: #f6f6f6;
+  border-radius: 4px;
   resize: none;
 `;
 
 const ButtonBox = styled.div`
   display: flex;
-  margin-top: 20px;
   width: 360px;
   justify-content: space-between;
+  margin: auto;
+  margin-top: 20px;
 `;
 const Button = styled.button`
   cursor: pointer;
@@ -71,10 +82,10 @@ const Button = styled.button`
     props.add &&
     `
     background:${customColor.deepBlue};
+    opacity: 0.9;
     color:white;
     &:hover {
-    /* transform: scale(1.1); */
-    opacity: 0.9;
+    opacity: 1;
     }
   `}
   ${(props) =>
@@ -87,6 +98,12 @@ const Button = styled.button`
     opacity: 0.9;
     }
     `}
+`;
+const IntroHeader = styled.div`
+  background-color: ${customColor.deepBlue};
+  width: 100vw;
+  height: 480px;
+  position: relative;
 `;
 
 export default add;
