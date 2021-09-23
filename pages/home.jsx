@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { LayoutContainer, TypoGraphy, Header } from 'components/common/index';
 import { customColor } from 'constants/index';
-import { Top5TextLoop } from 'components/app/home';
+import { Top5TextLoop } from 'components/common';
 const home = () => {
   return (
     <LayoutContainer>
