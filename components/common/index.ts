@@ -6,3 +6,4 @@ export { HelperBot } from './HelperBot';
 export { Header } from './Header';
 export { Top5TextLoop } from './Top5TextLoop';
 export { UrlInput } from './UrlInput';
+export { TitleHeader } from './TitleHeader';
