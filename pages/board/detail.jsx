@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutContainer, TypoGraphy } from 'components/common';
+import {
+  LayoutContainer,
+  TypoGraphy,
+  TitleHeader,
+  Header,
+} from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { scrapApi } from 'apis';
@@ -14,13 +19,9 @@ import {
 const detail = ({ detailInfo }) => {
   return (
     <LayoutContainer>
-      <IntroHeader />
+      <Header />
+      <TitleHeader title={'글쓴이 제목'} top5Visible={false} />
       <Container>
-        <AuthorTitle>
-          <TypoGraphy type="Head" color={customColor.black} textAlign="center">
-            글쓴이 제목
-          </TypoGraphy>
-        </AuthorTitle>
         <PetitionTitle>
           <TypoGraphy
             type="Head"
