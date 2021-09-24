@@ -9,14 +9,12 @@ const Top5List = [
   { id: 1, title: '학교 폭파해주세요', sub: '123,334' },
   { id: 2, title: '우리집 강아지는 멋진 강아지', sub: '345,123' },
   { id: 3, title: '이세상을 살려라 할렐루야', sub: '789,345' },
-  { id: 4, title: '너 내 동료가 되라', sub: '111,111' },
+  { id: 4, title: '너, 내 동료가 되라', sub: '111,111' },
   { id: 5, title: '피..피카츄..!', sub: '222,222' },
 ];
 export const Top5TextLoop = () => {
   const [handleDrop, setHandleDrop] = useState(false);
-  const handleDropDown = () => {
-    setHandleDrop(!handleDrop);
-  };
+
   return (
     <Top5Section>
       <Top5Title>
@@ -31,7 +29,7 @@ export const Top5TextLoop = () => {
       <Top5ItemBox handleDrop={handleDrop}>
         {handleDrop ? (
           <div>
-            {Top5List.map(({ id, title, sub }, index) => (
+            {Top5List.map(({ id, title, sub }) => (
               <ItemWrapper key={id}>
                 <ItemRanking>
                   <TypoGraphy
@@ -217,7 +215,7 @@ export const Top5TextLoop = () => {
             transition: 'transform 0.5s ',
           }}
           // style={DropDownStyle}
-          onClick={handleDropDown}
+          onClick={() => setHandleDrop((handleDrop) => !handleDrop)}
         />
       </Top5ItemBox>
     </Top5Section>
@@ -264,4 +262,3 @@ const ItemSubNumber = styled.div`
   align-items: center;
   width: 15%;
 `;
-const DropDownStyle = {};
