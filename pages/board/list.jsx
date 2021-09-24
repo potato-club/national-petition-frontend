@@ -31,6 +31,7 @@ const TitleHeader = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding: 16px;
+  padding-bottom: 50px;
   background-color: ${customColor.deepBlue};
 `;
 
