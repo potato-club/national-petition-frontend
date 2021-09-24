@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
@@ -12,7 +12,6 @@ import { FaUserEdit } from 'react-icons/fa';
 import {
   RecommandButton,
   CommentAddForm,
-  CommentItem,
   CommnetList,
 } from 'components/app/board/detail';
 

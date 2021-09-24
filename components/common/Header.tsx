@@ -2,23 +2,36 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from './TypoGraphy';
+import Link from 'next/link';
 
 export const Header = () => {
   return (
     <Wrapper>
       <Side>
-        <TypoGraphy type="h1" color={customColor.white}>
-          국민청원 소통방
-        </TypoGraphy>
+        <Link href="/board/list">
+          <a>
+            <TypoGraphy type="h1" color={customColor.white}>
+              국민청원 소통방
+            </TypoGraphy>
+          </a>
+        </Link>
       </Side>
       <Side>
-        <TypoGraphy type="h1" color={customColor.white}>
-          홈
-        </TypoGraphy>
+        <Link href="/board/list">
+          <a>
+            <TypoGraphy type="h1" color={customColor.white}>
+              홈
+            </TypoGraphy>
+          </a>
+        </Link>
         <Gap />
-        <TypoGraphy type="h1" color={customColor.white}>
-          로그인
-        </TypoGraphy>
+        <Link href="/user/login">
+          <a>
+            <TypoGraphy type="h1" color={customColor.white}>
+              로그인
+            </TypoGraphy>
+          </a>
+        </Link>
       </Side>
     </Wrapper>
   );
@@ -37,6 +50,7 @@ const Wrapper = styled.div`
   height: 60px;
   padding-left: 32px;
   padding-right: 32px;
+  z-index: 1000;
 `;
 
 const Side = styled.div`

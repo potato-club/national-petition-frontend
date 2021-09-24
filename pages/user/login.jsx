@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutContainer, TypoGraphy } from 'components/common';
+import { LayoutContainer, TypoGraphy, Header } from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { GoogleLoginButton } from 'react-social-login-buttons';
@@ -7,6 +7,7 @@ import { GoogleLoginButton } from 'react-social-login-buttons';
 const login = () => {
   return (
     <LayoutContainer>
+      <Header />
       <Wrapper>
         <LoginWrapper>
           <Title>
