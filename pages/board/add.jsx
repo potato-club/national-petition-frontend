@@ -9,17 +9,23 @@ const add = () => {
       <IntroHeader />
       <FormBox>
         <InputContentBox>
-          <TypoGraphy type="h1" fontWeight="bold">
-            제목
-          </TypoGraphy>
+          <Title>
+            <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
+              제목
+            </TypoGraphy>
+          </Title>
           <Input placeholder="제목을 입력하세요" />
-          <TypoGraphy type="h1" fontWeight="bold">
-            청원 링크
-          </TypoGraphy>
+          <Title>
+            <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
+              청원 링크
+            </TypoGraphy>
+          </Title>
           <Input placeholder="https://" />
-          <TypoGraphy type="h1" fontWeight="bold">
-            나의 의견
-          </TypoGraphy>
+          <Title>
+            <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
+              나의 의견
+            </TypoGraphy>
+          </Title>
           <OpinionInput placeholder="자유롭게 의견을 작성하세요" />
         </InputContentBox>
         <ButtonBox>
@@ -38,7 +44,6 @@ const FormBox = styled.form`
   left: 50%;
   margin-top: -406px;
   margin-left: -589px;
-  border: 1px solid black;
   border-radius: 4px;
   padding: 10px;
   box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
@@ -46,22 +51,32 @@ const FormBox = styled.form`
   -moz-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
   background-color: white;
 `;
+
+const Title = styled.div`
+  margin-left: 8px;
+`;
+
 const Input = styled.input`
   width: 1178px;
   height: 40px;
   background-color: #f6f6f6;
-  border: 1px solid gray;
+  border: none;
+  padding: 8px;
   margin-bottom: 16px;
   border-radius: 4px;
   font-size: 18px;
+  margin-top: 8px;
 `;
 const InputContentBox = styled.div``;
 const OpinionInput = styled.textarea`
   width: 1178px;
   height: 500px;
   font-size: 20px;
+  border: none;
+  padding: 8px;
   background-color: #f6f6f6;
   border-radius: 4px;
+  margin-top: 16px;
   resize: none;
 `;
 
@@ -77,7 +92,7 @@ const Button = styled.button`
   width: 160px;
   height: 40px;
   border-radius: 4px;
-  border: 1px solid gray;
+  border: none;
   ${(props) =>
     props.add &&
     `
@@ -91,11 +106,10 @@ const Button = styled.button`
   ${(props) =>
     props.cancel &&
     `
-    background-color: white;
+    background-color: ${customColor.grayBg};
     &:hover {
-    background-color: ${customColor.deepBlue};
-    color:white;
-    opacity: 0.9;
+    background-color: ${customColor.grayBg};
+    opacity: 0.5;
     }
     `}
 `;
