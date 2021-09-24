@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { LayoutContainer, TypoGraphy, Header } from 'components/common/index';
 import { customColor } from 'constants/index';
-import { Top5TextLoop } from 'components/app/home';
+import { Top5TextLoop } from 'components/common';
 const home = () => {
   return (
     <LayoutContainer>
@@ -26,11 +26,7 @@ const home = () => {
               URL
             </TypoGraphy>
           </UrlTitle>
-          <InputUrl>
-            <TypoGraphy type="body1" color={customColor.gray} textAlign="left">
-              청원 글의 URL을 넣어주세요.
-            </TypoGraphy>
-          </InputUrl>
+          <InputUrl placeholder="청원 글의 URL을 넣어주세요."></InputUrl>
           <EnrollmentButton>
             <TypoGraphy type="h3" color={customColor.white} textAlign="center">
               등록
@@ -80,12 +76,15 @@ const UrlTitle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 11%;
+  width: 10%;
   height: 100%;
   border-right: 2px solid ${customColor.grayBg};
 `;
-const InputUrl = styled.div`
-  width: 70%;
+const InputUrl = styled.input`
+  width: 75%;
+  height: 100%;
+  font-size: 20px;
+  border: none;
 `;
 const EnrollmentButton = styled.button`
   border: none;
