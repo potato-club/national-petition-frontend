@@ -48,7 +48,6 @@ export const ListItem = ({
       </Day>
       <GraphWrapper>
         <Bar>
-          {console.log(agreePer, disagreePer)}
           <AgreeBar per={(agreePer / (agreePer + disagreePer)) * 100} />
           <DisagreeBar per={(disagreePer / (agreePer + disagreePer)) * 100} />
         </Bar>

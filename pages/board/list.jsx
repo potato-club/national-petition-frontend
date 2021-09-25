@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import {
   LayoutContainer,
@@ -10,9 +10,21 @@ import { customColor } from 'constants/index';
 import { Search, ListItem } from 'components/app/board/list';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import dummy from '../../dummy/list.json';
+import { Pagination } from '@mui/material';
 
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
+
+  const postPerPage = 10;
+  const [allPage] = useState(Math.ceil(dummy.length / postPerPage));
+  const [currentPost, setCurrentPost] = useState(dummy.slice(0, postPerPage));
+
+  const handleChange = (e, value) => {
+    setCurrentPost(
+      dummy.slice(value * postPerPage - postPerPage, value * postPerPage),
+    );
+  };
+
   return (
     <LayoutContainer>
       <Header />
@@ -91,7 +103,7 @@ const list = () => {
             </NavGraph>
           </ListNav>
           <List>
-            {dummy.map(
+            {currentPost.map(
               ({
                 id,
                 category,
@@ -120,13 +132,24 @@ const list = () => {
         <ListLowerWrapper>
           <Search />
         </ListLowerWrapper>
-        {/* 페이지네이션 */}
+        <PaginationWrapper>
+          <Pagination
+            count={allPage}
+            onChange={handleChange}
+            shape="rounded"
+            color="primary"
+          />
+        </PaginationWrapper>
       </Container>
     </LayoutContainer>
   );
 };
 
 const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
   width: 1178px;
   margin-left: auto;
   margin-right: auto;
@@ -185,5 +208,11 @@ const ListLowerWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 100px;
+`;
 export default list;
