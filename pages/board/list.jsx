@@ -14,6 +14,7 @@ import { Pagination } from '@mui/material';
 
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
+  const [sortPosition, setSortPosition] = useState('최신순');
 
   const postPerPage = 10;
   const [allPage] = useState(Math.ceil(dummy.length / postPerPage));
@@ -25,6 +26,9 @@ const list = () => {
     );
   };
 
+  const handleSort = (e) => {
+    setSortPosition(e.target.innerText);
+  };
   return (
     <LayoutContainer>
       <Header />
@@ -38,7 +42,7 @@ const list = () => {
               type="body1"
               color={customColor.white}
               textAlign="center">
-              추천순
+              {sortPosition}
             </TypoGraphy>
             <RiArrowDropDownLine
               style={{
@@ -51,6 +55,34 @@ const list = () => {
                 transition: 'transform 0.5s ',
               }}
             />
+            {handleDrop && (
+              <SortList>
+                <SortButton onClick={handleSort}>
+                  <TypoGraphy
+                    type="body1"
+                    color={customColor.black}
+                    textAlign="center">
+                    최신순
+                  </TypoGraphy>
+                </SortButton>
+                <SortButton onClick={handleSort}>
+                  <TypoGraphy
+                    type="body1"
+                    color={customColor.black}
+                    textAlign="center">
+                    조회순
+                  </TypoGraphy>
+                </SortButton>
+                <SortButton onClick={handleSort}>
+                  <TypoGraphy
+                    type="body1"
+                    color={customColor.black}
+                    textAlign="center">
+                    추천순
+                  </TypoGraphy>
+                </SortButton>
+              </SortList>
+            )}
           </SortWrapper>
         </ListUpperWrapper>
 
@@ -161,6 +193,7 @@ const ListUpperWrapper = styled.div`
   margin-top: 100px;
 `;
 const SortWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -169,6 +202,32 @@ const SortWrapper = styled.div`
   padding-left: 15px;
   background-color: ${customColor.blue};
   cursor: pointer;
+`;
+
+const SortList = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid ${customColor.blue};
+  top: 30px;
+  left: 0;
+  width: 100px;
+  height: 90px;
+  background-color: ${customColor.white};
+`;
+
+const SortButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 100%;
+  height: 30px;
+  :hover {
+    background-color: ${customColor.grayBg};
+  }
 `;
 
 const ListWrapper = styled.div`
