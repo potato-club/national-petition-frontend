@@ -4,10 +4,10 @@ import { customColor } from 'constants/index';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { TypoGraphy } from 'components/common';
 
-export const RecommandButton = ({ type }) => {
+export const RecommandButton = ({ type, onClick }) => {
   return (
     <Wrapper>
-      <ButtonWrapper>
+      <ButtonWrapper onClick={onClick}>
         {type === 'like' ? (
           <AiOutlineLike size="56px" color={customColor.blue} />
         ) : (
