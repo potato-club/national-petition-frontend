@@ -214,7 +214,6 @@ export const Top5TextLoop = () => {
             transform: handleDrop ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.5s ',
           }}
-          // style={DropDownStyle}
           onClick={() => setHandleDrop((handleDrop) => !handleDrop)}
         />
       </Top5ItemBox>
@@ -232,9 +231,7 @@ const Top5ItemBox = styled.div`
   justify-content: center;
   width: 600px;
   height: ${({ handleDrop }) => (handleDrop ? `225px` : `45px`)};
-
   padding: 0px 10px;
-
   background-color: ${customColor.white};
   border-radius: 20px;
 `;
