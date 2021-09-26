@@ -130,7 +130,7 @@ const list = () => {
                 color={customColor.black}
                 textAlign="center"
                 fontWeight="bold">
-                찬반 그래프
+                찬성률
               </TypoGraphy>
             </NavGraph>
           </ListNav>
@@ -145,6 +145,7 @@ const list = () => {
                 day,
                 agreePer,
                 disagreePer,
+                comment,
               }) => (
                 <ListItem
                   key={id}
@@ -155,6 +156,7 @@ const list = () => {
                   day={day}
                   agreePer={agreePer}
                   disagreePer={disagreePer}
+                  comment={comment}
                 />
               ),
             )}

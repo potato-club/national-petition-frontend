@@ -11,6 +11,7 @@ export const ListItem = ({
   day,
   agreePer,
   disagreePer,
+  comment,
 }) => {
   return (
     <Wrapper>
@@ -24,11 +25,19 @@ export const ListItem = ({
         </TypoGraphy>
       </Category>
       <TitleWrapper>
-        <Title>
+        <MainTitle>
           <TypoGraphy type="body1" color={customColor.black} textAlign="left">
             {title}
           </TypoGraphy>
-        </Title>
+          <CommentWrapper>
+            <TypoGraphy
+              type="body1"
+              color={customColor.skyBlue}
+              textAlign="center">
+              &nbsp;({comment})
+            </TypoGraphy>
+          </CommentWrapper>
+        </MainTitle>
         <SubTitle>
           <MdSubdirectoryArrowRight />
           <TypoGraphy type="body2" color={customColor.gray} textAlign="left">
@@ -74,11 +83,14 @@ const TitleWrapper = styled.div`
   flex-direction: column;
   height: 100%;
 `;
-const Title = styled.div`
+const MainTitle = styled.div`
   display: flex;
   align-items: flex-end;
   padding-bottom: 5px;
   height: 60%;
+`;
+const CommentWrapper = styled.div`
+  margin-bottom: 2px;
 `;
 const SubTitle = styled.div`
   display: flex;
@@ -104,7 +116,7 @@ const Bar = styled.div`
   display: flex;
   width: 80%;
   height: 15px;
-  background-color: ${customColor.black};
+  background-color: ${customColor.grayBg};
 `;
 const AgreeBar = styled.div`
   width: ${({ per }) => per + '%'};

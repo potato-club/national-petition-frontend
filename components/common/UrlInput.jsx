@@ -46,6 +46,9 @@ const InputUrl = styled.input`
   height: 100%;
   font-size: 20px;
   border: none;
+  :focus {
+    outline: none;
+  }
 `;
 const EnrollmentButton = styled.button`
   border: none;
