@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { LayoutContainer, TypoGraphy, Header } from 'components/common';
+import {
+  LayoutContainer,
+  TypoGraphy,
+  Header,
+  TitleHeader,
+} from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 
@@ -14,11 +19,9 @@ const profile = () => {
   };
   return (
     <LayoutContainer>
+      <Header />
+      <TitleHeader title="내 정보 보기" top5Visible={false} />
       <ProfileBox>
-        {/* <Header /> */}
-        <TypoGraphy type="Head" color={customColor.black}>
-          내 정보 보기
-        </TypoGraphy>
         <ProfileForm>
           <FormHeader>
             <SayHi>
