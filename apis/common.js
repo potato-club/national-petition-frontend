@@ -1,28 +1,47 @@
 import axios from 'axios';
 import { settings } from 'constants/index';
-
-const authorization = (token) => ({
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+import { tokenHelper } from 'util/index';
 
 export default {
-  get: async (url, authYn) => {
-    return authYn
-      ? axios.get(
-          settings.testUrl + url,
-          // authorization(await tokenHelper.getIdToken()),
-        )
-      : axios.get(settings.testUrl + url);
+  authGet: async (url, params) => {
+    return axios.get(settings.testUrl + url, {
+      params,
+      headers: {
+        Authorization: `Bearer ${await tokenHelper.getIdToken()}`,
+      },
+    });
   },
-  post: async (url, req, authYn) => {
-    return authYn
-      ? axios.post(
-          settings.testUrl + url,
-          req,
-          // authorization(await tokenHelper.getIdToken()),
-        )
-      : axios.post(settings.testUrl + url, req);
+  get: async (url, params) => {
+    return axios.get(settings.testUrl + url, { params });
+  },
+  authPost: async () => {
+    return axios.post(settings.testUrl + url, params, {
+      headers: {
+        Authorization: `Bearer ${await tokenHelper.getIdToken()}`,
+      },
+    });
+  },
+  post: async (url, authYn, params) => {
+    return axios.post(settings.testUrl + url, params);
+  },
+  authTextPut: async (url, params) => {
+    return await axios({
+      method: 'put',
+      url: settings.testUrl + url,
+      data: params,
+      headers: {
+        Authorization: `Bearer ${await tokenHelper.getIdToken()}`,
+      },
+    });
+  },
+  authDelete: async (url, params) => {
+    return await axios({
+      method: 'delete',
+      url: settings.testUrl + url,
+      data: params,
+      headers: {
+        Authorization: `Bearer ${await tokenHelper.getIdToken()}`,
+      },
+    });
   },
 };

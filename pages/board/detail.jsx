@@ -113,7 +113,7 @@ const detail = ({ detailInfo }) => {
 };
 
 export async function getServerSideProps(context) {
-  const { data: detailInfo } = await scrapApi.getDetail();
+  const { data: detailInfo } = await scrapApi.getDetail({ id: '60083' });
 
   return {
     props: { detailInfo },
