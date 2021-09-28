@@ -26,103 +26,102 @@ const profile = () => {
     <LayoutContainer>
       <Header />
       <TitleHeader title="내 정보 보기" top5Visible={false} />
-      <ProfileBox>
-        <BoxHeader>
-          <SayHi>
-            <TypoGraphy type="Head" color={customColor.black}>
+
+      <BoxHeader>
+        <SayHi>
+          <TypoGraphy type="Head" color={customColor.black}>
+            {userName}
+          </TypoGraphy>
+          <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
+            님, 안녕하세요!
+          </TypoGraphy>
+        </SayHi>
+        <TypoGraphy type="body1" color={customColor.gray}>
+          당신의 안녕을 기원합니다.
+        </TypoGraphy>
+      </BoxHeader>
+      <BoxBody>
+        <AttributeBox>
+          <Attribute>
+            <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
+              이 름 &nbsp;&nbsp;:{' '}
+            </TypoGraphy>
+          </Attribute>
+          <Value>
+            <TypoGraphy type="h1" color={customColor.black}>
               {userName}
             </TypoGraphy>
+          </Value>
+        </AttributeBox>
+
+        <Line />
+        <AttributeBox>
+          <Attribute>
             <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-              님, 안녕하세요!
+              닉네임 :{' '}
             </TypoGraphy>
-          </SayHi>
-          <TypoGraphy type="body1" color={customColor.gray}>
-            당신의 안녕을 기원합니다.
-          </TypoGraphy>
-        </BoxHeader>
-        <BoxBody>
-          <AttributeBox>
-            <Attribute>
-              <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-                이 름 :{' '}
-              </TypoGraphy>
-            </Attribute>
-            <Value>
-              <TypoGraphy type="h1" color={customColor.black}>
-                {userName}
-              </TypoGraphy>
-            </Value>
-          </AttributeBox>
+          </Attribute>
+          <Value>
+            <TypoGraphy type="h1" color={customColor.black}>
+              {userNickName}
+            </TypoGraphy>
+          </Value>
+        </AttributeBox>
+        <Line />
+        <AttributeBox>
+          <Attribute>
+            <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
+              이메일 :{' '}
+            </TypoGraphy>
+          </Attribute>
 
-          <Line />
-          <AttributeBox>
-            <Attribute>
-              <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-                닉네임 :{' '}
-              </TypoGraphy>
-            </Attribute>
-            <Value>
-              <TypoGraphy type="h1" color={customColor.black}>
-                {userNickName}
-              </TypoGraphy>
-            </Value>
-          </AttributeBox>
-          <Line />
-          <AttributeBox>
-            <Attribute>
-              <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-                이메일 :{' '}
-              </TypoGraphy>
-            </Attribute>
-
-            <Value>
-              <TypoGraphy type="h1" color={customColor.black}>
-                {userEmail}
-              </TypoGraphy>
-            </Value>
-          </AttributeBox>
-          <Line />
-          <ButtonBox>
-            <Button logout onClick={qqqqqqmodal}>
-              로그아웃
-            </Button>
-            <Button resign onClick={qqqqqqmodal}>
-              탈퇴하기
-            </Button>
-          </ButtonBox>
-        </BoxBody>
-        <BoxBody>
-          <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-            내가 쓴 글
-          </TypoGraphy>
-          <Line />
-          <List>
-            {myPost.map(
-              ({
-                id,
-                category,
-                title,
-                subTitle,
-                subNumber,
-                day,
-                agreePer,
-                disagreePer,
-              }) => (
-                <ListItem
-                  key={id}
-                  category={category}
-                  title={title}
-                  subTitle={subTitle}
-                  subNumber={subNumber}
-                  day={day}
-                  agreePer={agreePer}
-                  disagreePer={disagreePer}
-                />
-              ),
-            )}
-          </List>
-        </BoxBody>
-      </ProfileBox>
+          <Value>
+            <TypoGraphy type="h1" color={customColor.black}>
+              {userEmail}
+            </TypoGraphy>
+          </Value>
+        </AttributeBox>
+        <Line />
+        <ButtonBox>
+          <Button logout onClick={qqqqqqmodal}>
+            로그아웃
+          </Button>
+          <Button resign onClick={qqqqqqmodal}>
+            탈퇴하기
+          </Button>
+        </ButtonBox>
+      </BoxBody>
+      <BoxBody>
+        <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
+          내가 쓴 글
+        </TypoGraphy>
+        <Line />
+        <List>
+          {myPost.map(
+            ({
+              id,
+              category,
+              title,
+              subTitle,
+              subNumber,
+              day,
+              agreePer,
+              disagreePer,
+            }) => (
+              <ListItem
+                key={id}
+                category={category}
+                title={title}
+                subTitle={subTitle}
+                subNumber={subNumber}
+                day={day}
+                agreePer={agreePer}
+                disagreePer={disagreePer}
+              />
+            ),
+          )}
+        </List>
+      </BoxBody>
     </LayoutContainer>
   );
 };
@@ -160,10 +159,14 @@ const BoxBody = styled.div`
   border-radius: 4px;
   background-color: ${customColor.white};
   border: 1px solid ${customColor.gray};
+  box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
+  background-color: ${customColor.grayBg};
 `;
 
 const Line = styled.hr`
-  margin-top: 20px;
+  margin: 20px auto;
 `;
 
 const ButtonBox = styled.div`
