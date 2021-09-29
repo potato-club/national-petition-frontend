@@ -8,3 +8,5 @@ export { Top5TextLoop } from './Top5TextLoop';
 export { UrlInput } from './UrlInput';
 export { TitleHeader } from './TitleHeader';
 export { MessageModal } from './MessageModal';
+export { BoardList } from './BoardList';
+export { ListItem } from './ListItem';
