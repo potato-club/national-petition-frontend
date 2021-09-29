@@ -10,7 +10,7 @@ const add = () => {
       <Header />
       <FormBox>
         <FormHeader>
-          <TypoGraphy type="Head" color={customColor.black}>
+          <TypoGraphy type="Head" color={customColor.black} fontWeight="bold">
             게시글 등록
           </TypoGraphy>
         </FormHeader>

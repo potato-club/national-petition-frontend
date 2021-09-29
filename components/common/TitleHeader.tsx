@@ -22,6 +22,19 @@ export const TitleHeader: React.FC<Props> = ({ title, top5Visible = true }) => {
   );
 };
 
+const ImageWrapper = styled.div`
+  background-image: url('/img/headerbg.jpeg');
+  background-size: cover;
+  opacity: 0.5;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  width: 100vw;
+  z-index: -1;
+`;
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -31,7 +44,12 @@ const Wrapper = styled.div`
   margin-right: auto;
   padding: 16px;
   padding-bottom: 50px;
-  background-color: ${customColor.deepBlue};
+  background-image: linear-gradient(
+      rgba(3, 68, 151, 0.2),
+      rgba(3, 68, 151, 0.2)
+    ),
+    url('/img/headerbg.jpeg');
+  background-size: cover;
 `;
 
 const Divide = styled.div`
