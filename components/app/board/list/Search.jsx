@@ -6,7 +6,7 @@ import { customColor } from 'constants/index';
 export const Search = () => {
   return (
     <SearchWrapper>
-      <InputText />
+      <InputText placeholder="제목을 입력해주세요" />
       <SearchButton>
         <TypoGraphy type="body1" color={customColor.white} textAlign="center">
           검색
@@ -30,6 +30,10 @@ const InputText = styled.input`
   width: 240px;
   padding: 0;
   margin: 0;
+  :focus {
+    outline: none;
+  }
+  padding-left: 5px;
 `;
 const SearchButton = styled.button`
   border: none;

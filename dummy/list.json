@@ -7,7 +7,8 @@
     "subNumber": "124,235",
     "day": "2021.09.25",
     "agreePer": 5,
-    "disagreePer": 3
+    "disagreePer": 3,
+    "comment": 4
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "subNumber": "90,232",
     "day": "2021.09.25",
     "agreePer": 3,
-    "disagreePer": 0
+    "disagreePer": 0,
+    "comment": 12
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "subNumber": "444,444",
     "day": "2021.09.25",
     "agreePer": 0,
-    "disagreePer": 0
+    "disagreePer": 0,
+    "comment": 141
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "subNumber": "124,235",
     "day": "2021.09.25",
     "agreePer": 33,
-    "disagreePer": 12
+    "disagreePer": 12,
+    "comment": 42
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "subNumber": "90,232",
     "day": "2021.09.25",
     "agreePer": 79,
-    "disagreePer": 3
+    "disagreePer": 3,
+    "comment": 4
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "subNumber": "444,444",
     "day": "2022.09.25",
     "agreePer": 9,
-    "disagreePer": 12
+    "disagreePer": 12,
+    "comment": 11
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "subNumber": "444,444",
     "day": "2021.09.25",
     "agreePer": 0,
-    "disagreePer": 12
+    "disagreePer": 12,
+    "comment": 832
   },
   {
     "id": 8,
@@ -77,7 +84,8 @@
     "subNumber": "141,252",
     "day": "2021.09.23",
     "agreePer": 100,
-    "disagreePer": 12
+    "disagreePer": 12,
+    "comment": 4
   },
   {
     "id": 9,
@@ -87,7 +95,8 @@
     "subNumber": "141,252",
     "day": "2021.09.23",
     "agreePer": 1,
-    "disagreePer": 12
+    "disagreePer": 12,
+    "comment": 221
   },
   {
     "id": 10,
@@ -97,7 +106,8 @@
     "subNumber": "999,999",
     "day": "2021.09.21",
     "agreePer": 1231,
-    "disagreePer": 12
+    "disagreePer": 12,
+    "comment": 4
   },
   {
     "id": 11,
@@ -107,7 +117,8 @@
     "subNumber": "999,999",
     "day": "2021.09.21",
     "agreePer": 1212,
-    "disagreePer": 12212
+    "disagreePer": 12212,
+    "comment": 4
   },
   {
     "id": 12,
@@ -117,6 +128,7 @@
     "subNumber": "921,311",
     "day": "2021.09.21",
     "agreePer": 221,
-    "disagreePer": 33
+    "disagreePer": 33,
+    "comment": 0
   }
 ]
