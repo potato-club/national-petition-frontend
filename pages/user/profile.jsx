@@ -4,11 +4,11 @@ import {
   TypoGraphy,
   Header,
   TitleHeader,
+  BoardList,
 } from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import dummy from '../../dummy/list.json';
-import { ListItem } from 'components/app/board/list';
 
 const profile = () => {
   const [userName, setUserName] = useState('박상훈');
@@ -19,8 +19,6 @@ const profile = () => {
   const qqqqqqmodal = () => {
     alert('');
   };
-
-  const [myPost, setMyPost] = useState(dummy.slice(0, 5));
 
   return (
     <LayoutContainer>
@@ -95,32 +93,7 @@ const profile = () => {
         <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
           내가 쓴 글
         </TypoGraphy>
-        <Line />
-        <List>
-          {myPost.map(
-            ({
-              id,
-              category,
-              title,
-              subTitle,
-              subNumber,
-              day,
-              agreePer,
-              disagreePer,
-            }) => (
-              <ListItem
-                key={id}
-                category={category}
-                title={title}
-                subTitle={subTitle}
-                subNumber={subNumber}
-                day={day}
-                agreePer={agreePer}
-                disagreePer={disagreePer}
-              />
-            ),
-          )}
-        </List>
+        <BoardList listData={dummy} />
       </BoxBody>
     </LayoutContainer>
   );
@@ -202,7 +175,6 @@ const Button = styled.button`
     }
     `}
 `;
-const List = styled.div``;
 
 const AttributeBox = styled.div`
   display: flex;
