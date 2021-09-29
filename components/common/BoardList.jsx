@@ -4,7 +4,7 @@ import { TypoGraphy, ListItem } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { Pagination } from '@mui/material';
 
-export const ListAndPagination = ({ listData }) => {
+export const BoardList = ({ listData }) => {
   const postPerPage = 10;
   const [allPage] = useState(Math.ceil(listData.length / postPerPage));
   const [currentPost, setCurrentPost] = useState(

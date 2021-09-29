@@ -5,7 +5,7 @@ import {
   TypoGraphy,
   Header,
   TitleHeader,
-  ListAndPagination,
+  BoardList,
 } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { Search } from 'components/app/board/list';
@@ -76,7 +76,7 @@ const list = () => {
           </SortWrapper>
         </ListUpperWrapper>
 
-        <ListAndPagination listData={dummy} />
+        <BoardList listData={dummy} />
       </Container>
     </LayoutContainer>
   );
