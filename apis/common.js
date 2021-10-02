@@ -14,7 +14,7 @@ export default {
   get: async (url, params) => {
     return axios.get(settings.testUrl + url, { params });
   },
-  authPost: async () => {
+  authPost: async (url, params) => {
     return axios.post(settings.testUrl + url, params, {
       headers: {
         Authorization: `Bearer ${await tokenHelper.getIdToken()}`,
