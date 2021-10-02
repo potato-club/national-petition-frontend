@@ -5,6 +5,11 @@ import { customColor } from 'constants/index';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 
 const login = () => {
+  const signIn = () => {
+    location.href =
+      'http://ec2-54-180-73-27.ap-northeast-2.compute.amazonaws.com:30000/login/oauth2/code/google';
+  };
+
   return (
     <LayoutContainer>
       <Header />
@@ -24,7 +29,7 @@ const login = () => {
             </TypoGraphy>
           </Content>
           <ButtonWrapper>
-            <GoogleLoginButton />
+            <GoogleLoginButton onClick={signIn} />
           </ButtonWrapper>
         </LoginWrapper>
       </Wrapper>
