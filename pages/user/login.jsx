@@ -1,13 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LayoutContainer, TypoGraphy, Header } from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { GoogleLoginButton } from 'react-social-login-buttons';
+import { getQueryString, tokenHelper, isObjectEmpty } from 'util/index';
+import { RegisterModal } from 'components/app/user/login';
+import { memberApi } from 'apis/index';
 
 const login = () => {
+  const [registerModalVisible, setRegisterModalVisible] = useState(false);
+
+  useEffect(() => {
+    (() => {
+      if (!isObjectEmpty(getQueryString())) {
+        const { register, idToken, refreshToken } = getQueryString();
+
+        console.log('REGISTER :: ', register);
+        console.log('ID_TOKEN :: ', idToken);
+        console.log('REFRESH_TOKEN :: ', refreshToken);
+
+        setToken(idToken, refreshToken);
+
+        if (register === 'false') {
+          setRegisterModalVisible(true);
+        }
+      }
+    })();
+  }, []);
+
   const signIn = () => {
     location.href =
       'http://ec2-54-180-73-27.ap-northeast-2.compute.amazonaws.com:30000/login/oauth2/code/google';
+  };
+
+  const setToken = (idToken, refreshToken) => {
+    tokenHelper.setIdToken(idToken);
+    tokenHelper.setRefreshToken(refreshToken);
+  };
+
+  const RegisterNickName = async (nickName) => {
+    console.log(nickName);
+
+    try {
+      const { data } = await memberApi.addNickName({ nickName });
+
+      console.log('DATA :: ', data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -33,6 +73,11 @@ const login = () => {
           </ButtonWrapper>
         </LoginWrapper>
       </Wrapper>
+      <RegisterModal
+        visible={registerModalVisible}
+        onClose={() => setRegisterModalVisible(true)}
+        onConfirm={RegisterNickName}
+      />
     </LayoutContainer>
   );
 };
