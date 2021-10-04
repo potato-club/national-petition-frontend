@@ -1,0 +1,6 @@
+{
+  "name": "jolp-petitions",
+  "region": "ap-northeast-2",
+  "accelerated": true,
+  "url": "https://jolp-petitions.s3.amazonaws.com"
+}

@@ -1,0 +1,10 @@
+falsyExempleServerlessNext:
+  component: '@sls-next/serverless-component'
+  inputs:
+    name:
+      defaultLambda: 'jolp-petitions'
+      apiLambda: 'jolp-petitions-api'
+    bucketRegion: 'ap-northeast-2'
+    bucketName: 'jolp-petitions'
+    cloudfront:
+      distributionId: 'EJO058BTDW38F'
