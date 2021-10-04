@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "serverless"
   },
   "dependencies": {
     "@emotion/react": "^11.4.1",
@@ -25,6 +26,7 @@
     "@types/react": "17.0.20",
     "add": "^2.0.6",
     "typescript": "4.4.2",
+    "serverless": "^2.59.0",
     "yarn": "^1.22.11"
   }
 }
