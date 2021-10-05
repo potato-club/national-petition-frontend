@@ -29,8 +29,7 @@ const login = () => {
   }, []);
 
   const signIn = () => {
-    location.href =
-      'http://ec2-54-180-73-27.ap-northeast-2.compute.amazonaws.com:30000/login/oauth2/code/google';
+    location.href = 'https://dev.petition.pw/oauth2/authorization/google';
   };
 
   const setToken = (idToken, refreshToken) => {
