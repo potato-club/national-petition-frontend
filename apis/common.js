@@ -21,7 +21,7 @@ export default {
       },
     });
   },
-  post: async (url, authYn, params) => {
+  post: async (url, params) => {
     return axios.post(settings.apiUrl + url, params);
   },
   authTextPut: async (url, params) => {
