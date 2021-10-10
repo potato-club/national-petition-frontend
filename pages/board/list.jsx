@@ -11,14 +11,36 @@ import { customColor } from 'constants/index';
 import { Search } from 'components/app/board/list';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import dummy from '../../dummy/list.json';
+import { boardApi } from 'apis';
 
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
-
+  const [boardList, setBoardList] = useState();
   const handleSort = (e) => {
     setSortPosition(e.target.innerText);
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const {
+          data: { data: list },
+        } = await boardApi.list({
+          search: '',
+          page: 0,
+          size: 10,
+        });
+
+        console.log('LIST :: ', list);
+
+        setBoardList(list);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
+
   return (
     <LayoutContainer>
       <Header />
