@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutContainer, TypoGraphy, Header } from 'components/common';
+import {
+  LayoutContainer,
+  TypoGraphy,
+  Header,
+  MessageModal,
+} from 'components/common';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 import { customColor } from 'constants/index';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { getQueryString, tokenHelper, isObjectEmpty } from 'util/index';
@@ -9,6 +15,9 @@ import { memberApi } from 'apis/index';
 
 const login = () => {
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
+  const [messageModalVisible, setMessageModalVisible] = useState(false);
+  const [messageContent, setMessageContent] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     (() => {
@@ -41,9 +50,21 @@ const login = () => {
     console.log(nickName);
 
     try {
-      const { data } = await memberApi.addNickName({ nickName });
+      const {
+        data: { data: result },
+      } = await memberApi.addNickName({ nickName });
 
-      console.log('DATA :: ', data);
+      console.log('RESULT :: ', result);
+
+      if (result === 'success') {
+        router.push('/board/list');
+      } else if (result === 'duplicate') {
+        setMessageContent('중복된 닉네임입니다');
+        setMessageModalVisible(true);
+      } else {
+        setMessageContent('알 수 없는 오류로 실패하였습니다');
+        setMessageModalVisible(true);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -76,6 +97,11 @@ const login = () => {
         visible={registerModalVisible}
         onClose={() => setRegisterModalVisible(true)}
         onConfirm={RegisterNickName}
+      />
+      <MessageModal
+        content={messageContent}
+        visible={messageModalVisible}
+        onClose={() => setMessageModalVisible(false)}
       />
     </LayoutContainer>
   );
