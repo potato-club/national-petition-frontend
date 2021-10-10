@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from './TypoGraphy';
 import Link from 'next/link';
+import { memberApi } from 'apis/index';
+
+type User = {
+  name: string;
+  email: string;
+  picture: string;
+  nickName: string;
+};
 
 export const Header = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const {
+        data: { data: userInfo },
+      } = await memberApi.getInfo();
+
+      setUser(userInfo);
+    })();
+  }, []);
+
   return (
     <Wrapper>
       <Side>
@@ -25,13 +45,23 @@ export const Header = () => {
           </a>
         </Link>
         <Gap />
-        <Link href="/user/login">
-          <a>
-            <TypoGraphy type="h1" color={customColor.white}>
-              로그인
-            </TypoGraphy>
-          </a>
-        </Link>
+        {user ? (
+          <Link href="/user/profile">
+            <a>
+              <TypoGraphy type="h1" color={customColor.white}>
+                {user.nickName}
+              </TypoGraphy>
+            </a>
+          </Link>
+        ) : (
+          <Link href="/user/login">
+            <a>
+              <TypoGraphy type="h1" color={customColor.white}>
+                로그인
+              </TypoGraphy>
+            </a>
+          </Link>
+        )}
       </Side>
     </Wrapper>
   );
