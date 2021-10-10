@@ -17,11 +17,13 @@ export const Header = () => {
 
   useEffect(() => {
     (async () => {
-      const {
-        data: { data: userInfo },
-      } = await memberApi.getInfo();
+      try {
+        const {
+          data: { data: userInfo },
+        } = await memberApi.getInfo();
 
-      setUser(userInfo);
+        setUser(userInfo);
+      } catch (e) {}
     })();
   }, []);
 
