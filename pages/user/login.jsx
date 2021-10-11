@@ -32,6 +32,8 @@ const login = () => {
 
         if (register === 'false') {
           setRegisterModalVisible(true);
+        } else {
+          router.push('/board/list');
         }
       }
     })();

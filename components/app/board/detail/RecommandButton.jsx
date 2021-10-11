@@ -4,14 +4,20 @@ import { customColor } from 'constants/index';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { TypoGraphy } from 'components/common';
 
-export const RecommandButton = ({ type, onClick }) => {
+export const RecommandButton = ({ selected, type, onClick, count }) => {
   return (
     <Wrapper>
-      <ButtonWrapper onClick={onClick}>
+      <ButtonWrapper onClick={onClick} selected={selected}>
         {type === 'like' ? (
-          <AiOutlineLike size="56px" color={customColor.blue} />
+          <AiOutlineLike
+            size="56px"
+            color={selected ? customColor.white : customColor.blue}
+          />
         ) : (
-          <AiOutlineDislike size="56px" color={customColor.blue} />
+          <AiOutlineDislike
+            size="56px"
+            color={selected ? customColor.white : customColor.blue}
+          />
         )}
       </ButtonWrapper>
       <Gap />
@@ -20,13 +26,18 @@ export const RecommandButton = ({ type, onClick }) => {
         fontWeight="bold"
         textAlign="center"
         color={customColor.gray}>
-        320,100
+        {count}
       </TypoGraphy>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  &:hover {
+    transform: translate(0px, -16px);
+    transition-duration: 1s;
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -35,10 +46,14 @@ const ButtonWrapper = styled.div`
   padding: 16px;
   margin-left: 88px;
   margin-right: 88px;
-  background-color: ${customColor.white};
+  background-color: ${(props) =>
+    props.selected ? customColor.blue : customColor.white};
   border-radius: 1000px;
   cursor: pointer;
   box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.05);
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Gap = styled.div`
