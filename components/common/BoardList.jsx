@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy, ListItem } from 'components/common/index';
 import { customColor } from 'constants/index';
@@ -21,17 +21,15 @@ title: "목데이터 제목 404258"
 viewCounts: 0 
 */
 
-export const BoardList = ({ listData }) => {
-  const postPerPage = 10;
-  const [allPage] = useState(Math.ceil(listData.length / postPerPage));
-  const [currentPost, setCurrentPost] = useState(
-    listData.slice(0, postPerPage),
-  );
+const postPerPage = 10;
 
-  console.log('length ::', listData.length);
-  console.log('계산 ::', Math.ceil(listData.length / postPerPage));
-  console.log('allPage ::', allPage);
-  console.log('currentPost:: ', currentPost);
+export const BoardList = ({ listData }) => {
+  const [allPage] = useState(Math.ceil(listData.length / postPerPage));
+  const [currentPost, setCurrentPost] = useState([]);
+
+  useEffect(() => {
+    setCurrentPost(listData.slice(0, postPerPage));
+  }, [listData]);
 
   const handlePageChange = (e, value) => {
     setCurrentPost(
@@ -93,9 +91,9 @@ export const BoardList = ({ listData }) => {
             ({
               boardId,
               category,
-              petitionTitle,
-              // subTitle
+              petitionTitle, // subTitle
               viewCounts,
+              title,
               createdDate,
               boardLikeCounts,
               boardUnLikeCounts,
@@ -105,7 +103,7 @@ export const BoardList = ({ listData }) => {
                 key={boardId}
                 category={category}
                 petitionTitle={petitionTitle}
-                subTitle={/* subTitle */ '임시타이틀'}
+                subTitle={title}
                 viewCounts={viewCounts}
                 createdDate={createdDate}
                 boardLikeCounts={boardLikeCounts}
