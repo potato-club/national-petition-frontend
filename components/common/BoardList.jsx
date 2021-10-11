@@ -4,6 +4,23 @@ import { TypoGraphy, ListItem } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { Pagination } from '@mui/material';
 
+/* 
+boardCommentCounts: 0
+boardId: 11676
+boardLikeCounts: 0
+boardUnLikeCounts: 0
+category: null
+content: "목 데이터 내용 96826"
+createdDate: "2021-10-10 09:46:00"
+memberId: 1
+petitionContent: "\n\t\t\t\t\t\t\t\t\t\t5 살3 살 손자가 있습니다 3 살짜리는  좀활발해서  요즘뉴스가너무  끔찍해서 이제껏 않보내다 이제 보내는데 아이가 가기 싫어해서 불안 합니다\n  이때   어린이 인격 형성에 많은영향을 끼치는데 \n 제발 안심하게 보낼수 있게 도와 주세요  제가 회사 다닐때 노동부에서 돈 받는다고 쓸데없는교육도 정기적으로 받았는데 그런돈 이런데 좀쓰세요\t\t\t\t\t\t\t\t\t"
+petitionTitle: "도와주세요"
+petitionUrl: "https://www1.president.go.kr/petitions/560722"
+petitionsCount: "1"
+title: "목데이터 제목 404258"
+viewCounts: 0 
+*/
+
 export const BoardList = ({ listData }) => {
   const postPerPage = 10;
   const [allPage] = useState(Math.ceil(listData.length / postPerPage));
@@ -11,7 +28,12 @@ export const BoardList = ({ listData }) => {
     listData.slice(0, postPerPage),
   );
 
-  const handleChange = (e, value) => {
+  console.log('length ::', listData.length);
+  console.log('계산 ::', Math.ceil(listData.length / postPerPage));
+  console.log('allPage ::', allPage);
+  console.log('currentPost:: ', currentPost);
+
+  const handlePageChange = (e, value) => {
     setCurrentPost(
       listData.slice(value * postPerPage - postPerPage, value * postPerPage),
     );
@@ -69,26 +91,26 @@ export const BoardList = ({ listData }) => {
         <List>
           {currentPost.map(
             ({
-              id,
+              boardId,
               category,
-              title,
-              subTitle,
-              subNumber,
-              day,
-              agreePer,
-              disagreePer,
-              comment,
+              petitionTitle,
+              // subTitle
+              viewCounts,
+              createdDate,
+              boardLikeCounts,
+              boardUnLikeCounts,
+              boardCommentCounts,
             }) => (
               <ListItem
-                key={id}
+                key={boardId}
                 category={category}
-                title={title}
-                subTitle={subTitle}
-                subNumber={subNumber}
-                day={day}
-                agreePer={agreePer}
-                disagreePer={disagreePer}
-                comment={comment}
+                petitionTitle={petitionTitle}
+                subTitle={/* subTitle */ '임시타이틀'}
+                viewCounts={viewCounts}
+                createdDate={createdDate}
+                boardLikeCounts={boardLikeCounts}
+                boardUnLikeCounts={boardUnLikeCounts}
+                boardCommentCounts={boardCommentCounts}
               />
             ),
           )}
@@ -97,7 +119,7 @@ export const BoardList = ({ listData }) => {
       <PaginationWrapper>
         <Pagination
           count={allPage}
-          onChange={handleChange}
+          onChange={handlePageChange}
           shape="rounded"
           color="primary"
         />

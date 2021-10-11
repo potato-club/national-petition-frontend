@@ -16,7 +16,7 @@ import { boardApi } from 'apis';
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
-  const [boardList, setBoardList] = useState();
+  const [boardList, setBoardList] = useState([]);
   const handleSort = (e) => {
     setSortPosition(e.target.innerText);
   };
@@ -98,7 +98,7 @@ const list = () => {
           </SortWrapper>
         </ListUpperWrapper>
 
-        <BoardList listData={dummy} />
+        <BoardList listData={boardList} />
       </Container>
     </LayoutContainer>
   );
