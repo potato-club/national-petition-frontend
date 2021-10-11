@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy, ListItem } from 'components/common/index';
 import { customColor } from 'constants/index';
@@ -27,7 +27,6 @@ export const BoardList = ({ listData }) => {
   const [currentPost, setCurrentPost] = useState(
     listData.slice(0, postPerPage),
   );
-
   console.log('length ::', listData.length);
   console.log('계산 ::', Math.ceil(listData.length / postPerPage));
   console.log('allPage ::', allPage);
