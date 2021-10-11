@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
@@ -9,11 +9,42 @@ import {
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import dummy from '../../dummy/list.json';
+import { memberApi } from 'apis/index';
 
 const profile = () => {
-  const [userName, setUserName] = useState('박상훈');
+  const [userName, setUserName] = useState('박상훈2');
   const [userNickName, setUserNickName] = useState('스폰지밥');
   const [userEmail, setUserEmail] = useState('bigyou00@gmail.com');
+
+  const fetchProfile = async () => {
+    try {
+      const { data: myInfo } = await memberApi.getInfo();
+      const { name, email, nickName } = myInfo.data;
+      setUserName(name);
+      setUserNickName(nickName);
+      setUserEmail(email);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 정말로 삭제하실 건가요? 했을 때 yes 하면 실행하기
+  const deleteMe = async () => {
+    try {
+      await memberApi.delete();
+      history.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const deleteModal = () => {
+    alert('진짜 삭제할거임? ㅇㅋ');
+    deleteMe();
+  };
 
   // 모달 띄울 것
   const qqqqqqmodal = () => {
@@ -84,7 +115,7 @@ const profile = () => {
           <Button logout onClick={qqqqqqmodal}>
             로그아웃
           </Button>
-          <Button resign onClick={qqqqqqmodal}>
+          <Button resign onClick={deleteModal}>
             탈퇴하기
           </Button>
         </ButtonBox>
