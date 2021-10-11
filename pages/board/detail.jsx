@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
@@ -17,6 +17,22 @@ import {
 } from 'components/app/board/detail';
 
 const detail = ({ detailInfo }) => {
+  const [likeSelected, setLikeSelected] = useState(false);
+  const [unLikeSelected, setUnLikeSeleted] = useState(false);
+
+  const onRecommendSelect = async (state, type) => {
+    if (!state) {
+      const { data } = await boardApi.like({
+        boardId: 727,
+        boardState: type === 'like' ? 'LIKE' : 'UNLIKE',
+      });
+      console.log('FALSE_DATA :: ', data);
+    } else {
+      const { data } = await boardApi.likeCancel({ boardId: 727 });
+      console.log('TRUE__DATA :: ', data);
+    }
+  };
+
   return (
     <LayoutContainer>
       <Header />
@@ -70,12 +86,14 @@ const detail = ({ detailInfo }) => {
         </PepitionContent>
         <RecommandWrapper>
           <RecommandButton
-            selected={true}
+            onClick={() => onRecommendSelect(likeSelected, 'like')}
+            selected={likeSelected}
             type="like"
             count={detailInfo.boardLikeCounts}
           />
           <RecommandButton
-            selected={false}
+            onClick={() => onRecommendSelect(unLikeSelected, 'unlike')}
+            selected={unLikeSelected}
             type="unlike"
             count={detailInfo.boardUnLikeCounts}
           />
