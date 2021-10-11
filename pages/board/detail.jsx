@@ -15,22 +15,53 @@ import {
   CommentList,
   Information,
 } from 'components/app/board/detail';
+import moment from 'moment';
 
 const detail = ({ detailInfo }) => {
   const [likeSelected, setLikeSelected] = useState(false);
   const [unLikeSelected, setUnLikeSeleted] = useState(false);
+  const [likeCount, setLikeCount] = useState(detailInfo.boardLikeCounts);
+  const [unLikeCount, setUnLikeCount] = useState(detailInfo.boardUnLikeCounts);
 
   const onRecommendSelect = async (state, type) => {
+    // 추천수 응답 논의 필요
+
     if (!state) {
-      const { data } = await boardApi.like({
+      const {
+        data: { data: result },
+      } = await boardApi.like({
         boardId: 727,
         boardState: type === 'like' ? 'LIKE' : 'UNLIKE',
       });
-      console.log('FALSE_DATA :: ', data);
+
+      if (result === 'OK') {
+        if (likeSelected || unLikeSelected) {
+          setLikeSelected((cur) => !cur);
+          setUnLikeSeleted((cur) => !cur);
+        } else {
+          type === 'like'
+            ? setLikeSelected((cur) => !cur)
+            : setUnLikeSeleted((cur) => !cur);
+        }
+      }
     } else {
-      const { data } = await boardApi.likeCancel({ boardId: 727 });
-      console.log('TRUE__DATA :: ', data);
+      const {
+        data: { data: result },
+      } = await boardApi.likeCancel({ boardId: 727 });
+
+      if (result === 'OK') {
+        type === 'like'
+          ? setLikeSelected((cur) => !cur)
+          : setUnLikeSeleted((cur) => !cur);
+      }
     }
+
+    const {
+      data: { data: info },
+    } = await boardApi.getDetail('727');
+
+    setLikeCount(info.boardLikeCounts);
+    setUnLikeCount(info.boardUnLikeCounts);
   };
 
   return (
@@ -56,7 +87,10 @@ const detail = ({ detailInfo }) => {
         <InformationForm>
           <Information title="작성자" content={'네글자임'} />
           <Information title="조회수" content={detailInfo.viewCounts} />
-          <Information title="게시글 등록" content={'2021-09-11'} />
+          <Information
+            title="게시글 등록"
+            content={moment(detailInfo.createdDate).format('YYYY-MM-DD')}
+          />
           <Information title="청원등록" content={'2021-09-11'} />
         </InformationForm>
         <UserContent>
@@ -89,13 +123,13 @@ const detail = ({ detailInfo }) => {
             onClick={() => onRecommendSelect(likeSelected, 'like')}
             selected={likeSelected}
             type="like"
-            count={detailInfo.boardLikeCounts}
+            count={likeCount}
           />
           <RecommandButton
             onClick={() => onRecommendSelect(unLikeSelected, 'unlike')}
             selected={unLikeSelected}
             type="unlike"
-            count={detailInfo.boardUnLikeCounts}
+            count={unLikeCount}
           />
         </RecommandWrapper>
         <CommentInputForm>
