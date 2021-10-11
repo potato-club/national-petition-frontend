@@ -21,9 +21,11 @@ title: "목데이터 제목 404258"
 viewCounts: 0 
 */
 
+const postPerPage = 10;
+
 export const BoardList = ({ listData }) => {
-  const postPerPage = 10;
   const [allPage] = useState(Math.ceil(listData.length / postPerPage));
+<<<<<<< HEAD
   const [currentPost, setCurrentPost] = useState(
     listData.slice(0, postPerPage),
   );
@@ -31,6 +33,13 @@ export const BoardList = ({ listData }) => {
   console.log('계산 ::', Math.ceil(listData.length / postPerPage));
   console.log('allPage ::', allPage);
   console.log('currentPost:: ', currentPost);
+=======
+  const [currentPost, setCurrentPost] = useState([]);
+
+  useEffect(() => {
+    setCurrentPost(listData.slice(0, postPerPage));
+  }, [listData]);
+>>>>>>> 23dde259a7ba29813562210c9334aeb1b60f857c
 
   const handlePageChange = (e, value) => {
     setCurrentPost(
@@ -92,9 +101,9 @@ export const BoardList = ({ listData }) => {
             ({
               boardId,
               category,
-              petitionTitle,
-              // subTitle
+              petitionTitle, // subTitle
               viewCounts,
+              title,
               createdDate,
               boardLikeCounts,
               boardUnLikeCounts,
@@ -104,7 +113,7 @@ export const BoardList = ({ listData }) => {
                 key={boardId}
                 category={category}
                 petitionTitle={petitionTitle}
-                subTitle={/* subTitle */ '임시타이틀'}
+                subTitle={title}
                 viewCounts={viewCounts}
                 createdDate={createdDate}
                 boardLikeCounts={boardLikeCounts}
