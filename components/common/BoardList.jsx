@@ -21,22 +21,7 @@ title: "목데이터 제목 404258"
 viewCounts: 0 
 */
 
-const postPerPage = 10;
-
-export const BoardList = ({ listData }) => {
-  const [allPage] = useState(Math.ceil(listData.length / postPerPage));
-
-  const [currentPost, setCurrentPost] = useState([]);
-
-  useEffect(() => {
-    setCurrentPost(listData.slice(0, postPerPage));
-  }, [listData]);
-
-  const handlePageChange = (e, value) => {
-    setCurrentPost(
-      listData.slice(value * postPerPage - postPerPage, value * postPerPage),
-    );
-  };
+export const BoardList = ({ listData, handlePageChange, currentPost }) => {
   return (
     <Container>
       <ListWrapper>
@@ -88,7 +73,7 @@ export const BoardList = ({ listData }) => {
           </NavGraph>
         </ListNav>
         <List>
-          {currentPost.map(
+          {listData.map(
             ({
               boardId,
               category,
@@ -117,10 +102,14 @@ export const BoardList = ({ listData }) => {
       </ListWrapper>
       <PaginationWrapper>
         <Pagination
-          count={allPage}
-          onChange={handlePageChange}
+          count={100}
+          onChange={(e, value) => {
+            handlePageChange(value);
+          }}
+          page={currentPost}
           shape="rounded"
           color="primary"
+          siblingCount={3}
         />
       </PaginationWrapper>
     </Container>
