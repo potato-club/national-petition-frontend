@@ -25,21 +25,12 @@ const postPerPage = 10;
 
 export const BoardList = ({ listData }) => {
   const [allPage] = useState(Math.ceil(listData.length / postPerPage));
-<<<<<<< HEAD
-  const [currentPost, setCurrentPost] = useState(
-    listData.slice(0, postPerPage),
-  );
-  console.log('length ::', listData.length);
-  console.log('계산 ::', Math.ceil(listData.length / postPerPage));
-  console.log('allPage ::', allPage);
-  console.log('currentPost:: ', currentPost);
-=======
+
   const [currentPost, setCurrentPost] = useState([]);
 
   useEffect(() => {
     setCurrentPost(listData.slice(0, postPerPage));
   }, [listData]);
->>>>>>> 23dde259a7ba29813562210c9334aeb1b60f857c
 
   const handlePageChange = (e, value) => {
     setCurrentPost(
