@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
   TitleHeader,
   Header,
-} from 'components/common';
+  HelperBot,
+} from 'components/common/index';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { boardApi } from 'apis';
@@ -137,6 +138,7 @@ const detail = ({ detailInfo }) => {
         </CommentInputForm>
         <CommentList boardId={727} />
       </Container>
+      <HelperBot />
     </LayoutContainer>
   );
 };
