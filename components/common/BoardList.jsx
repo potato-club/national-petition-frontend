@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy, ListItem } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { Pagination } from '@mui/material';
 
-export const BoardList = ({ listData }) => {
-  const postPerPage = 10;
-  const [allPage] = useState(Math.ceil(listData.length / postPerPage));
-  const [currentPost, setCurrentPost] = useState(
-    listData.slice(0, postPerPage),
-  );
+/* 
+boardCommentCounts: 0
+boardId: 11676
+boardLikeCounts: 0
+boardUnLikeCounts: 0
+category: null
+content: "목 데이터 내용 96826"
+createdDate: "2021-10-10 09:46:00"
+memberId: 1
+petitionContent: "\n\t\t\t\t\t\t\t\t\t\t5 살3 살 손자가 있습니다 3 살짜리는  좀활발해서  요즘뉴스가너무  끔찍해서 이제껏 않보내다 이제 보내는데 아이가 가기 싫어해서 불안 합니다\n  이때   어린이 인격 형성에 많은영향을 끼치는데 \n 제발 안심하게 보낼수 있게 도와 주세요  제가 회사 다닐때 노동부에서 돈 받는다고 쓸데없는교육도 정기적으로 받았는데 그런돈 이런데 좀쓰세요\t\t\t\t\t\t\t\t\t"
+petitionTitle: "도와주세요"
+petitionUrl: "https://www1.president.go.kr/petitions/560722"
+petitionsCount: "1"
+title: "목데이터 제목 404258"
+viewCounts: 0 
+*/
 
-  const handleChange = (e, value) => {
-    setCurrentPost(
-      listData.slice(value * postPerPage - postPerPage, value * postPerPage),
-    );
-  };
+export const BoardList = ({
+  listData,
+  handlePageChange,
+  currentPost,
+  listCount,
+}) => {
   return (
     <Container>
       <ListWrapper>
@@ -67,28 +78,28 @@ export const BoardList = ({ listData }) => {
           </NavGraph>
         </ListNav>
         <List>
-          {currentPost.map(
+          {listData.map(
             ({
-              id,
+              boardId,
               category,
+              petitionTitle, // subTitle
+              viewCounts,
               title,
-              subTitle,
-              subNumber,
-              day,
-              agreePer,
-              disagreePer,
-              comment,
+              createdDate,
+              boardLikeCounts,
+              boardUnLikeCounts,
+              boardCommentCounts,
             }) => (
               <ListItem
-                key={id}
+                key={boardId}
                 category={category}
-                title={title}
-                subTitle={subTitle}
-                subNumber={subNumber}
-                day={day}
-                agreePer={agreePer}
-                disagreePer={disagreePer}
-                comment={comment}
+                petitionTitle={petitionTitle}
+                subTitle={title}
+                viewCounts={viewCounts}
+                createdDate={createdDate}
+                boardLikeCounts={boardLikeCounts}
+                boardUnLikeCounts={boardUnLikeCounts}
+                boardCommentCounts={boardCommentCounts}
               />
             ),
           )}
@@ -96,10 +107,14 @@ export const BoardList = ({ listData }) => {
       </ListWrapper>
       <PaginationWrapper>
         <Pagination
-          count={allPage}
-          onChange={handleChange}
+          count={listCount}
+          onChange={(e, value) => {
+            handlePageChange(value);
+          }}
+          page={currentPost}
           shape="rounded"
           color="primary"
+          siblingCount={3}
         />
       </PaginationWrapper>
     </Container>
