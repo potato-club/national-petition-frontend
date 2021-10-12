@@ -21,7 +21,12 @@ title: "목데이터 제목 404258"
 viewCounts: 0 
 */
 
-export const BoardList = ({ listData, handlePageChange, currentPost }) => {
+export const BoardList = ({
+  listData,
+  handlePageChange,
+  currentPost,
+  listCount,
+}) => {
   return (
     <Container>
       <ListWrapper>
@@ -102,7 +107,7 @@ export const BoardList = ({ listData, handlePageChange, currentPost }) => {
       </ListWrapper>
       <PaginationWrapper>
         <Pagination
-          count={100}
+          count={listCount}
           onChange={(e, value) => {
             handlePageChange(value);
           }}

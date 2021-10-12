@@ -18,7 +18,7 @@ const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
   const [boardList, setBoardList] = useState([]);
-
+  const [listCount, setListCount] = useState(0);
   const [sortBoardApi, setSortBoardApi] = useState(undefined);
   const [currentPost, setCurrentPost] = useState(1);
 
@@ -34,7 +34,9 @@ const list = () => {
     (async () => {
       try {
         const {
-          data: { data: list },
+          data: {
+            data: { boardList: list, boardCounts: count },
+          },
         } = await boardApi.list({
           search: '',
           page: currentPost - 1,
@@ -42,8 +44,9 @@ const list = () => {
           sort: sortBoardApi,
         });
 
+        console.log('count::', count);
         console.log('LIST :: ', list);
-
+        setListCount(Math.ceil(count / 10));
         setBoardList(list);
       } catch (e) {
         console.log(e);
@@ -55,7 +58,9 @@ const list = () => {
     (async () => {
       try {
         const {
-          data: { data: list },
+          data: {
+            data: { boardList: list, boardCounts: count },
+          },
         } = await boardApi.list({
           search: '',
           page: 0,
@@ -64,8 +69,11 @@ const list = () => {
         });
 
         setCurrentPost(1);
-        console.log('LIST :: ', list);
 
+        console.log('count:::', count);
+        console.log('LIST ::: ', list);
+
+        setListCount(Math.ceil(count / 10));
         setBoardList(list);
       } catch (e) {
         console.log(e);
@@ -138,6 +146,7 @@ const list = () => {
           listData={boardList}
           handlePageChange={handlePageChange}
           currentPost={currentPost}
+          listCount={listCount}
         />
       </Container>
     </LayoutContainer>
