@@ -5,21 +5,27 @@ import {
   Header,
   TitleHeader,
   BoardList,
+  MessageModal,
 } from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import dummy from '../../dummy/list.json';
 import { memberApi } from 'apis/index';
+import router from 'next/router';
 
 const profile = () => {
   const [userName, setUserName] = useState('박상훈2');
   const [userNickName, setUserNickName] = useState('스폰지밥');
   const [userEmail, setUserEmail] = useState('bigyou00@gmail.com');
 
+  const [logoutModal, setLogoutModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const fetchProfile = async () => {
     try {
-      const { data: myInfo } = await memberApi.getInfo();
-      const { name, email, nickName } = myInfo.data;
+      const {
+        data: { data: myInfo },
+      } = await memberApi.getInfo();
+      const { name, email, nickName } = myInfo;
       setUserName(name);
       setUserNickName(nickName);
       setUserEmail(email);
@@ -32,30 +38,31 @@ const profile = () => {
   const deleteMe = async () => {
     try {
       await memberApi.delete();
-      history.push('/');
+      setDeleteModal(false);
+      router.push('/user/login');
     } catch (error) {
       console.log(error);
     }
   };
+  // 로그아웃 API
+  const nowLogout = async () => {
+    try {
+      console.log('로그아웃 API');
+      setLogoutModal(false);
+      router.push('/board/list');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
   }, []);
-
-  const deleteModal = () => {
-    alert('진짜 삭제할거임? ㅇㅋ');
-    deleteMe();
-  };
-
-  // 모달 띄울 것
-  const qqqqqqmodal = () => {
-    alert('');
-  };
 
   return (
     <LayoutContainer>
       <Header />
       <TitleHeader title="내 정보 보기" top5Visible={false} />
-
       <BoxHeader>
         <SayHi>
           <TypoGraphy type="Head" color={customColor.black}>
@@ -112,10 +119,10 @@ const profile = () => {
         </AttributeBox>
         <Line />
         <ButtonBox>
-          <Button logout onClick={qqqqqqmodal}>
+          <Button logout onClick={() => setLogoutModal(true)}>
             로그아웃
           </Button>
-          <Button resign onClick={deleteModal}>
+          <Button resign onClick={() => setDeleteModal(true)}>
             탈퇴하기
           </Button>
         </ButtonBox>
@@ -126,6 +133,16 @@ const profile = () => {
         </TypoGraphy>
         <BoardList listData={dummy} />
       </BoxBody>
+      <MessageModal
+        visible={deleteModal}
+        onConfirm={deleteMe}
+        content={'정말로 탈퇴하실 건가요?'}
+      />
+      <MessageModal
+        visible={logoutModal}
+        onConfirm={nowLogout}
+        content={'로그아웃 하실건가요?'}
+      />
     </LayoutContainer>
   );
 };
