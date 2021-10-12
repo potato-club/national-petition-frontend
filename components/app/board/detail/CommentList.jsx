@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { CommentItem } from './CommentItem';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
+import { commentApi } from 'apis';
 
-export const CommnetList = () => {
+const LIMIT = 15;
+
+export const CommentList = ({ boardId }) => {
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    (async () => {
+      const {
+        data: { data: list },
+      } = await commentApi.list(boardId);
+
+      console.log('DATA :: ', list);
+    })();
+  }, []);
+
+  const addPage = () => {};
+
   return (
     <Wrapper>
       <CommentItem />

@@ -3,12 +3,15 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from './TypoGraphy';
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 
 export const HelperBot = () => {
+  const router = useRouter();
+
   return (
     <Wrapper>
       <ItemWrapper>
-        <Item>
+        <Item onClick={() => router.push('/board/list')}>
           <AiOutlineHome
             size={32}
             color={customColor.white}
@@ -16,7 +19,7 @@ export const HelperBot = () => {
           />
           <TypoGraphy color={customColor.white}>HOME</TypoGraphy>
         </Item>
-        <Item>
+        <Item onClick={() => router.push('/user/profile')}>
           <AiOutlineUser
             size={32}
             color={customColor.white}
@@ -36,12 +39,12 @@ const Wrapper = styled.div`
 `;
 const ItemWrapper = styled.div`
   background-color: ${customColor.deepBlue};
-  padding-top: 32px;
-  padding-bottom: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   padding-left: 16px;
   padding-right: 16px;
   box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.05);
-  border-radius: 50px;
+  border-radius: 100px;
 `;
 
 const Item = styled.div`
