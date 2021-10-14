@@ -84,7 +84,7 @@ export const BoardList = ({
                 type="h1"
                 color={customColor.black}
                 textAlign="center">
-                검색결과가 없습니다.
+                검색결과가 없습니다
               </TypoGraphy>
             </NoListWrapper>
           ) : (
