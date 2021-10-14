@@ -12,6 +12,7 @@ export const Search = ({ setSearchData }) => {
         type={'text'}
         placeholder="제목을 입력해주세요"
         onChange={(e) => setHandleText(e.target.value)}
+        onKeyPress={(e) => e.key === 'Enter' && setSearchData(handleText)}
       />
       <SearchButton onClick={() => setSearchData(handleText)}>
         <TypoGraphy type="body1" color={customColor.white} textAlign="center">
