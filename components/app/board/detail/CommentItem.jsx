@@ -7,7 +7,7 @@ import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { ApplyItem } from './ApplyItem';
 import { CommentAddForm } from './CommentAddForm';
 
-export const CommentItem = () => {
+export const CommentItem = ({ content }) => {
   const [ApplyVisible, setApplyVisible] = useState(false);
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
 
@@ -24,7 +24,7 @@ export const CommentItem = () => {
         </Information>
         <Content>
           <TypoGraphy type="body2" color={customColor.black}>
-            내용
+            {content}
           </TypoGraphy>
         </Content>
         <ButtonForm>

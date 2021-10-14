@@ -4,8 +4,8 @@ export const commentApi = {
   edit: async (params) => {
     return await api.authTextPut('/api/v1/comment', params);
   },
-  list: async (boardId) => {
-    return await api.authGet(`/api/v1/comment/${boardId}`);
+  list: async (boardId, params) => {
+    return await api.get(`/api/v1/comment/page/${boardId}`, params);
   },
   add: async (boardId, params) => {
     return await api.authPost(`/api/v1/comment/${boardId}`, params);
