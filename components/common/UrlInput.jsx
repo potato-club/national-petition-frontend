@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common/index';
 import { customColor } from 'constants/index';
 
 export const UrlInput = () => {
+  // 해당 url을 가지고 있는 state기억하기
+  const [url, setUrl] = useState('');
+
+  // 입력한 거 등록 클릭시 넘어가는 함수
+  const moveToAdd = () => {
+    // url이 넘어갈 것임
+    console.log('넘어갈 거임');
+  };
   return (
     <EnrollmentWrapper>
       <UrlTitle>
@@ -11,8 +19,11 @@ export const UrlInput = () => {
           URL
         </TypoGraphy>
       </UrlTitle>
-      <InputUrl placeholder="청원 글의 URL을 넣어주세요."></InputUrl>
-      <EnrollmentButton>
+      <InputUrl
+        placeholder="청원 글의 URL을 넣어주세요."
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}></InputUrl>
+      <EnrollmentButton onClick={moveToAdd}>
         <TypoGraphy type="h3" color={customColor.white} textAlign="center">
           등록
         </TypoGraphy>

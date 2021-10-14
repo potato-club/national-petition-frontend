@@ -1,9 +1,50 @@
-import React from 'react';
-import { LayoutContainer, TypoGraphy, Header } from 'components/common';
+import React, { useState } from 'react';
+import {
+  LayoutContainer,
+  TypoGraphy,
+  Header,
+  MessageModal,
+} from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
+import router from 'next/router';
+import { boardApi } from 'apis/index';
 
 const add = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  // 여기서 리덕스의 url값
+  const [petitionUrl, setPetitionUrl] = useState('');
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  // 작성완료 이벤트 : 등록API, 컨텐츠 내용 확인
+  const addPage = async () => {
+    if (title === '' || content === '' || petitionUrl === '') {
+      // 모달 띄우고  return
+      setModalIsOpen(true);
+      return null;
+    }
+    try {
+      //API연동
+      const {
+        data: { data: postData },
+      } = await boardApi.add({ title, content, petitionUrl });
+      console.log(postData);
+      // 연동 성공하면 성공했다고 모달 띄우기
+
+      // 리스트 페이지로 이동
+      // router.push('/board/list');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 작성 취소 클릭시
+  const clickCancel = () => {
+    // 모달 띄우기
+  };
   return (
     <LayoutContainer>
       <IntroHeader />
@@ -20,25 +61,46 @@ const add = () => {
               제목
             </TypoGraphy>
           </Title>
-          <Input placeholder="제목을 입력하세요" />
+          <Input
+            placeholder="제목을 입력하세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
           <Title>
             <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
               청원 링크
             </TypoGraphy>
           </Title>
-          <Input placeholder="https://" />
+          <Input
+            placeholder="https://"
+            value={petitionUrl}
+            onChange={(e) => setPetitionUrl(e.target.value)}
+          />
           <Title>
             <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
               나의 의견
             </TypoGraphy>
           </Title>
-          <OpinionInput placeholder="자유롭게 의견을 작성하세요" />
+          <OpinionInput
+            placeholder="자유롭게 의견을 작성하세요"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
         </InputContentBox>
         <ButtonBox>
-          <Button add>작성 완료</Button>
-          <Button cancel>작성 취소</Button>
+          <Button add onClick={addPage}>
+            작성 완료
+          </Button>
+          <Button cancel onClick={clickCancel}>
+            작성 취소
+          </Button>
         </ButtonBox>
       </FormBox>
+      <MessageModal
+        visible={modalIsOpen}
+        onConfirm={() => setModalIsOpen(false)}
+        content={'값을 다 입력하세요'}
+      />
     </LayoutContainer>
   );
 };
