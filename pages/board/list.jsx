@@ -13,7 +13,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 // import dummy from '../../dummy/list.json';
 import { boardApi } from 'apis';
 
-//sort=viewCounts & sort=boardCommentCounts
+//sort=viewCounts & sort=rootCommentsCount
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
@@ -27,10 +27,12 @@ const list = () => {
     if (e.target.innerText === '최신순') setSortBoardApi(undefined);
     else if (e.target.innerText === '조회순') setSortBoardApi('viewCounts');
     else if (e.target.innerText === '추천순')
-      setSortBoardApi('boardCommentCounts');
+      setSortBoardApi('rootCommentsCount');
     setSortPosition(e.target.innerText);
   };
-
+  //예외처리
+  //1. 리스트 불러오지 못했을경우
+  //2. 검색결과가 없을경우
   useEffect(() => {
     (async () => {
       try {
