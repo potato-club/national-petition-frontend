@@ -6,11 +6,6 @@ import { TypoGraphy } from 'components/common';
 export const CommentAddForm = () => {
   return (
     <Wrapper>
-      <NickNameForm>
-        <TypoGraphy type="body2" fontWeight="bold">
-          동철
-        </TypoGraphy>
-      </NickNameForm>
       <InputComment placeholder="무분별한 악플은 자제해주세요" />
       <Divider />
       <AddButton>
@@ -40,6 +35,7 @@ const NickNameForm = styled.div`
 const InputComment = styled.textarea`
   width: 800px;
   height: 56px;
+  margin-top: 16px;
   outline: none;
   border: none;
   resize: none;

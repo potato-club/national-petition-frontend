@@ -10,14 +10,23 @@ import {
 import { customColor } from 'constants/index';
 import { Search } from 'components/app/board/list';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-import dummy from '../../dummy/list.json';
+// import dummy from '../../dummy/list.json';
 import { boardApi } from 'apis';
 
+//sort=viewCounts & sort=boardCommentCounts
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
-  const [boardList, setBoardList] = useState();
+  const [boardList, setBoardList] = useState([]);
+  const [listCount, setListCount] = useState(0);
+  const [sortBoardApi, setSortBoardApi] = useState(undefined);
+  const [currentPost, setCurrentPost] = useState(1);
+
   const handleSort = (e) => {
+    if (e.target.innerText === '최신순') setSortBoardApi(undefined);
+    else if (e.target.innerText === '조회순') setSortBoardApi('viewCounts');
+    else if (e.target.innerText === '추천순')
+      setSortBoardApi('boardCommentCounts');
     setSortPosition(e.target.innerText);
   };
 
@@ -25,21 +34,56 @@ const list = () => {
     (async () => {
       try {
         const {
-          data: { data: list },
+          data: {
+            data: { boardList: list, boardCounts: count },
+          },
         } = await boardApi.list({
           search: '',
-          page: 0,
+          page: currentPost - 1,
           size: 10,
+          sort: sortBoardApi,
         });
 
+        console.log('count::', count);
         console.log('LIST :: ', list);
-
+        setListCount(Math.ceil(count / 10));
         setBoardList(list);
       } catch (e) {
         console.log(e);
       }
     })();
-  }, []);
+  }, [currentPost]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const {
+          data: {
+            data: { boardList: list, boardCounts: count },
+          },
+        } = await boardApi.list({
+          search: '',
+          page: 0,
+          size: 10,
+          sort: sortBoardApi,
+        });
+
+        setCurrentPost(1);
+
+        console.log('count:::', count);
+        console.log('LIST ::: ', list);
+
+        setListCount(Math.ceil(count / 10));
+        setBoardList(list);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, [sortBoardApi]);
+
+  const handlePageChange = (value) => {
+    setCurrentPost(value);
+  };
 
   return (
     <LayoutContainer>
@@ -98,7 +142,12 @@ const list = () => {
           </SortWrapper>
         </ListUpperWrapper>
 
-        <BoardList listData={dummy} />
+        <BoardList
+          listData={boardList}
+          handlePageChange={handlePageChange}
+          currentPost={currentPost}
+          listCount={listCount}
+        />
       </Container>
     </LayoutContainer>
   );

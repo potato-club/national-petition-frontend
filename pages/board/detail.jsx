@@ -1,32 +1,81 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
   TitleHeader,
   Header,
-} from 'components/common';
+  HelperBot,
+} from 'components/common/index';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
-import { scrapApi } from 'apis';
+import { boardApi } from 'apis';
 import { FaUserEdit } from 'react-icons/fa';
 import {
   RecommandButton,
   CommentAddForm,
-  CommnetList,
+  CommentList,
+  Information,
 } from 'components/app/board/detail';
+import moment from 'moment';
 
 const detail = ({ detailInfo }) => {
+  const [likeSelected, setLikeSelected] = useState(false);
+  const [unLikeSelected, setUnLikeSeleted] = useState(false);
+  const [likeCount, setLikeCount] = useState(detailInfo.boardLikeCounts);
+  const [unLikeCount, setUnLikeCount] = useState(detailInfo.boardUnLikeCounts);
+
+  const onRecommendSelect = async (state, type) => {
+    // 추천수 응답 논의 필요
+
+    if (!state) {
+      const {
+        data: { data: result },
+      } = await boardApi.like({
+        boardId: 727,
+        boardState: type === 'like' ? 'LIKE' : 'UNLIKE',
+      });
+
+      if (result === 'OK') {
+        if (likeSelected || unLikeSelected) {
+          setLikeSelected((cur) => !cur);
+          setUnLikeSeleted((cur) => !cur);
+        } else {
+          type === 'like'
+            ? setLikeSelected((cur) => !cur)
+            : setUnLikeSeleted((cur) => !cur);
+        }
+      }
+    } else {
+      const {
+        data: { data: result },
+      } = await boardApi.likeCancel({ boardId: 727 });
+
+      if (result === 'OK') {
+        type === 'like'
+          ? setLikeSelected((cur) => !cur)
+          : setUnLikeSeleted((cur) => !cur);
+      }
+    }
+
+    const {
+      data: { data: info },
+    } = await boardApi.getDetail('727');
+
+    setLikeCount(info.boardLikeCounts);
+    setUnLikeCount(info.boardUnLikeCounts);
+  };
+
   return (
     <LayoutContainer>
       <Header />
-      <TitleHeader title={'글쓴이 제목'} top5Visible={false} />
+      <TitleHeader title={detailInfo.title} top5Visible={false} />
       <Container>
         <PetitionTitle>
           <TypoGraphy
             type="Head"
             color={customColor.deepBlue}
             textAlign="center">
-            {detailInfo.title}
+            {detailInfo.petitionTitle}
           </TypoGraphy>
         </PetitionTitle>
         <StatusWrapper>
@@ -37,42 +86,13 @@ const detail = ({ detailInfo }) => {
           <PetitionDivider />
         </StatusWrapper>
         <InformationForm>
-          <Information>
-            <TypoGraphy type="h3" color={customColor.black} fontWeight="bold">
-              작성자
-            </TypoGraphy>
-            <Gap />
-            <TypoGraphy type="h3" color={customColor.black}>
-              네글자임
-            </TypoGraphy>
-          </Information>
-          <Information>
-            <TypoGraphy type="h3" color={customColor.black} fontWeight="bold">
-              조회수
-            </TypoGraphy>
-            <Gap />
-            <TypoGraphy type="h3" color={customColor.black}>
-              100,000
-            </TypoGraphy>
-          </Information>
-          <Information>
-            <TypoGraphy type="h3" color={customColor.black} fontWeight="bold">
-              게시글 등록
-            </TypoGraphy>
-            <Gap />
-            <TypoGraphy type="h3" color={customColor.black}>
-              2021-09-11
-            </TypoGraphy>
-          </Information>
-          <Information>
-            <TypoGraphy type="h3" color={customColor.black} fontWeight="bold">
-              청원 등록
-            </TypoGraphy>
-            <Gap />
-            <TypoGraphy type="h3" color={customColor.black}>
-              2021-09-11
-            </TypoGraphy>
-          </Information>
+          <Information title="작성자" content={'네글자임'} />
+          <Information title="조회수" content={detailInfo.viewCounts} />
+          <Information
+            title="게시글 등록"
+            content={moment(detailInfo.createdDate).format('YYYY-MM-DD')}
+          />
+          <Information title="청원등록" content={'2021-09-11'} />
         </InformationForm>
         <UserContent>
           <NickNameForm>
@@ -86,12 +106,12 @@ const detail = ({ detailInfo }) => {
             </TypoGraphy>
           </NickNameForm>
           <TypoGraphy type="body1" color={customColor.black} fontWeight="300">
-            이건 단지 의견일 뿐이다
+            {detailInfo.content}
           </TypoGraphy>
         </UserContent>
         <PepitionContent>
           <TypoGraphy type="h4" color={customColor.black} fontHeight="1.5">
-            {detailInfo.content.split('\n').map((line, index) => (
+            {detailInfo.petitionContent.split('\n').map((line, index) => (
               <span key={index.toString()}>
                 {line}
                 <br />
@@ -100,20 +120,35 @@ const detail = ({ detailInfo }) => {
           </TypoGraphy>
         </PepitionContent>
         <RecommandWrapper>
-          <RecommandButton type="like" />
-          <RecommandButton type="unlike" />
+          <RecommandButton
+            onClick={() => onRecommendSelect(likeSelected, 'like')}
+            selected={likeSelected}
+            type="like"
+            count={likeCount}
+          />
+          <RecommandButton
+            onClick={() => onRecommendSelect(unLikeSelected, 'unlike')}
+            selected={unLikeSelected}
+            type="unlike"
+            count={unLikeCount}
+          />
         </RecommandWrapper>
         <CommentInputForm>
           <CommentAddForm />
         </CommentInputForm>
-        <CommnetList />
+        <CommentList boardId={727} />
       </Container>
+      <HelperBot />
     </LayoutContainer>
   );
 };
 
 export async function getServerSideProps(context) {
-  const { data: detailInfo } = await scrapApi.getDetail({ id: '60083' });
+  const {
+    data: { data: detailInfo },
+  } = await boardApi.getDetail('727');
+
+  console.log('DETAIL_INFO :: ', detailInfo);
 
   return {
     props: { detailInfo },
@@ -176,10 +211,6 @@ const InformationForm = styled.div`
   padding-right: 16px;
   padding-top: 32px;
   padding-bottom: 32px;
-`;
-
-const Information = styled.div`
-  display: flex;
 `;
 
 const UserContent = styled.div`

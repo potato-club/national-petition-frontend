@@ -5,13 +5,13 @@ import { customColor } from 'constants/index';
 import { MdSubdirectoryArrowRight } from 'react-icons/md';
 export const ListItem = ({
   category,
-  title,
+  petitionTitle,
   subTitle,
-  subNumber,
-  day,
-  agreePer,
-  disagreePer,
-  comment,
+  viewCounts,
+  createdDate,
+  boardLikeCounts,
+  boardUnLikeCounts,
+  boardCommentCounts,
 }) => {
   return (
     <Wrapper>
@@ -27,14 +27,14 @@ export const ListItem = ({
       <TitleWrapper>
         <MainTitle>
           <TypoGraphy type="body1" color={customColor.black} textAlign="left">
-            {title}
+            {petitionTitle}
           </TypoGraphy>
           <CommentWrapper>
             <TypoGraphy
               type="body1"
               color={customColor.skyBlue}
               textAlign="center">
-              &nbsp;({comment})
+              &nbsp;({boardCommentCounts})
             </TypoGraphy>
           </CommentWrapper>
         </MainTitle>
@@ -47,18 +47,26 @@ export const ListItem = ({
       </TitleWrapper>
       <SubNumber>
         <TypoGraphy type="body1" color={customColor.skyBlue} textAlign="center">
-          {subNumber}
+          {viewCounts}
         </TypoGraphy>
       </SubNumber>
       <Day>
         <TypoGraphy type="body1" color={customColor.black} textAlign="center">
-          {day}
+          {createdDate.slice(0, 10)}
         </TypoGraphy>
       </Day>
       <GraphWrapper>
         <Bar>
-          <AgreeBar per={(agreePer / (agreePer + disagreePer)) * 100} />
-          <DisagreeBar per={(disagreePer / (agreePer + disagreePer)) * 100} />
+          <AgreeBar
+            per={
+              (boardLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100
+            }
+          />
+          <DisagreeBar
+            per={
+              (boardUnLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100
+            }
+          />
         </Bar>
       </GraphWrapper>
     </Wrapper>

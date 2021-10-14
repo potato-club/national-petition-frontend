@@ -18,8 +18,12 @@ const profile = () => {
   const [userNickName, setUserNickName] = useState('스폰지밥');
   const [userEmail, setUserEmail] = useState('bigyou00@gmail.com');
 
+  const [myPostList, setMyPostList] = useState([]);
+
   const [logoutModal, setLogoutModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const myPage = 0;
+  const pageSize = 1;
   const fetchProfile = async () => {
     try {
       const {
@@ -34,9 +38,22 @@ const profile = () => {
     }
   };
 
+  const fetchMyPost = async () => {
+    try {
+      const {
+        data: { data: myList },
+      } = await memberApi.boardList({ myPage, pageSize });
+      // 일단 무슨 값인지 확인하기
+      console.log(myList);
+      setMyPostList(myList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // 정말로 삭제하실 건가요? 했을 때 yes 하면 실행하기
   const deleteMe = async () => {
     try {
+      // 동철이가 커스텀해주면 그때 넘길 것임
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
@@ -47,6 +64,7 @@ const profile = () => {
   // 로그아웃 API
   const nowLogout = async () => {
     try {
+      // 아직 미구현
       console.log('로그아웃 API');
       setLogoutModal(false);
       router.push('/board/list');
@@ -57,6 +75,7 @@ const profile = () => {
 
   useEffect(() => {
     fetchProfile();
+    // fetchMyPost();
   }, []);
 
   return (
