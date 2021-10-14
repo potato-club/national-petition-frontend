@@ -88,6 +88,9 @@ const Category = styled.div`
 `;
 const TitleWrapper = styled.div`
   width: 61%;
+
+  display: flex;
+  justify-content: center;
   flex-direction: column;
   height: 100%;
 `;
@@ -95,7 +98,6 @@ const MainTitle = styled.div`
   display: flex;
   align-items: flex-end;
   padding-bottom: 5px;
-  height: 60%;
 `;
 const CommentWrapper = styled.div`
   margin-bottom: 2px;
@@ -104,8 +106,6 @@ const SubTitle = styled.div`
   display: flex;
   align-items: flex-start;
   display: flex;
-
-  height: 40%;
 `;
 
 const SubNumber = styled.div`
