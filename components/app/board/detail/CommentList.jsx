@@ -13,22 +13,20 @@ export const CommentList = ({ boardId }) => {
 
   useEffect(() => {
     (async () => {
-      const {
-        data: { data: list },
-      } = await commentApi.list(boardId, { page, size: PAGE_LIMIT, boardId });
-
-      console.log('LIST :: ', list);
-
-      setCommentList(list.contents);
+      await addPage();
     })();
   }, []);
+
+  useEffect(() => {
+    console.log(commentList);
+  }, [commentList]);
 
   const addPage = async () => {
     const {
       data: { data: list },
     } = await commentApi.list(boardId, { page, size: PAGE_LIMIT, boardId });
 
-    setCommentList((cur) => cur.concat(cur, ...list.contents));
+    setCommentList((cur) => cur.concat(...list.contents));
     setPage((cur) => cur + 1);
   };
 

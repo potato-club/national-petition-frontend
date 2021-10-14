@@ -18,7 +18,7 @@ import {
 } from 'components/app/board/detail';
 import moment from 'moment';
 
-const BOARD_ID = 727;
+const BOARD_ID = 11793;
 
 const detail = ({ detailInfo }) => {
   const [likeSelected, setLikeSelected] = useState(false);
