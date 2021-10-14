@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
@@ -10,15 +10,19 @@ import { customColor } from 'constants/index';
 import { useRouter } from 'next/router';
 import { boardApi } from 'apis/index';
 
-const add = ({ location }) => {
+const add = () => {
   const router = useRouter();
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-
-  // 여기서 리덕스의 url값
   const [petitionUrl, setPetitionUrl] = useState('');
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    setPetitionUrl(router.query.url);
+  }, [router.isReady]);
 
   // 작성완료 이벤트 : 등록API, 컨텐츠 내용 확인
   const addPage = async () => {
