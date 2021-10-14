@@ -13,7 +13,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 // import dummy from '../../dummy/list.json';
 import { boardApi } from 'apis';
 
-//sort=viewCounts & sort=boardCommentCounts
+//sort=viewCounts & sort=rootCommentsCount
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
@@ -21,15 +21,18 @@ const list = () => {
   const [listCount, setListCount] = useState(0);
   const [sortBoardApi, setSortBoardApi] = useState(undefined);
   const [currentPost, setCurrentPost] = useState(1);
+  const [SearchData, setSearchData] = useState('');
 
   const handleSort = (e) => {
     if (e.target.innerText === '최신순') setSortBoardApi(undefined);
     else if (e.target.innerText === '조회순') setSortBoardApi('viewCounts');
     else if (e.target.innerText === '추천순')
-      setSortBoardApi('boardCommentCounts');
+      setSortBoardApi('rootCommentsCount');
     setSortPosition(e.target.innerText);
   };
-
+  //예외처리
+  //1. 리스트 불러오지 못했을경우
+  //2. 검색결과가 없을경우
   useEffect(() => {
     (async () => {
       try {
@@ -38,12 +41,12 @@ const list = () => {
             data: { boardList: list, boardCounts: count },
           },
         } = await boardApi.list({
-          search: '',
-          page: currentPost - 1,
+          search: SearchData,
+          page: currentPost,
           size: 10,
           sort: sortBoardApi,
         });
-
+        console.log('Search::', SearchData);
         console.log('count::', count);
         console.log('LIST :: ', list);
         setListCount(Math.ceil(count / 10));
@@ -52,7 +55,7 @@ const list = () => {
         console.log(e);
       }
     })();
-  }, [currentPost]);
+  }, [currentPost, SearchData]);
 
   useEffect(() => {
     (async () => {
@@ -62,14 +65,15 @@ const list = () => {
             data: { boardList: list, boardCounts: count },
           },
         } = await boardApi.list({
-          search: '',
-          page: 0,
+          search: SearchData,
+          page: 1,
           size: 10,
           sort: sortBoardApi,
         });
 
         setCurrentPost(1);
 
+        console.log('Search::', SearchData);
         console.log('count:::', count);
         console.log('LIST ::: ', list);
 
@@ -91,7 +95,7 @@ const list = () => {
       <TitleHeader title="국민청원 소통방" />
       <Container>
         <ListUpperWrapper>
-          <Search />
+          <Search setSearchData={setSearchData} />
           <SortWrapper
             onClick={() => setHandleDrop((handleDrop) => !handleDrop)}>
             <TypoGraphy
