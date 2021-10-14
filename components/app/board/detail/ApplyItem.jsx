@@ -31,7 +31,7 @@ export const ApplyItem = () => {
             내용
           </TypoGraphy>
         </Content>
-        <ButtonForm>
+        {/* <ButtonForm>
           <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
             <BsArrowReturnRight
               size="16"
@@ -47,7 +47,7 @@ export const ApplyItem = () => {
           <AddApplyWrapper>
             <CommentAddForm />
           </AddApplyWrapper>
-        )}
+        )} */}
       </ItemContainer>
     </Wrapper>
   );
@@ -77,7 +77,7 @@ const Information = styled.div`
 `;
 const Content = styled.div`
   margin-bottom: 8px;
-  min-height: 32px;
+  min-height: 24px;
 `;
 const ButtonForm = styled.div`
   display: flex;

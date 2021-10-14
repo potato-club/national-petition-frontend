@@ -14,6 +14,6 @@ export const memberApi = {
     return await api.authGet('/api/v1/mypage/boardList', params);
   },
   delete: async () => {
-    return await api.authGet('/api/v1/mypage/delete');
+    return await api.authDelete('/api/v1/mypage/delete');
   },
 };
