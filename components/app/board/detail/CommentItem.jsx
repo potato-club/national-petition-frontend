@@ -6,8 +6,17 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { ApplyItem } from './ApplyItem';
 import { CommentAddForm } from './CommentAddForm';
+import moment from 'moment';
+import { ApplyPagination } from './ApplyPagination';
 
-export const CommentItem = () => {
+export const CommentItem = ({
+  commentId,
+  memberId,
+  content,
+  depth,
+  childrenCounts,
+  createdAt,
+}) => {
   const [ApplyVisible, setApplyVisible] = useState(false);
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
 
@@ -19,12 +28,12 @@ export const CommentItem = () => {
             동철
           </TypoGraphy>
           <TypoGraphy type="body1" color={customColor.gray}>
-            2019-01-11
+            {moment(createdAt).format('YYYY-MM-DD')}
           </TypoGraphy>
         </Information>
         <Content>
           <TypoGraphy type="body2" color={customColor.black}>
-            내용
+            {content}
           </TypoGraphy>
         </Content>
         <ButtonForm>
@@ -47,7 +56,7 @@ export const CommentItem = () => {
                   style={{ marginRight: 4 }}
                 />
                 <TypoGraphy type="body2" color={customColor.blue}>
-                  답글 32개 접기
+                  답글 {childrenCounts}개 접기
                 </TypoGraphy>
               </ApplyViewWrapper>
             ) : (
@@ -58,7 +67,7 @@ export const CommentItem = () => {
                   style={{ marginRight: 4 }}
                 />
                 <TypoGraphy type="body2" color={customColor.blue}>
-                  답글 32개 보기
+                  답글 {childrenCounts}개 보기
                 </TypoGraphy>
               </ApplyViewWrapper>
             )}
@@ -72,14 +81,7 @@ export const CommentItem = () => {
       )}
       {ApplyVisible && (
         <ApplyWrapper>
-          <ApplyItem />
-          <ApplyItem />
-          <ApplyItem />
-          <ApplyItem />
-          <ApplyItem />
-          <MoreApplyButton>
-            <TypoGraphy color={customColor.gray}>답글 더보기</TypoGraphy>
-          </MoreApplyButton>
+          <ApplyPagination />
         </ApplyWrapper>
       )}
     </Wrapper>
