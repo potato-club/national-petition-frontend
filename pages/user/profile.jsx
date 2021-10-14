@@ -14,8 +14,8 @@ import { memberApi } from 'apis/index';
 import router from 'next/router';
 
 const profile = () => {
-  const [userName, setUserName] = useState('박상훈2');
-  const [userNickName, setUserNickName] = useState('스폰지밥');
+  const [userName, setUserName] = useState('사용자이름');
+  const [userNickName, setUserNickName] = useState('별명');
   const [userEmail, setUserEmail] = useState('bigyou00@gmail.com');
 
   const [myPostList, setMyPostList] = useState([]);
@@ -150,7 +150,8 @@ const profile = () => {
         <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
           내가 쓴 글
         </TypoGraphy>
-        <BoardList listData={dummy} />
+
+        {/* <BoardList listData={dummy} /> */}
       </BoxBody>
       <MessageModal
         visible={deleteModal}
