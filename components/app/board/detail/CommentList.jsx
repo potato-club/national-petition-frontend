@@ -9,6 +9,7 @@ const PAGE_LIMIT = 15;
 
 export const CommentList = ({ boardId }) => {
   const [page, setPage] = useState(1);
+  const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -17,15 +18,31 @@ export const CommentList = ({ boardId }) => {
       } = await commentApi.list(boardId, { page, size: PAGE_LIMIT, boardId });
 
       console.log('LIST :: ', list);
+
+      setCommentList(list.contents);
     })();
   }, []);
 
-  const addPage = () => {};
+  const addPage = async () => {
+    const {
+      data: { data: list },
+    } = await commentApi.list(boardId, { page, size: PAGE_LIMIT, boardId });
+
+    setCommentList((cur) => cur.concat(cur, ...list.contents));
+    setPage((cur) => cur + 1);
+  };
 
   return (
     <Wrapper>
-      <CommentItem />
-      <MoreCommentButton>
+      {commentList.map(
+        (
+          { commentId, memberId, content, depth, childrenCounts, createdAt },
+          index,
+        ) => (
+          <CommentItem key={index.toString()} content={content} />
+        ),
+      )}
+      <MoreCommentButton onClick={addPage}>
         <TypoGraphy color={customColor.white}>댓글 더보기</TypoGraphy>
       </MoreCommentButton>
     </Wrapper>
