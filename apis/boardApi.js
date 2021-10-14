@@ -19,4 +19,7 @@ export const boardApi = {
   list: async (params) => {
     return await api.get('/api/v1/getBoard/list', params);
   },
+  getLikeStatus: async (boardId) => {
+    return await api.authGet(`/api/v1/board/status/${boardId}`);
+  },
 };

@@ -5,7 +5,7 @@ import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
 import { commentApi } from 'apis';
 
-const LIMIT = 15;
+const PAGE_LIMIT = 15;
 
 export const CommentList = ({ boardId }) => {
   const [page, setPage] = useState(1);
@@ -14,9 +14,9 @@ export const CommentList = ({ boardId }) => {
     (async () => {
       const {
         data: { data: list },
-      } = await commentApi.list(boardId);
+      } = await commentApi.list(boardId, { page, size: PAGE_LIMIT, boardId });
 
-      console.log('DATA :: ', list);
+      console.log('LIST :: ', list);
     })();
   }, []);
 
