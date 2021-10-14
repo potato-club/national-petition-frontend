@@ -37,7 +37,15 @@ export const CommentList = ({ boardId }) => {
           { commentId, memberId, content, depth, childrenCounts, createdAt },
           index,
         ) => (
-          <CommentItem key={index.toString()} content={content} />
+          <CommentItem
+            key={commentId}
+            commentId={commentId}
+            memberId={memberId}
+            depth={depth}
+            childrenCounts={childrenCounts}
+            createdAt={createdAt}
+            content={content}
+          />
         ),
       )}
       <MoreCommentButton onClick={addPage}>
