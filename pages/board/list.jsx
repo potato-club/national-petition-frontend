@@ -21,6 +21,7 @@ const list = () => {
   const [listCount, setListCount] = useState(0);
   const [sortBoardApi, setSortBoardApi] = useState(undefined);
   const [currentPost, setCurrentPost] = useState(1);
+  const [SearchData, setSearchData] = useState('');
 
   const handleSort = (e) => {
     if (e.target.innerText === '최신순') setSortBoardApi(undefined);
@@ -38,12 +39,12 @@ const list = () => {
             data: { boardList: list, boardCounts: count },
           },
         } = await boardApi.list({
-          search: '',
-          page: currentPost - 1,
+          search: SearchData,
+          page: currentPost,
           size: 10,
           sort: sortBoardApi,
         });
-
+        console.log('Search::', SearchData);
         console.log('count::', count);
         console.log('LIST :: ', list);
         setListCount(Math.ceil(count / 10));
@@ -52,7 +53,7 @@ const list = () => {
         console.log(e);
       }
     })();
-  }, [currentPost]);
+  }, [currentPost, SearchData]);
 
   useEffect(() => {
     (async () => {
@@ -62,14 +63,15 @@ const list = () => {
             data: { boardList: list, boardCounts: count },
           },
         } = await boardApi.list({
-          search: '',
-          page: 0,
+          search: SearchData,
+          page: 1,
           size: 10,
           sort: sortBoardApi,
         });
 
         setCurrentPost(1);
 
+        console.log('Search::', SearchData);
         console.log('count:::', count);
         console.log('LIST ::: ', list);
 
@@ -91,7 +93,7 @@ const list = () => {
       <TitleHeader title="국민청원 소통방" />
       <Container>
         <ListUpperWrapper>
-          <Search />
+          <Search setSearchData={setSearchData} />
           <SortWrapper
             onClick={() => setHandleDrop((handleDrop) => !handleDrop)}>
             <TypoGraphy

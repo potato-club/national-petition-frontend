@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common/index';
 import { customColor } from 'constants/index';
 
-export const Search = () => {
+export const Search = ({ setSearchData }) => {
+  const [handleText, setHandleText] = useState('');
+
   return (
     <SearchWrapper>
-      <InputText placeholder="제목을 입력해주세요" />
-      <SearchButton>
+      <InputText
+        type={'text'}
+        placeholder="제목을 입력해주세요"
+        onChange={(e) => setHandleText(e.target.value)}
+      />
+      <SearchButton onClick={() => setSearchData(handleText)}>
         <TypoGraphy type="body1" color={customColor.white} textAlign="center">
           검색
         </TypoGraphy>
