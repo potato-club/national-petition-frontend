@@ -7,10 +7,11 @@ import {
 } from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
-import router from 'next/router';
+import { useRouter } from 'next/router';
 import { boardApi } from 'apis/index';
 
-const add = () => {
+const add = ({ location }) => {
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
