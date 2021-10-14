@@ -78,30 +78,41 @@ export const BoardList = ({
           </NavGraph>
         </ListNav>
         <List>
-          {listData.map(
-            ({
-              boardId,
-              category,
-              petitionTitle, // subTitle
-              viewCounts,
-              title,
-              createdDate,
-              boardLikeCounts,
-              boardUnLikeCounts,
-              boardCommentCounts,
-            }) => (
-              <ListItem
-                key={boardId}
-                category={category}
-                petitionTitle={petitionTitle}
-                subTitle={title}
-                viewCounts={viewCounts}
-                createdDate={createdDate}
-                boardLikeCounts={boardLikeCounts}
-                boardUnLikeCounts={boardUnLikeCounts}
-                boardCommentCounts={boardCommentCounts}
-              />
-            ),
+          {listData.length === 0 ? (
+            <NoListWrapper>
+              <TypoGraphy
+                type="h1"
+                color={customColor.black}
+                textAlign="center">
+                검색결과가 없습니다.
+              </TypoGraphy>
+            </NoListWrapper>
+          ) : (
+            listData.map(
+              ({
+                boardId,
+                category,
+                petitionTitle, // subTitle
+                viewCounts,
+                title,
+                createdDate,
+                boardLikeCounts,
+                boardUnLikeCounts,
+                boardCommentCounts,
+              }) => (
+                <ListItem
+                  key={boardId}
+                  category={category}
+                  petitionTitle={petitionTitle}
+                  subTitle={title}
+                  viewCounts={viewCounts}
+                  createdDate={createdDate}
+                  boardLikeCounts={boardLikeCounts}
+                  boardUnLikeCounts={boardUnLikeCounts}
+                  boardCommentCounts={boardCommentCounts}
+                />
+              ),
+            )
           )}
         </List>
       </ListWrapper>
@@ -152,6 +163,14 @@ const NavGraph = styled.div`
 `;
 
 const List = styled.div``;
+
+const NoListWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 100px;
+`;
 
 const PaginationWrapper = styled.div`
   display: flex;

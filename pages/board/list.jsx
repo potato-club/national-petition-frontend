@@ -49,13 +49,14 @@ const list = () => {
         console.log('Search::', SearchData);
         console.log('count::', count);
         console.log('LIST :: ', list);
+
         setListCount(Math.ceil(count / 10));
         setBoardList(list);
       } catch (e) {
         console.log(e);
       }
     })();
-  }, [currentPost, SearchData]);
+  }, [currentPost]);
 
   useEffect(() => {
     (async () => {
@@ -73,7 +74,7 @@ const list = () => {
 
         setCurrentPost(1);
 
-        console.log('Search::', SearchData);
+        console.log('Search:::', SearchData);
         console.log('count:::', count);
         console.log('LIST ::: ', list);
 
@@ -83,12 +84,11 @@ const list = () => {
         console.log(e);
       }
     })();
-  }, [sortBoardApi]);
+  }, [sortBoardApi, SearchData]);
 
   const handlePageChange = (value) => {
     setCurrentPost(value);
   };
-
   return (
     <LayoutContainer>
       <Header />
