@@ -93,11 +93,8 @@ const add = () => {
           />
         </InputContentBox>
         <ButtonBox>
-          <Button add onClick={addPage}>
+          <Button onClick={addPage}>
             작성 완료
-          </Button>
-          <Button cancel onClick={clickCancel}>
-            작성 취소
           </Button>
         </ButtonBox>
       </FormBox>
@@ -164,11 +161,8 @@ const OpinionInput = styled.textarea`
 `;
 
 const ButtonBox = styled.div`
-  display: flex;
-  width: 360px;
-  justify-content: space-between;
   margin: auto;
-  margin-top: 14px;
+  margin-top:12px;
 `;
 const Button = styled.button`
   cursor: pointer;
@@ -176,25 +170,13 @@ const Button = styled.button`
   height: 40px;
   border-radius: 4px;
   border: none;
-  ${(props) =>
-    props.add &&
-    `
-    background:${customColor.deepBlue};
-    opacity: 0.9;
-    color:white;
-    &:hover {
-    opacity: 1;
-    }
-  `}
-  ${(props) =>
-    props.cancel &&
-    `
-    background-color: ${customColor.grayBg};
-    &:hover {
-    background-color: ${customColor.grayBg};
-    opacity: 0.5;
-    }
-    `}
+  background:${customColor.deepBlue};
+  opacity: 0.9;
+  color:white;
+  &:hover {
+  opacity: 1;
+  }
+
 `;
 const IntroHeader = styled.div`
   background-color: ${customColor.deepBlue};
