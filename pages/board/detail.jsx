@@ -80,6 +80,13 @@ const detail = ({ detailInfo }) => {
     setUnLikeCount(info.boardUnLikeCounts);
   };
 
+  // TODO
+  const addComment = async (comment) => {
+    const { data } = await boardApi.add({ content: comment });
+
+    console.log(data);
+  };
+
   return (
     <LayoutContainer>
       <Header />
@@ -149,7 +156,7 @@ const detail = ({ detailInfo }) => {
           />
         </RecommandWrapper>
         <CommentInputForm>
-          <CommentAddForm />
+          <CommentAddForm onSubmit={addComment} />
         </CommentInputForm>
         <CommentList boardId={BOARD_ID} />
       </Container>
