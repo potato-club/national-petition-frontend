@@ -12,6 +12,7 @@ import { customColor } from 'constants/index';
 import dummy from '../../dummy/list.json';
 import { memberApi } from 'apis/index';
 import router from 'next/router';
+import { tokenHelper } from 'util/index';
 
 const profile = () => {
   const [userName, setUserName] = useState('사용자이름');
@@ -25,6 +26,7 @@ const profile = () => {
   const myPage = 0;
   const pageSize = 1;
 
+  // 내 정보 불러오기 API
   const fetchProfile = async () => {
     try {
       const {
@@ -39,6 +41,7 @@ const profile = () => {
     }
   };
 
+  // 내가 쓴 글 API
   const fetchMyPost = async () => {
     try {
       const {
@@ -51,7 +54,8 @@ const profile = () => {
       console.log(error);
     }
   };
-  // 정말로 삭제하실 건가요? 했을 때 yes 하면 실행하기
+
+  // 계정삭제 API
   const deleteMe = async () => {
     try {
       // 동철이가 커스텀해주면 그때 넘길 것임
@@ -62,12 +66,12 @@ const profile = () => {
       console.log(error);
     }
   };
+
   // 로그아웃 API
   const nowLogout = async () => {
     try {
-      const { data: all } = await memberApi.logout();
-      console.log('로그아웃 API');
-      console.log(all);
+      await memberApi.logout();
+      tokenHelper.setIdToken('');
       setLogoutModal(false);
       router.push('/');
     } catch (error) {
@@ -79,6 +83,7 @@ const profile = () => {
     fetchProfile();
     // fetchMyPost();
   }, []);
+
   return (
     <LayoutContainer>
       <Header />
