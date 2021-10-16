@@ -17,8 +17,7 @@ import {
   Information,
 } from 'components/app/board/detail';
 import moment from 'moment';
-
-const BOARD_ID = 11793;
+import { useRouter } from 'next/router';
 
 const detail = ({ detailInfo }) => {
   const [likeSelected, setLikeSelected] = useState(false);
@@ -26,12 +25,15 @@ const detail = ({ detailInfo }) => {
   const [likeCount, setLikeCount] = useState(detailInfo.boardLikeCounts);
   const [unLikeCount, setUnLikeCount] = useState(detailInfo.boardUnLikeCounts);
 
+  const router = useRouter();
+  const { id: boardId } = router.query;
+
   useEffect(() => {
     (async () => {
       try {
         const {
           data: { data: status },
-        } = await boardApi.getLikeStatus(BOARD_ID);
+        } = await boardApi.getLikeStatus(boardId);
 
         status !== null &&
           (status === 'LIKE' ? setLikeSelected(true) : setUnLikeSeleted(true));
@@ -46,7 +48,7 @@ const detail = ({ detailInfo }) => {
       const {
         data: { data: result },
       } = await boardApi.like({
-        boardId: BOARD_ID,
+        boardId: boardId,
         boardState: type === 'like' ? 'LIKE' : 'UNLIKE',
       });
 
@@ -63,7 +65,7 @@ const detail = ({ detailInfo }) => {
     } else {
       const {
         data: { data: result },
-      } = await boardApi.likeCancel({ boardId: BOARD_ID });
+      } = await boardApi.likeCancel({ boardId: boardId });
 
       if (result === 'OK') {
         type === 'like'
@@ -158,7 +160,7 @@ const detail = ({ detailInfo }) => {
         <CommentInputForm>
           <CommentAddForm onSubmit={addComment} />
         </CommentInputForm>
-        <CommentList boardId={BOARD_ID} />
+        <CommentList boardId={boardId} />
       </Container>
       <HelperBot />
     </LayoutContainer>
@@ -166,11 +168,11 @@ const detail = ({ detailInfo }) => {
 };
 
 export async function getServerSideProps(context) {
+  const { id } = context.query;
+
   const {
     data: { data: detailInfo },
-  } = await boardApi.getDetail(BOARD_ID);
-
-  console.log('DETAIL_INFO :: ', detailInfo);
+  } = await boardApi.getDetail(id);
 
   return {
     props: { detailInfo },
@@ -270,10 +272,6 @@ const NickNameForm = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 16px;
-`;
-
-const Gap = styled.div`
-  margin-right: 8px;
 `;
 
 export default detail;

@@ -92,6 +92,7 @@ export const BoardList = ({
             }) => (
               <ListItem
                 key={boardId}
+                boardId={boardId}
                 category={category}
                 petitionTitle={petitionTitle}
                 subTitle={title}
