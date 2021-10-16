@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
 
-export const CommentAddForm = () => {
+export const CommentAddForm = ({ onSubmit }) => {
+  const [comment, setComment] = useState('');
+
   return (
     <Wrapper>
-      <InputComment placeholder="무분별한 악플은 자제해주세요" />
+      <InputComment
+        placeholder="무분별한 악플은 자제해주세요"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      />
       <Divider />
-      <AddButton>
+      <AddButton onClick={() => onSubmit(comment)}>
         <TypoGraphy type="body1" color={customColor.white}>
           등록
         </TypoGraphy>

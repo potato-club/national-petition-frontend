@@ -162,11 +162,13 @@ const profile = () => {
       <MessageModal
         visible={deleteModal}
         onConfirm={deleteMe}
+        onClose={() => setDeleteModal(false)}
         content={'정말로 탈퇴하실 건가요?'}
       />
       <MessageModal
         visible={logoutModal}
         onConfirm={nowLogout}
+        onClose={() => setLogoutModal(false)}
         content={'로그아웃 하실건가요?'}
       />
     </LayoutContainer>

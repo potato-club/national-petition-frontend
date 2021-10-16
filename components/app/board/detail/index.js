@@ -5,3 +5,4 @@ export { CommentItem } from './CommentItem';
 export { ApplyItem } from './ApplyItem';
 export { CommentList } from './CommentList';
 export { Information } from './Information';
+export { ApplyPagination } from './ApplyPagination';

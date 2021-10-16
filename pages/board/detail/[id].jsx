@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   LayoutContainer,
   TypoGraphy,
@@ -17,12 +17,29 @@ import {
   Information,
 } from 'components/app/board/detail';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 
 const detail = ({ detailInfo }) => {
   const [likeSelected, setLikeSelected] = useState(false);
   const [unLikeSelected, setUnLikeSeleted] = useState(false);
   const [likeCount, setLikeCount] = useState(detailInfo.boardLikeCounts);
   const [unLikeCount, setUnLikeCount] = useState(detailInfo.boardUnLikeCounts);
+
+  const router = useRouter();
+  const { id: boardId } = router.query;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const {
+          data: { data: status },
+        } = await boardApi.getLikeStatus(boardId);
+
+        status !== null &&
+          (status === 'LIKE' ? setLikeSelected(true) : setUnLikeSeleted(true));
+      } catch (e) {}
+    })();
+  }, []);
 
   const onRecommendSelect = async (state, type) => {
     // 추천수 응답 논의 필요
@@ -31,7 +48,7 @@ const detail = ({ detailInfo }) => {
       const {
         data: { data: result },
       } = await boardApi.like({
-        boardId: 727,
+        boardId: boardId,
         boardState: type === 'like' ? 'LIKE' : 'UNLIKE',
       });
 
@@ -48,7 +65,7 @@ const detail = ({ detailInfo }) => {
     } else {
       const {
         data: { data: result },
-      } = await boardApi.likeCancel({ boardId: 727 });
+      } = await boardApi.likeCancel({ boardId: boardId });
 
       if (result === 'OK') {
         type === 'like'
@@ -63,6 +80,13 @@ const detail = ({ detailInfo }) => {
 
     setLikeCount(info.boardLikeCounts);
     setUnLikeCount(info.boardUnLikeCounts);
+  };
+
+  // TODO
+  const addComment = async (comment) => {
+    const { data } = await boardApi.add({ content: comment });
+
+    console.log(data);
   };
 
   return (
@@ -134,9 +158,9 @@ const detail = ({ detailInfo }) => {
           />
         </RecommandWrapper>
         <CommentInputForm>
-          <CommentAddForm />
+          <CommentAddForm onSubmit={addComment} />
         </CommentInputForm>
-        <CommentList boardId={727} />
+        <CommentList boardId={boardId} />
       </Container>
       <HelperBot />
     </LayoutContainer>
@@ -144,11 +168,11 @@ const detail = ({ detailInfo }) => {
 };
 
 export async function getServerSideProps(context) {
+  const { id } = context.query;
+
   const {
     data: { data: detailInfo },
-  } = await boardApi.getDetail('727');
-
-  console.log('DETAIL_INFO :: ', detailInfo);
+  } = await boardApi.getDetail(id);
 
   return {
     props: { detailInfo },
@@ -248,10 +272,6 @@ const NickNameForm = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 16px;
-`;
-
-const Gap = styled.div`
-  margin-right: 8px;
 `;
 
 export default detail;

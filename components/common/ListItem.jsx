@@ -3,7 +3,9 @@ import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { MdSubdirectoryArrowRight } from 'react-icons/md';
+import Link from 'next/link';
 export const ListItem = ({
+  boardId,
   category,
   petitionTitle,
   subTitle,
@@ -14,62 +16,68 @@ export const ListItem = ({
   boardCommentCounts,
 }) => {
   return (
-    <Wrapper>
-      <Category>
-        <TypoGraphy
-          type="body1"
-          color={customColor.skyBlue}
-          textAlign="center"
-          fontWeight="bold">
-          {category}
-        </TypoGraphy>
-      </Category>
-      <TitleWrapper>
-        <MainTitle>
-          <TypoGraphy type="body1" color={customColor.black} textAlign="left">
-            {petitionTitle}
+    <Link href={`/board/detail/${boardId}`}>
+      <Wrapper>
+        <Category>
+          <TypoGraphy
+            type="body1"
+            color={customColor.skyBlue}
+            textAlign="center"
+            fontWeight="bold">
+            {category}
           </TypoGraphy>
-          <CommentWrapper>
-            <TypoGraphy
-              type="body1"
-              color={customColor.skyBlue}
-              textAlign="center">
-              &nbsp;({boardCommentCounts})
+        </Category>
+        <TitleWrapper>
+          <MainTitle>
+            <TypoGraphy type="body1" color={customColor.black} textAlign="left">
+              {petitionTitle}
             </TypoGraphy>
-          </CommentWrapper>
-        </MainTitle>
-        <SubTitle>
-          <MdSubdirectoryArrowRight />
-          <TypoGraphy type="body2" color={customColor.gray} textAlign="left">
-            {subTitle}
+            <CommentWrapper>
+              <TypoGraphy
+                type="body1"
+                color={customColor.skyBlue}
+                textAlign="center">
+                &nbsp;({boardCommentCounts})
+              </TypoGraphy>
+            </CommentWrapper>
+          </MainTitle>
+          <SubTitle>
+            <MdSubdirectoryArrowRight />
+            <TypoGraphy type="body2" color={customColor.gray} textAlign="left">
+              {subTitle}
+            </TypoGraphy>
+          </SubTitle>
+        </TitleWrapper>
+        <SubNumber>
+          <TypoGraphy
+            type="body1"
+            color={customColor.skyBlue}
+            textAlign="center">
+            {viewCounts}
           </TypoGraphy>
-        </SubTitle>
-      </TitleWrapper>
-      <SubNumber>
-        <TypoGraphy type="body1" color={customColor.skyBlue} textAlign="center">
-          {viewCounts}
-        </TypoGraphy>
-      </SubNumber>
-      <Day>
-        <TypoGraphy type="body1" color={customColor.black} textAlign="center">
-          {createdDate.slice(0, 10)}
-        </TypoGraphy>
-      </Day>
-      <GraphWrapper>
-        <Bar>
-          <AgreeBar
-            per={
-              (boardLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100
-            }
-          />
-          <DisagreeBar
-            per={
-              (boardUnLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100
-            }
-          />
-        </Bar>
-      </GraphWrapper>
-    </Wrapper>
+        </SubNumber>
+        <Day>
+          <TypoGraphy type="body1" color={customColor.black} textAlign="center">
+            {createdDate.slice(0, 10)}
+          </TypoGraphy>
+        </Day>
+        <GraphWrapper>
+          <Bar>
+            <AgreeBar
+              per={
+                (boardLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100
+              }
+            />
+            <DisagreeBar
+              per={
+                (boardUnLikeCounts / (boardLikeCounts + boardUnLikeCounts)) *
+                100
+              }
+            />
+          </Bar>
+        </GraphWrapper>
+      </Wrapper>
+    </Link>
   );
 };
 const Wrapper = styled.div`
@@ -88,6 +96,9 @@ const Category = styled.div`
 `;
 const TitleWrapper = styled.div`
   width: 61%;
+
+  display: flex;
+  justify-content: center;
   flex-direction: column;
   height: 100%;
 `;
@@ -95,7 +106,6 @@ const MainTitle = styled.div`
   display: flex;
   align-items: flex-end;
   padding-bottom: 5px;
-  height: 60%;
 `;
 const CommentWrapper = styled.div`
   margin-bottom: 2px;
@@ -104,8 +114,6 @@ const SubTitle = styled.div`
   display: flex;
   align-items: flex-start;
   display: flex;
-
-  height: 40%;
 `;
 
 const SubNumber = styled.div`
