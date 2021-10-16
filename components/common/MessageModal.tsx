@@ -30,6 +30,13 @@ export const MessageModal: React.FC<Props> = ({
           </TypoGraphy>
         </Content>
         <Bottom>
+          {onClose && (
+            <Button onClick={onClose}>
+              <TypoGraphy type="h3" color={customColor.blue}>
+                취소
+              </TypoGraphy>
+            </Button>
+          )}
           <Button onClick={onConfirm || onClose}>
             <TypoGraphy type="h3" color={customColor.blue}>
               확인
@@ -63,6 +70,7 @@ const Content = styled.div`
 
 const Button = styled.div`
   cursor: pointer;
+  margin-left: 16px;
 `;
 
 const Bottom = styled.div`
