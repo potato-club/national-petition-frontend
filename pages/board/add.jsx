@@ -7,22 +7,17 @@ import {
 } from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
-import { useRouter } from 'next/router';
 import { boardApi } from 'apis/index';
+import { useRouter } from 'next/router';
 
 const add = () => {
-  const router = useRouter();
-
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [petitionUrl, setPetitionUrl] = useState('');
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  useEffect(() => {
-    if (!router.isReady) return;
-    setPetitionUrl(router.query.url);
-  }, [router.isReady]);
+  const router = useRouter();
 
   // 작성완료 이벤트 : 등록API, 컨텐츠 내용 확인
   const addPage = async () => {
@@ -38,18 +33,19 @@ const add = () => {
       } = await boardApi.add({ title, content, petitionUrl });
       console.log(postData);
       // 연동 성공하면 성공했다고 모달 띄우기
-
-      // 리스트 페이지로 이동
-      // router.push('/board/list');
+      
+      router.push('/board/list');
     } catch (error) {
       console.error(error);
     }
   };
 
-  // 작성 취소 클릭시
-  const clickCancel = () => {
-    // 모달 띄우기
-  };
+  useEffect(() => {
+    if (!router.isReady) return;
+    setPetitionUrl(router.query.url);
+  }, [router.isReady]);
+  console.log('qweqwe');
+
   return (
     <LayoutContainer>
       <IntroHeader />
@@ -93,9 +89,7 @@ const add = () => {
           />
         </InputContentBox>
         <ButtonBox>
-          <Button onClick={addPage}>
-            작성 완료
-          </Button>
+          <Button onClick={addPage}>작성 완료</Button>
         </ButtonBox>
       </FormBox>
       <MessageModal
@@ -162,7 +156,7 @@ const OpinionInput = styled.textarea`
 
 const ButtonBox = styled.div`
   margin: auto;
-  margin-top:12px;
+  margin-top: 12px;
 `;
 const Button = styled.button`
   cursor: pointer;
@@ -170,13 +164,12 @@ const Button = styled.button`
   height: 40px;
   border-radius: 4px;
   border: none;
-  background:${customColor.deepBlue};
+  background: ${customColor.deepBlue};
   opacity: 0.9;
-  color:white;
+  color: white;
   &:hover {
-  opacity: 1;
+    opacity: 1;
   }
-
 `;
 const IntroHeader = styled.div`
   background-color: ${customColor.deepBlue};

@@ -16,4 +16,7 @@ export const memberApi = {
   delete: async () => {
     return await api.authDelete('/api/v1/mypage/delete');
   },
+  logout: async (params) => {
+    return await api.authPost('/api/v1/logout', params);
+  },
 };

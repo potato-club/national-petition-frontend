@@ -24,6 +24,7 @@ const profile = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const myPage = 0;
   const pageSize = 1;
+
   const fetchProfile = async () => {
     try {
       const {
@@ -64,10 +65,11 @@ const profile = () => {
   // 로그아웃 API
   const nowLogout = async () => {
     try {
-      // 아직 미구현
+      const { data: all } = await memberApi.logout();
       console.log('로그아웃 API');
+      console.log(all);
       setLogoutModal(false);
-      router.push('/board/list');
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -77,7 +79,6 @@ const profile = () => {
     fetchProfile();
     // fetchMyPost();
   }, []);
-
   return (
     <LayoutContainer>
       <Header />
