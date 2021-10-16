@@ -1,9 +1,51 @@
-import React from 'react';
-import { LayoutContainer, TypoGraphy, Header } from 'components/common';
+import React, { useEffect, useState } from 'react';
+import {
+  LayoutContainer,
+  TypoGraphy,
+  Header,
+  MessageModal,
+} from 'components/common';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
+import { boardApi } from 'apis/index';
+import { useRouter } from 'next/router';
 
 const add = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [petitionUrl, setPetitionUrl] = useState('');
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const router = useRouter();
+
+  // 작성완료 이벤트 : 등록API, 컨텐츠 내용 확인
+  const addPage = async () => {
+    if (title === '' || content === '' || petitionUrl === '') {
+      // 모달 띄우고  return
+      setModalIsOpen(true);
+      return null;
+    }
+    try {
+      //API연동
+      const {
+        data: { data: postData },
+      } = await boardApi.add({ title, content, petitionUrl });
+      console.log(postData);
+      // 연동 성공하면 성공했다고 모달 띄우기
+      
+      router.push('/board/list');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    setPetitionUrl(router.query.url);
+  }, [router.isReady]);
+  console.log('qweqwe');
+
   return (
     <LayoutContainer>
       <IntroHeader />
@@ -20,25 +62,41 @@ const add = () => {
               제목
             </TypoGraphy>
           </Title>
-          <Input placeholder="제목을 입력하세요" />
+          <Input
+            placeholder="제목을 입력하세요"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
           <Title>
             <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
               청원 링크
             </TypoGraphy>
           </Title>
-          <Input placeholder="https://" />
+          <Input
+            placeholder="https://"
+            value={petitionUrl}
+            onChange={(e) => setPetitionUrl(e.target.value)}
+          />
           <Title>
             <TypoGraphy type="h1" fontWeight="bold" color={customColor.gray}>
               나의 의견
             </TypoGraphy>
           </Title>
-          <OpinionInput placeholder="자유롭게 의견을 작성하세요" />
+          <OpinionInput
+            placeholder="자유롭게 의견을 작성하세요"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
         </InputContentBox>
         <ButtonBox>
-          <Button add>작성 완료</Button>
-          <Button cancel>작성 취소</Button>
+          <Button onClick={addPage}>작성 완료</Button>
         </ButtonBox>
       </FormBox>
+      <MessageModal
+        visible={modalIsOpen}
+        onConfirm={() => setModalIsOpen(false)}
+        content={'값을 다 입력하세요'}
+      />
     </LayoutContainer>
   );
 };
@@ -97,11 +155,8 @@ const OpinionInput = styled.textarea`
 `;
 
 const ButtonBox = styled.div`
-  display: flex;
-  width: 360px;
-  justify-content: space-between;
   margin: auto;
-  margin-top: 14px;
+  margin-top: 12px;
 `;
 const Button = styled.button`
   cursor: pointer;
@@ -109,25 +164,12 @@ const Button = styled.button`
   height: 40px;
   border-radius: 4px;
   border: none;
-  ${(props) =>
-    props.add &&
-    `
-    background:${customColor.deepBlue};
-    opacity: 0.9;
-    color:white;
-    &:hover {
+  background: ${customColor.deepBlue};
+  opacity: 0.9;
+  color: white;
+  &:hover {
     opacity: 1;
-    }
-  `}
-  ${(props) =>
-    props.cancel &&
-    `
-    background-color: ${customColor.grayBg};
-    &:hover {
-    background-color: ${customColor.grayBg};
-    opacity: 0.5;
-    }
-    `}
+  }
 `;
 const IntroHeader = styled.div`
   background-color: ${customColor.deepBlue};
