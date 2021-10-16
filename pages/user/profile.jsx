@@ -41,7 +41,7 @@ const profile = () => {
     }
   };
 
-  // 내가 쓴 글 API
+  // :: 미구현 :: 내가 쓴 글 API
   const fetchMyPost = async () => {
     try {
       const {
@@ -58,7 +58,6 @@ const profile = () => {
   // 계정삭제 API
   const deleteMe = async () => {
     try {
-      // 동철이가 커스텀해주면 그때 넘길 것임
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
