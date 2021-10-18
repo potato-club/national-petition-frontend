@@ -15,13 +15,6 @@ id: "601350"
 title: "*** 아버지 장제원 국회의원직 박탈을 원합니다." 
 */
 
-// const Top5List = [
-//   { id: 1, title: '학교 폭파해주세요', agreement: '123,334' },
-//   { id: 2, title: '우리집 강아지는 멋진 강아지', agreement: '345,123' },
-//   { id: 3, title: '이세상을 살려라 할렐루야', agreement: '789,345' },
-//   { id: 4, title: '너, 내 동료가 되라', agreement: '111,111' },
-//   { id: 5, title: '피..피카츄..!', agreement: '222,222' },
-// ];
 export const Top5TextLoop = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [Top5List, setTop5List] = useState([
