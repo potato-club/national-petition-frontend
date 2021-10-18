@@ -12,6 +12,7 @@ import { customColor } from 'constants/index';
 import dummy from '../../dummy/list.json';
 import { memberApi } from 'apis/index';
 import router from 'next/router';
+import { tokenHelper } from 'util/index';
 
 const profile = () => {
   const [userName, setUserName] = useState('사용자이름');
@@ -24,6 +25,8 @@ const profile = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const myPage = 0;
   const pageSize = 1;
+
+  // 내 정보 불러오기 API
   const fetchProfile = async () => {
     try {
       const {
@@ -38,6 +41,7 @@ const profile = () => {
     }
   };
 
+  // :: 미구현 :: 내가 쓴 글 API
   const fetchMyPost = async () => {
     try {
       const {
@@ -50,10 +54,10 @@ const profile = () => {
       console.log(error);
     }
   };
-  // 정말로 삭제하실 건가요? 했을 때 yes 하면 실행하기
+
+  // 계정삭제 API
   const deleteMe = async () => {
     try {
-      // 동철이가 커스텀해주면 그때 넘길 것임
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
@@ -61,13 +65,14 @@ const profile = () => {
       console.log(error);
     }
   };
+
   // 로그아웃 API
   const nowLogout = async () => {
     try {
-      // 아직 미구현
-      console.log('로그아웃 API');
+      await memberApi.logout();
+      tokenHelper.setIdToken('');
       setLogoutModal(false);
-      router.push('/board/list');
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -156,11 +161,13 @@ const profile = () => {
       <MessageModal
         visible={deleteModal}
         onConfirm={deleteMe}
+        onClose={() => setDeleteModal(false)}
         content={'정말로 탈퇴하실 건가요?'}
       />
       <MessageModal
         visible={logoutModal}
         onConfirm={nowLogout}
+        onClose={() => setLogoutModal(false)}
         content={'로그아웃 하실건가요?'}
       />
     </LayoutContainer>
