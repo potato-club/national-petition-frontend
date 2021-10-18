@@ -298,6 +298,7 @@ const ItemTitle = styled.div`
   display: flex;
   align-items: center;
   width: 77%;
+  overflow: hidden;
 `;
 const ItemSubNumber = styled.div`
   display: flex;
