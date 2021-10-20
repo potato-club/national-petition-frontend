@@ -16,35 +16,36 @@ const add = () => {
   const [petitionUrl, setPetitionUrl] = useState('');
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [addModal, setAddModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
 
   const router = useRouter();
-
-  // 작성완료 이벤트 : 등록API, 컨텐츠 내용 확인
-  const addPage = async () => {
-    if (title === '' || content === '' || petitionUrl === '') {
-      // 모달 띄우고  return
-      setModalIsOpen(true);
-      return null;
-    }
-    try {
-      //API연동
-      const {
-        data: { data: postData },
-      } = await boardApi.add({ title, content, petitionUrl });
-      console.log(postData);
-      // 연동 성공하면 성공했다고 모달 띄우기
-      
-      router.push('/board/list');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const reg = /^https:\/\/www1.president.go.kr\/petitions/;
 
   useEffect(() => {
     if (!router.isReady) return;
     setPetitionUrl(router.query.url);
   }, [router.isReady]);
-  console.log('qweqwe');
+
+  const addPage = async () => {
+    if (title === '' || content === '' || petitionUrl === '') {
+      setModalContent('빈 칸 없이 입력 해주세요');
+      setModalIsOpen(true);
+      return null;
+    }
+    if (!reg.test(petitionUrl)) {
+      setModalContent('국민 청원 링크가 아닙니다.');
+      setModalIsOpen(true);
+      return null;
+    }
+    try {
+      await boardApi.add({ title, content, petitionUrl });
+      setModalContent('게시글을 등록했습니다.');
+      setAddModal(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <LayoutContainer>
@@ -89,13 +90,23 @@ const add = () => {
           />
         </InputContentBox>
         <ButtonBox>
-          <Button onClick={addPage}>작성 완료</Button>
+          <Button onClick={addPage}>
+            <TypoGraphy color={customColor.white}>작성 완료</TypoGraphy>
+          </Button>
         </ButtonBox>
       </FormBox>
       <MessageModal
         visible={modalIsOpen}
         onConfirm={() => setModalIsOpen(false)}
-        content={'값을 다 입력하세요'}
+        content={modalContent}
+      />
+      <MessageModal
+        visible={addModal}
+        onConfirm={() => {
+          setAddModal(false);
+          router.push('/board/list');
+        }}
+        content={modalContent}
       />
     </LayoutContainer>
   );
@@ -158,7 +169,7 @@ const ButtonBox = styled.div`
   margin: auto;
   margin-top: 12px;
 `;
-const Button = styled.button`
+const Button = styled.div`
   cursor: pointer;
   width: 160px;
   height: 40px;
@@ -167,6 +178,9 @@ const Button = styled.button`
   background: ${customColor.deepBlue};
   opacity: 0.9;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     opacity: 1;
   }
