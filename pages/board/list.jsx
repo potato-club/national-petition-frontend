@@ -13,7 +13,7 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 // import dummy from '../../dummy/list.json';
 import { boardApi } from 'apis';
 
-//sort=viewCounts & sort=rootCommentsCount
+//sort=viewCounts & sort=likeCounts
 const list = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [sortPosition, setSortPosition] = useState('최신순');
@@ -26,8 +26,7 @@ const list = () => {
   const handleSort = (e) => {
     if (e.target.innerText === '최신순') setSortBoardApi(undefined);
     else if (e.target.innerText === '조회순') setSortBoardApi('viewCounts');
-    else if (e.target.innerText === '추천순')
-      setSortBoardApi('rootCommentsCount');
+    else if (e.target.innerText === '추천순') setSortBoardApi('likeCounts');
     setSortPosition(e.target.innerText);
   };
   //예외처리
