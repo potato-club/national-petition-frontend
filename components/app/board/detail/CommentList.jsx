@@ -15,10 +15,6 @@ export const CommentList = ({ boardId, commentReset }) => {
     init();
   }, [commentReset]);
 
-  useEffect(() => {
-    console.log(commentList);
-  }, [commentList]);
-
   const addPage = async () => {
     const {
       data: { data: list },
