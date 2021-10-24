@@ -8,7 +8,7 @@ import {
 } from 'components/common/index';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
-import { boardApi } from 'apis';
+import { boardApi, commentApi } from 'apis';
 import { FaUserEdit } from 'react-icons/fa';
 import {
   RecommandButton,
@@ -18,12 +18,18 @@ import {
 } from 'components/app/board/detail';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { useToasts } from 'react-toast-notifications';
+import { getErrorMessage } from 'util/index';
+
+// test with :: 11789
 
 const detail = ({ detailInfo }) => {
   const [likeSelected, setLikeSelected] = useState(false);
   const [unLikeSelected, setUnLikeSeleted] = useState(false);
   const [likeCount, setLikeCount] = useState(detailInfo.boardLikeCounts);
   const [unLikeCount, setUnLikeCount] = useState(detailInfo.boardUnLikeCounts);
+  const [commentReset, setCommentReset] = useState(false);
+  const { addToast } = useToasts();
 
   const router = useRouter();
   const { id: boardId } = router.query;
@@ -76,7 +82,7 @@ const detail = ({ detailInfo }) => {
 
     const {
       data: { data: info },
-    } = await boardApi.getDetail('727');
+    } = await boardApi.getDetail(boardId);
 
     setLikeCount(info.boardLikeCounts);
     setUnLikeCount(info.boardUnLikeCounts);
@@ -84,9 +90,14 @@ const detail = ({ detailInfo }) => {
 
   // TODO
   const addComment = async (comment) => {
-    const { data } = await boardApi.add({ content: comment });
+    try {
+      await commentApi.add(boardId, { content: comment });
 
-    console.log(data);
+      setCommentReset((cur) => !cur);
+      addToast('댓글이 작성되었습니다', { appearance: 'success' });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
+    }
   };
 
   return (
@@ -110,7 +121,10 @@ const detail = ({ detailInfo }) => {
           <PetitionDivider />
         </StatusWrapper>
         <InformationForm>
-          <Information title="작성자" content={'네글자임'} />
+          <Information
+            title="작성자"
+            content={detailInfo.memberResponse.nickName}
+          />
           <Information title="조회수" content={detailInfo.viewCounts} />
           <Information
             title="게시글 등록"
@@ -160,7 +174,7 @@ const detail = ({ detailInfo }) => {
         <CommentInputForm>
           <CommentAddForm onSubmit={addComment} />
         </CommentInputForm>
-        <CommentList boardId={boardId} />
+        <CommentList boardId={boardId} commentReset={commentReset} />
       </Container>
       <HelperBot />
     </LayoutContainer>
