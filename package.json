@@ -21,7 +21,8 @@
     "react-icons": "^4.2.0",
     "react-social-login-buttons": "^3.5.1",
     "react-text-loop": "^2.3.0",
-    "react-toast-notifications": "^2.5.1"
+    "react-toast-notifications": "^2.5.1",
+    "recoil": "^0.4.1"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",

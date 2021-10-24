@@ -1,1 +1,1 @@
-export const getErrorMessage = (e) => e.response.data.message;
+export const getErrorMessage = (e) => e.response?.data?.message;
