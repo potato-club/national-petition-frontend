@@ -4,13 +4,15 @@ import { CommentItem } from './CommentItem';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
 import { commentApi, memberApi } from 'apis';
+import { useRecoilState } from 'recoil';
+import { boardCommentList } from 'recoil/atom';
 
 const PAGE_LIMIT = 15;
 const NONE_USER = -1;
 
 export const CommentList = ({ boardId, commentReset }) => {
   const [page, setPage] = useState(1);
-  const [commentList, setCommentList] = useState([]);
+  const [commentList, setCommentList] = useRecoilState(boardCommentList);
   const [userId, setUserId] = useState(NONE_USER);
 
   useEffect(() => {
@@ -30,6 +32,8 @@ export const CommentList = ({ boardId, commentReset }) => {
     const {
       data: { data: list },
     } = await commentApi.list(boardId, { page: 1, size: PAGE_LIMIT, boardId });
+
+    console.log(list.contents);
 
     setPage(2);
     setCommentList(list.contents);
@@ -59,6 +63,7 @@ export const CommentList = ({ boardId, commentReset }) => {
             childrenCounts={childrenCounts}
             createdAt={createdAt}
             content={content}
+            setCommentList={setCommentList}
           />
         ),
       )}

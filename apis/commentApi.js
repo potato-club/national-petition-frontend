@@ -17,9 +17,9 @@ export const commentApi = {
     return await api.get('/api/v1/comment/page', params);
   },
   delete: async (commentId) => {
-    return await api.authDelete(`api/v1/comment/${commentId}`);
+    return await api.authDelete(`/api/v1/comment/${commentId}`);
   },
   unlike: async (params) => {
-    return await api.authDelete('api/v1/comment/unlike', params);
+    return await api.authDelete('/api/v1/comment/unlike', params);
   },
 };

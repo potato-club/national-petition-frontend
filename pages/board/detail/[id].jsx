@@ -277,7 +277,7 @@ const RecommandWrapper = styled.div`
 `;
 
 const CommentInputForm = styled.div`
-  margin-top: 32px;
+  margin-top: 16px;
   margin-bottom: 32px;
   /* border: 1px solid; */
 `;
