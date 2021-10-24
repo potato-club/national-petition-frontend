@@ -7,19 +7,13 @@ import { commentApi } from 'apis';
 
 const PAGE_LIMIT = 15;
 
-export const CommentList = ({ boardId }) => {
+export const CommentList = ({ boardId, commentReset }) => {
   const [page, setPage] = useState(1);
   const [commentList, setCommentList] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      await addPage();
-    })();
-  }, []);
-
-  useEffect(() => {
-    console.log(commentList);
-  }, [commentList]);
+    init();
+  }, [commentReset]);
 
   const addPage = async () => {
     const {
@@ -28,6 +22,15 @@ export const CommentList = ({ boardId }) => {
 
     setCommentList((cur) => cur.concat(...list.contents));
     setPage((cur) => cur + 1);
+  };
+
+  const init = async () => {
+    const {
+      data: { data: list },
+    } = await commentApi.list(boardId, { page: 1, size: PAGE_LIMIT, boardId });
+
+    setPage(2);
+    setCommentList(list.contents);
   };
 
   return (
