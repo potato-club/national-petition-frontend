@@ -3,13 +3,15 @@ import styled from '@emotion/styled';
 import { CommentItem } from './CommentItem';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
-import { commentApi } from 'apis';
+import { commentApi, memberApi } from 'apis';
 
 const PAGE_LIMIT = 15;
+const NONE_USER = -1;
 
 export const CommentList = ({ boardId, commentReset }) => {
   const [page, setPage] = useState(1);
   const [commentList, setCommentList] = useState([]);
+  const [userId, setUserId] = useState(NONE_USER);
 
   useEffect(() => {
     init();
@@ -31,6 +33,14 @@ export const CommentList = ({ boardId, commentReset }) => {
 
     setPage(2);
     setCommentList(list.contents);
+
+    try {
+      const {
+        data: { data: userInfo },
+      } = await memberApi.getInfo();
+
+      setUserId(userInfo.memberId);
+    } catch (e) {}
   };
 
   return (
@@ -42,6 +52,7 @@ export const CommentList = ({ boardId, commentReset }) => {
         ) => (
           <CommentItem
             key={commentId}
+            userId={userId}
             commentId={commentId}
             memberId={memberId}
             depth={depth}

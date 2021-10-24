@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
 import { customColor } from 'constants/index';
@@ -10,6 +10,7 @@ import moment from 'moment';
 import { ApplyPagination } from './ApplyPagination';
 
 export const CommentItem = ({
+  userId,
   commentId,
   memberId,
   content,
@@ -47,6 +48,20 @@ export const CommentItem = ({
               답글
             </TypoGraphy>
           </Button>
+          {userId === memberId && (
+            <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
+              <TypoGraphy type="body2" color={customColor.gray}>
+                삭제
+              </TypoGraphy>
+            </Button>
+          )}
+          {userId === memberId && (
+            <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
+              <TypoGraphy type="body2" color={customColor.gray}>
+                수정
+              </TypoGraphy>
+            </Button>
+          )}
           <Button onClick={() => setApplyVisible((cur) => !cur)}>
             {ApplyVisible ? (
               <ApplyViewWrapper>
