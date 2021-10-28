@@ -74,7 +74,7 @@ export const ListItem = ({
           onMouseOver={() => {
             setIsBarHover(0);
           }}
-          onMouseLeave={() => {
+          onMouseOut={() => {
             setIsBarHover(1);
           }}>
           {isBarHover ? (
@@ -173,5 +173,8 @@ const DisagreeBar = styled.div`
 `;
 
 const Percent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 `;
