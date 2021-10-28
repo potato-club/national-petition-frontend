@@ -138,6 +138,8 @@ const ListWrapper = styled.div`
   margin-bottom: 20px;
   border-top: 6px solid ${customColor.blue};
   border-bottom: 6px solid ${customColor.blue};
+
+  min-height: 962px;
 `;
 const ListNav = styled.div`
   display: flex;

@@ -268,8 +268,8 @@ const Top5ItemBox = styled.div`
   display: flex;
   justify-content: center;
   width: 600px;
-  height: ${({ handleDrop }) => (handleDrop ? `225px` : `45px`)};
-  padding: 0px 10px;
+  height: ${({ handleDrop }) => (handleDrop ? `245px` : `45px`)};
+  padding: ${({ handleDrop }) => (handleDrop ? `10px 10px` : `0px 10px`)};
   background-color: ${customColor.white};
   border-radius: 20px;
 `;
