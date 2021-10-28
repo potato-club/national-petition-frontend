@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common/index';
 import { customColor } from 'constants/index';
@@ -15,6 +15,15 @@ export const ListItem = ({
   boardUnLikeCounts,
   boardCommentCounts,
 }) => {
+  const [isBarHover, setIsBarHover] = useState(1);
+  const [percent, setPercent] = useState(
+    (boardLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100,
+  );
+  useEffect(() => {
+    if (isNaN(percent)) {
+      setPercent(0);
+    }
+  }, []);
   return (
     <Link href={`/board/detail/${boardId}`}>
       <Wrapper>
@@ -61,20 +70,38 @@ export const ListItem = ({
             {createdDate.slice(0, 10)}
           </TypoGraphy>
         </Day>
-        <GraphWrapper>
-          <Bar>
-            <AgreeBar
-              per={
-                (boardLikeCounts / (boardLikeCounts + boardUnLikeCounts)) * 100
-              }
-            />
-            <DisagreeBar
-              per={
-                (boardUnLikeCounts / (boardLikeCounts + boardUnLikeCounts)) *
-                100
-              }
-            />
-          </Bar>
+        <GraphWrapper
+          onMouseOver={() => {
+            setIsBarHover(0);
+          }}
+          onMouseLeave={() => {
+            setIsBarHover(1);
+          }}>
+          {isBarHover ? (
+            <Bar>
+              <AgreeBar
+                per={
+                  (boardLikeCounts / (boardLikeCounts + boardUnLikeCounts)) *
+                  100
+                }
+              />
+              <DisagreeBar
+                per={
+                  (boardUnLikeCounts / (boardLikeCounts + boardUnLikeCounts)) *
+                  100
+                }
+              />
+            </Bar>
+          ) : (
+            <Percent>
+              <TypoGraphy
+                type="body1"
+                color={customColor.skyBlue}
+                textAlign="center">
+                {percent}%
+              </TypoGraphy>
+            </Percent>
+          )}
         </GraphWrapper>
       </Wrapper>
     </Link>
@@ -143,4 +170,8 @@ const DisagreeBar = styled.div`
   width: ${({ per }) => per + '%'};
   height: 100%;
   background-color: ${customColor.gray};
+`;
+
+const Percent = styled.div`
+  width: 100%;
 `;
