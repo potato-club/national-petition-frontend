@@ -33,8 +33,6 @@ export const CommentList = ({ boardId, commentReset }) => {
       data: { data: list },
     } = await commentApi.list(boardId, { page: 1, size: PAGE_LIMIT, boardId });
 
-    console.log(list.contents);
-
     setPage(2);
     setCommentList(list.contents);
 

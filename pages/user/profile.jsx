@@ -36,9 +36,7 @@ const profile = () => {
       setUserName(name);
       setUserNickName(nickName);
       setUserEmail(email);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   // :: 미구현 :: 내가 쓴 글 API
@@ -48,11 +46,8 @@ const profile = () => {
         data: { data: myList },
       } = await memberApi.boardList({ myPage, pageSize });
       // 일단 무슨 값인지 확인하기
-      console.log(myList);
       setMyPostList(myList);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   // 계정삭제 API
@@ -61,9 +56,7 @@ const profile = () => {
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   // 로그아웃 API
@@ -73,9 +66,7 @@ const profile = () => {
       tokenHelper.setIdToken('');
       setLogoutModal(false);
       router.push('/');
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

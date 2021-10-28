@@ -34,12 +34,9 @@ export const Top5TextLoop = () => {
             data: { item: list },
           },
         } = await rankApi.getTop5();
-        console.log('Top5 :: ', list);
         setTop5List(list);
         setVisible(false);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     })();
   }, []);
 

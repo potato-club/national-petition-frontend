@@ -45,15 +45,10 @@ const list = () => {
           size: 10,
           sort: sortBoardApi,
         });
-        console.log('Search::', SearchData);
-        console.log('count::', count);
-        console.log('LIST :: ', list);
 
         setListCount(Math.ceil(count / 10));
         setBoardList(list);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     })();
   }, [currentPost]);
 
@@ -73,15 +68,9 @@ const list = () => {
 
         setCurrentPost(1);
 
-        console.log('Search:::', SearchData);
-        console.log('count:::', count);
-        console.log('LIST ::: ', list);
-
         setListCount(Math.ceil(count / 10));
         setBoardList(list);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     })();
   }, [sortBoardApi, SearchData]);
 
