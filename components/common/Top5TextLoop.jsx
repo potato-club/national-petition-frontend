@@ -34,12 +34,9 @@ export const Top5TextLoop = () => {
             data: { item: list },
           },
         } = await rankApi.getTop5();
-        console.log('Top5 :: ', list);
         setTop5List(list);
         setVisible(false);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     })();
   }, []);
 
@@ -271,8 +268,8 @@ const Top5ItemBox = styled.div`
   display: flex;
   justify-content: center;
   width: 600px;
-  height: ${({ handleDrop }) => (handleDrop ? `225px` : `45px`)};
-  padding: 0px 10px;
+  height: ${({ handleDrop }) => (handleDrop ? `245px` : `45px`)};
+  padding: ${({ handleDrop }) => (handleDrop ? `10px 10px` : `0px 10px`)};
   background-color: ${customColor.white};
   border-radius: 20px;
 `;

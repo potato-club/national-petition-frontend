@@ -1,21 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { ApplyItem } from './ApplyItem';
 import { Pagination } from '@mui/material';
+import { commentApi } from 'apis';
 
-export const ApplyPagination = () => {
+const PAGE_SIZE = 15;
+
+export const ApplyPagination = ({ commentId }) => {
+  const [applyList, setApplyList] = useState([]);
+  const [totalPage, setTotalPage] = useState(1);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    getList(page);
+  }, [page]);
+
+  const getList = async (page) => {
+    const {
+      data: { data: applyItem },
+    } = await commentApi.applyList(commentId, {
+      page: page,
+      size: PAGE_SIZE,
+      parentId: commentId,
+    });
+
+    setApplyList(applyItem.contents);
+    setTotalPage(applyItem.totalPages);
+  };
+
   return (
     <Wrapper>
-      <ApplyItem />
-      <ApplyItem />
-      <ApplyItem />
-      <ApplyItem />
+      {applyList.map(
+        ({ commentId, content, createdAt, nickName, memberId }) => (
+          <ApplyItem
+            key={commentId}
+            commentId={commentId}
+            content={content}
+            createdAt={createdAt}
+            nickName={nickName}
+            memberId={memberId}
+          />
+        ),
+      )}
       <PaginationWrapper>
         <Pagination
-          count={10}
-          onChange={(e, value) => {}}
-          page={1}
+          count={totalPage}
+          onChange={(e, value) => setPage(value)}
+          page={page}
           shape="rounded"
           color="primary"
           siblingCount={3}

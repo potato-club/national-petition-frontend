@@ -92,4 +92,5 @@ const TypoGraphyText = styled.div<StyledTypoGraphyProps>`
   font-weight: ${(props) => props.fontWeight};
   ${(props) =>
     props.fontHeight === 'normal' ? '' : `line-height: ${props.fontHeight};`}
+  word-break: break-all;
 `;

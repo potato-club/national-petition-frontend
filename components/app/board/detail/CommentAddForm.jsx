@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
 
-export const CommentAddForm = ({ onSubmit }) => {
-  const [comment, setComment] = useState('');
+export const CommentAddForm = ({ onSubmit, type = 'add', content = '' }) => {
+  const [comment, setComment] = useState(content);
 
   return (
     <Wrapper>
@@ -16,7 +16,7 @@ export const CommentAddForm = ({ onSubmit }) => {
       <Divider />
       <AddButton onClick={() => onSubmit(comment)}>
         <TypoGraphy type="body1" color={customColor.white}>
-          등록
+          {type === 'add' ? '등록' : '수정'}
         </TypoGraphy>
       </AddButton>
     </Wrapper>
@@ -27,7 +27,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${customColor.white};
-  border: 1px solid ${customColor.gray};
+  border: 1px solid ${customColor.grayBg};
+  border-radius: 2px;
+  margin-bottom: 16px;
+  margin-top: 16px;
 `;
 
 const NickNameForm = styled.div`

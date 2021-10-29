@@ -102,6 +102,7 @@ export const BoardList = ({
               }) => (
                 <ListItem
                   key={boardId}
+                  boardId={boardId}
                   category={category}
                   petitionTitle={petitionTitle}
                   subTitle={title}
@@ -137,6 +138,8 @@ const ListWrapper = styled.div`
   margin-bottom: 20px;
   border-top: 6px solid ${customColor.blue};
   border-bottom: 6px solid ${customColor.blue};
+
+  min-height: 962px;
 `;
 const ListNav = styled.div`
   display: flex;

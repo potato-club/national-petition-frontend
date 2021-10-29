@@ -7,7 +7,7 @@ import {
 } from 'components/common';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { customColor } from 'constants/index';
+import { customColor, settings } from 'constants/index';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { getQueryString, tokenHelper, isObjectEmpty } from 'util/index';
 import { RegisterModal } from 'components/app/user/login';
@@ -24,10 +24,6 @@ const login = () => {
       if (!isObjectEmpty(getQueryString())) {
         const { register, idToken, refreshToken } = getQueryString();
 
-        console.log('REGISTER :: ', register);
-        console.log('ID_TOKEN :: ', idToken);
-        console.log('REFRESH_TOKEN :: ', refreshToken);
-
         setToken(idToken, refreshToken);
 
         if (register === 'false') {
@@ -40,7 +36,7 @@ const login = () => {
   }, []);
 
   const signIn = () => {
-    location.href = 'https://dev.petition.pw/oauth2/authorization/google';
+    location.href = `${settings.apiUrl}/oauth2/authorization/google`;
   };
 
   const setToken = (idToken, refreshToken) => {
@@ -49,14 +45,10 @@ const login = () => {
   };
 
   const RegisterNickName = async (nickName) => {
-    console.log(nickName);
-
     try {
       const {
         data: { data: result },
       } = await memberApi.addNickName({ nickName });
-
-      console.log('RESULT :: ', result);
 
       if (result === 'success') {
         router.push('/board/list');
@@ -67,9 +59,7 @@ const login = () => {
         setMessageContent('알 수 없는 오류로 실패하였습니다');
         setMessageModalVisible(true);
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   return (
