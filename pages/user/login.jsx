@@ -7,7 +7,7 @@ import {
 } from 'components/common';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { customColor } from 'constants/index';
+import { customColor, settings } from 'constants/index';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { getQueryString, tokenHelper, isObjectEmpty } from 'util/index';
 import { RegisterModal } from 'components/app/user/login';
@@ -36,7 +36,7 @@ const login = () => {
   }, []);
 
   const signIn = () => {
-    location.href = 'https://dev.petition.pw/oauth2/authorization/google';
+    location.href = `${settings.apiUrl}/oauth2/authorization/google`;
   };
 
   const setToken = (idToken, refreshToken) => {
