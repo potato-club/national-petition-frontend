@@ -5,10 +5,11 @@ import { ApplyItem } from './ApplyItem';
 import { Pagination } from '@mui/material';
 import { commentApi } from 'apis';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 15;
 
 export const ApplyPagination = ({ commentId }) => {
   const [applyList, setApplyList] = useState([]);
+  const [totalPage, setTotalPage] = useState(1);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -16,25 +17,36 @@ export const ApplyPagination = ({ commentId }) => {
   }, [page]);
 
   const getList = async (page) => {
-    const { data } = await commentApi.applyList(commentId, {
+    const {
+      data: { data: applyItem },
+    } = await commentApi.applyList(commentId, {
       page: page,
       size: PAGE_SIZE,
       parentId: commentId,
     });
 
-    console.log(data);
+    setApplyList(applyItem.contents);
+    setTotalPage(applyItem.totalPages);
   };
 
   return (
     <Wrapper>
-      <ApplyItem />
-      <ApplyItem />
-      <ApplyItem />
-      <ApplyItem />
+      {applyList.map(
+        ({ commentId, content, createdAt, nickName, memberId }) => (
+          <ApplyItem
+            key={commentId}
+            commentId={commentId}
+            content={content}
+            createdAt={createdAt}
+            nickName={nickName}
+            memberId={memberId}
+          />
+        ),
+      )}
       <PaginationWrapper>
         <Pagination
-          count={10}
-          onChange={(e, value) => {}}
+          count={totalPage}
+          onChange={(e, value) => setPage(value)}
           page={page}
           shape="rounded"
           color="primary"
