@@ -53,6 +53,7 @@ export const CommentItem = ({
             depth,
             childrenCounts,
             createdAt,
+            nickName,
           }) => {
             return {
               commentId: id,
@@ -61,6 +62,7 @@ export const CommentItem = ({
               depth,
               childrenCounts,
               createdAt,
+              nickName,
             };
           },
         ),
