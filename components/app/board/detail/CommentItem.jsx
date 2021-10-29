@@ -20,6 +20,7 @@ export const CommentItem = ({
   childrenCounts,
   createdAt,
   setCommentList,
+  nickName,
 }) => {
   const [ApplyVisible, setApplyVisible] = useState(false);
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
@@ -52,6 +53,7 @@ export const CommentItem = ({
             depth,
             childrenCounts,
             createdAt,
+            nickName,
           }) => {
             return {
               commentId: id,
@@ -60,6 +62,7 @@ export const CommentItem = ({
               depth,
               childrenCounts,
               createdAt,
+              nickName,
             };
           },
         ),
@@ -80,7 +83,7 @@ export const CommentItem = ({
             type="body1"
             color={memberId === null ? customColor.gray : customColor.black}
             fontWeight={memberId === null ? 'normal' : 'bold'}>
-            동철
+            {nickName}
           </TypoGraphy>
           <TypoGraphy type="body1" color={customColor.gray}>
             {moment(createdAt).format('YYYY-MM-DD')}

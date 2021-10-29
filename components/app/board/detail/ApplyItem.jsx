@@ -35,23 +35,6 @@ export const ApplyItem = () => {
               내용
             </TypoGraphy>
           </Content>
-          {/* <ButtonForm>
-          <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
-            <BsArrowReturnRight
-              size="16"
-              color={customColor.gray}
-              style={{ marginRight: 4 }}
-            />
-            <TypoGraphy type="body2" color={customColor.gray}>
-              답글
-            </TypoGraphy>
-          </Button>
-        </ButtonForm>
-        {AddApplyVisible && (
-          <AddApplyWrapper>
-            <CommentAddForm />
-          </AddApplyWrapper>
-        )} */}
         </ItemContainer>
       </ContentWrapper>
       <Divide />
