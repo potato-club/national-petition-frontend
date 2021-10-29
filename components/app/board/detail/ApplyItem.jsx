@@ -3,9 +3,16 @@ import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
 import { customColor } from 'constants/index';
 import { BsArrowReturnRight } from 'react-icons/bs';
+import moment from 'moment';
 import { CommentAddForm } from './CommentAddForm';
 
-export const ApplyItem = () => {
+export const ApplyItem = ({
+  commentId,
+  content,
+  createdAt,
+  nickName,
+  memberId,
+}) => {
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
 
   return (
@@ -24,15 +31,15 @@ export const ApplyItem = () => {
               type="body1"
               color={customColor.black}
               fontWeight="bold">
-              동철
+              {nickName}
             </TypoGraphy>
             <TypoGraphy type="body1" color={customColor.gray}>
-              2019-01-11
+              {moment(createdAt).format('YYYY-MM-DD')}
             </TypoGraphy>
           </Information>
           <Content>
             <TypoGraphy type="body2" color={customColor.black}>
-              내용
+              {content}
             </TypoGraphy>
           </Content>
         </ItemContainer>
