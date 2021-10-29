@@ -49,11 +49,20 @@ export const CommentList = ({ boardId, commentReset }) => {
     <Wrapper>
       {commentList.map(
         (
-          { commentId, memberId, content, depth, childrenCounts, createdAt },
+          {
+            commentId,
+            memberId,
+            content,
+            depth,
+            childrenCounts,
+            createdAt,
+            nickName,
+          },
           index,
         ) => (
           <CommentItem
             key={commentId}
+            nickName={nickName}
             userId={userId}
             commentId={commentId}
             memberId={memberId}
