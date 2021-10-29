@@ -166,7 +166,7 @@ export const CommentItem = ({
         )}
         {ApplyVisible && (
           <ApplyWrapper>
-            <ApplyPagination />
+            <ApplyPagination commentId={commentId} />
           </ApplyWrapper>
         )}
       </ItemWrapper>
