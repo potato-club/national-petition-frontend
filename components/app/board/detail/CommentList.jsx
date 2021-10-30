@@ -71,6 +71,7 @@ export const CommentList = ({ boardId, commentReset }) => {
             createdAt={createdAt}
             content={content}
             setCommentList={setCommentList}
+            boardId={boardId}
           />
         ),
       )}

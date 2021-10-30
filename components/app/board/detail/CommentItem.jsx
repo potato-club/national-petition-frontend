@@ -21,10 +21,12 @@ export const CommentItem = ({
   createdAt,
   setCommentList,
   nickName,
+  boardId,
 }) => {
   const [ApplyVisible, setApplyVisible] = useState(false);
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
   const [commentEditVisible, setCommentEditVisible] = useState(false);
+  const [page, setPage] = useState(1);
   const { addToast } = useToasts();
 
   const deleteComment = async () => {
@@ -70,6 +72,17 @@ export const CommentItem = ({
 
       setCommentEditVisible((cur) => !cur);
       addToast('댓글이 수정되었습니다', { appearance: 'success' });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
+    }
+  };
+
+  const addApply = async (content) => {
+    try {
+      await commentApi.add(boardId, { content, parentId: commentId });
+
+      setPage(1);
+      addToast('댓글이 추가되었습니다', { appearance: 'success' });
     } catch (e) {
       addToast(getErrorMessage(e), { appearance: 'error' });
     }
@@ -161,12 +174,16 @@ export const CommentItem = ({
         </ButtonForm>
         {AddApplyVisible && (
           <AddApplyWrapper>
-            <CommentAddForm type="add" />
+            <CommentAddForm type="add" onSubmit={addApply} />
           </AddApplyWrapper>
         )}
         {ApplyVisible && (
           <ApplyWrapper>
-            <ApplyPagination commentId={commentId} />
+            <ApplyPagination
+              commentId={commentId}
+              page={page}
+              setPage={setPage}
+            />
           </ApplyWrapper>
         )}
       </ItemWrapper>
