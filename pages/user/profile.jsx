@@ -7,6 +7,8 @@ import {
   BoardList,
   MessageModal,
 } from 'components/common';
+import { getErrorMessage } from 'util/index';
+import { useToasts } from 'react-toast-notifications';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { memberApi } from 'apis/index';
@@ -29,6 +31,8 @@ const profile = () => {
   const [logoutModal, setLogoutModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
+  const { addToast } = useToasts();
+
   const fetchProfile = async () => {
     try {
       const {
@@ -39,7 +43,9 @@ const profile = () => {
       setUserNickName(nickName);
       setUserEmail(email);
     } catch (error) {
-      // 에러 동철이가 말했던 Tost사용하기
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
     }
   };
 
@@ -56,7 +62,11 @@ const profile = () => {
 
       setMyPostList(myList);
       setListCount(Math.ceil(totalSize / pageSize));
-    } catch (error) {}
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
   const deleteMe = async () => {
@@ -64,7 +74,11 @@ const profile = () => {
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
-    } catch (error) {}
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
   const nowLogout = async () => {
@@ -73,7 +87,11 @@ const profile = () => {
       tokenHelper.setIdToken('');
       setLogoutModal(false);
       router.push('/');
-    } catch (error) {}
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
   useEffect(() => {
