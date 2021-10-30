@@ -29,7 +29,6 @@ const profile = () => {
   const [logoutModal, setLogoutModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
-  // 내 정보 불러오기 API
   const fetchProfile = async () => {
     try {
       const {
@@ -44,27 +43,22 @@ const profile = () => {
     }
   };
 
-  // :: 미구현 :: 내가 쓴 글 API
-  // 현재 문제점 : size만큼만 내가 쓴글을 불러온다
   const fetchMyPost = async () => {
     try {
       const {
         data: {
-          data: { myBoardList: myList },
+          data: { myBoardList: myList, boardCounts: totalSize },
         },
       } = await memberApi.boardList({
-        page: 1,
+        page: currentPost,
         size: pageSize,
       });
 
-      // 일단 무슨 값인지 확인하기
-      console.log(myList);
       setMyPostList(myList);
-      setListCount(Math.ceil(myList.length / 10));
+      setListCount(Math.ceil(totalSize / pageSize));
     } catch (error) {}
   };
 
-  // 계정삭제 API
   const deleteMe = async () => {
     try {
       await memberApi.delete();
@@ -73,7 +67,6 @@ const profile = () => {
     } catch (error) {}
   };
 
-  // 로그아웃 API
   const nowLogout = async () => {
     try {
       await memberApi.logout();
@@ -86,6 +79,7 @@ const profile = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+
   useEffect(() => {
     fetchMyPost();
   }, [currentPost]);
