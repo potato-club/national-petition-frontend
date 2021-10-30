@@ -7,13 +7,13 @@ import { commentApi } from 'apis';
 
 const PAGE_SIZE = 15;
 
-export const ApplyPagination = ({ commentId }) => {
+export const ApplyPagination = ({ commentId, page, setPage }) => {
   const [applyList, setApplyList] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getList(page);
+    console.log('PAGE :: ', page);
   }, [page]);
 
   const getList = async (page) => {
