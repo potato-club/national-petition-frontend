@@ -9,6 +9,8 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { boardApi } from 'apis/index';
 import { useRouter } from 'next/router';
+import { getErrorMessage } from 'util/index';
+import { useToasts } from 'react-toast-notifications';
 
 const add = () => {
   const [title, setTitle] = useState('');
@@ -18,6 +20,7 @@ const add = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [addModal, setAddModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
+  const { addToast } = useToasts();
 
   const router = useRouter();
   const reg = /^https:\/\/www1.president.go.kr\/petitions/;
@@ -43,7 +46,9 @@ const add = () => {
       setModalContent('게시글을 등록했습니다.');
       setAddModal(true);
     } catch (error) {
-      console.error(error);
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
     }
   };
 

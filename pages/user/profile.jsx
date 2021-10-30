@@ -7,9 +7,10 @@ import {
   BoardList,
   MessageModal,
 } from 'components/common';
+import { getErrorMessage } from 'util/index';
+import { useToasts } from 'react-toast-notifications';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
-import dummy from '../../dummy/list.json';
 import { memberApi } from 'apis/index';
 import router from 'next/router';
 import { tokenHelper } from 'util/index';
@@ -20,13 +21,18 @@ const profile = () => {
   const [userEmail, setUserEmail] = useState('bigyou00@gmail.com');
 
   const [myPostList, setMyPostList] = useState([]);
+  const [listCount, setListCount] = useState(0);
+  const [currentPost, setCurrentPost] = useState(1);
+  const pageSize = 10;
+  const handlePageChange = (value) => {
+    setCurrentPost(value);
+  };
 
   const [logoutModal, setLogoutModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const myPage = 0;
-  const pageSize = 1;
 
-  // 내 정보 불러오기 API
+  const { addToast } = useToasts();
+
   const fetchProfile = async () => {
     try {
       const {
@@ -36,43 +42,65 @@ const profile = () => {
       setUserName(name);
       setUserNickName(nickName);
       setUserEmail(email);
-    } catch (error) {}
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
-  // :: 미구현 :: 내가 쓴 글 API
   const fetchMyPost = async () => {
     try {
       const {
-        data: { data: myList },
-      } = await memberApi.boardList({ myPage, pageSize });
-      // 일단 무슨 값인지 확인하기
+        data: {
+          data: { myBoardList: myList, boardCounts: totalSize },
+        },
+      } = await memberApi.boardList({
+        page: currentPost,
+        size: pageSize,
+      });
+
       setMyPostList(myList);
-    } catch (error) {}
+      setListCount(Math.ceil(totalSize / pageSize));
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
-  // 계정삭제 API
   const deleteMe = async () => {
     try {
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
-    } catch (error) {}
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
-  // 로그아웃 API
   const nowLogout = async () => {
     try {
       await memberApi.logout();
       tokenHelper.setIdToken('');
       setLogoutModal(false);
       router.push('/');
-    } catch (error) {}
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
   };
 
   useEffect(() => {
     fetchProfile();
-    // fetchMyPost();
   }, []);
+
+  useEffect(() => {
+    fetchMyPost();
+  }, [currentPost]);
 
   return (
     <LayoutContainer>
@@ -147,7 +175,12 @@ const profile = () => {
           내가 쓴 글
         </TypoGraphy>
 
-        {/* <BoardList listData={dummy} /> */}
+        <BoardList
+          listData={myPostList}
+          handlePageChange={handlePageChange}
+          currentPost={currentPost}
+          listCount={listCount}
+        />
       </BoxBody>
       <MessageModal
         visible={deleteModal}
