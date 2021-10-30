@@ -14,7 +14,7 @@ finished: "2021-10-23"
 id: "601350"
 title: "*** 아버지 장제원 국회의원직 박탈을 원합니다." 
 */
-
+//https://www1.president.go.kr/petitions/601501
 export const Top5TextLoop = () => {
   const [handleDrop, setHandleDrop] = useState(false);
   const [Top5List, setTop5List] = useState([
@@ -39,7 +39,6 @@ export const Top5TextLoop = () => {
       } catch (e) {}
     })();
   }, []);
-
   return (
     <Top5Section>
       <Top5Title>
@@ -82,7 +81,11 @@ export const Top5TextLoop = () => {
                       type="body1"
                       color={customColor.black}
                       textAlign="left">
-                      {title}
+                      <LinkBlueHouse
+                        href={'https://www1.president.go.kr/petitions/' + id}
+                        target={'_blank'}>
+                        {title}
+                      </LinkBlueHouse>
                     </TypoGraphy>
                   </ItemTitle>
                   <ItemSubNumber>
@@ -114,7 +117,14 @@ export const Top5TextLoop = () => {
                     type="body1"
                     color={customColor.black}
                     textAlign="left">
-                    {Top5List[0].title}
+                    <LinkBlueHouse
+                      href={
+                        'https://www1.president.go.kr/petitions/' +
+                        Top5List[0].id
+                      }
+                      target={'_blank'}>
+                      {Top5List[0].title}
+                    </LinkBlueHouse>
                   </TypoGraphy>
                 </ItemTitle>
                 <ItemSubNumber>
@@ -142,7 +152,14 @@ export const Top5TextLoop = () => {
                     type="body1"
                     color={customColor.black}
                     textAlign="left">
-                    {Top5List[1].title}
+                    <LinkBlueHouse
+                      href={
+                        'https://www1.president.go.kr/petitions/' +
+                        Top5List[1].id
+                      }
+                      target={'_blank'}>
+                      {Top5List[1].title}
+                    </LinkBlueHouse>
                   </TypoGraphy>
                 </ItemTitle>
                 <ItemSubNumber>
@@ -170,7 +187,14 @@ export const Top5TextLoop = () => {
                     type="body1"
                     color={customColor.black}
                     textAlign="left">
-                    {Top5List[2].title}
+                    <LinkBlueHouse
+                      href={
+                        'https://www1.president.go.kr/petitions/' +
+                        Top5List[2].id
+                      }
+                      target={'_blank'}>
+                      {Top5List[2].title}
+                    </LinkBlueHouse>
                   </TypoGraphy>
                 </ItemTitle>
                 <ItemSubNumber>
@@ -198,7 +222,14 @@ export const Top5TextLoop = () => {
                     type="body1"
                     color={customColor.black}
                     textAlign="left">
-                    {Top5List[3].title}
+                    <LinkBlueHouse
+                      href={
+                        'https://www1.president.go.kr/petitions/' +
+                        Top5List[3].id
+                      }
+                      target={'_blank'}>
+                      {Top5List[3].title}
+                    </LinkBlueHouse>
                   </TypoGraphy>
                 </ItemTitle>
                 <ItemSubNumber>
@@ -226,7 +257,14 @@ export const Top5TextLoop = () => {
                     type="body1"
                     color={customColor.black}
                     textAlign="left">
-                    {Top5List[4].title}
+                    <LinkBlueHouse
+                      href={
+                        'https://www1.president.go.kr/petitions/' +
+                        Top5List[4].id
+                      }
+                      target={'_blank'}>
+                      {Top5List[4].title}
+                    </LinkBlueHouse>
                   </TypoGraphy>
                 </ItemTitle>
                 <ItemSubNumber>
@@ -302,4 +340,10 @@ const ItemSubNumber = styled.div`
   justify-content: center;
   align-items: center;
   width: 15%;
+`;
+
+const LinkBlueHouse = styled.a`
+  :hover {
+    text-decoration: underline;
+  }
 `;
