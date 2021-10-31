@@ -35,7 +35,27 @@ export const CommentItem = ({
       await commentApi.delete(commentId);
 
       setCommentList((cur) =>
-        cur.filter(({ commentId: id }) => id !== commentId),
+        cur.map(
+          ({
+            commentId: id,
+            memberId,
+            content,
+            depth,
+            childrenCounts,
+            createdAt,
+            nickName,
+          }) => {
+            return {
+              commentId: id,
+              memberId: commentId === id ? null : memberId,
+              content: commentId === id ? '삭제된 메세지 입니다' : content,
+              depth,
+              childrenCounts,
+              createdAt,
+              nickName: commentId === id ? '' : nickName,
+            };
+          },
+        ),
       );
 
       addToast('댓글이 삭제되었습니다', { appearance: 'success' });
@@ -182,6 +202,7 @@ export const CommentItem = ({
           <ApplyWrapper>
             <ApplyPagination
               commentId={commentId}
+              userId={userId}
               page={page}
               setPage={setPage}
               applyAddUpdate={applyAddUpdate}

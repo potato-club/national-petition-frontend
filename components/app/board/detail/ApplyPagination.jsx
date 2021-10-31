@@ -4,21 +4,27 @@ import { customColor } from 'constants/index';
 import { ApplyItem } from './ApplyItem';
 import { Pagination } from '@mui/material';
 import { commentApi } from 'apis';
+import { useToasts } from 'react-toast-notifications';
+import { getErrorMessage } from 'util/index';
 
 const PAGE_SIZE = 5;
+const NONE_USER = -1;
 
 export const ApplyPagination = ({
   commentId,
   page,
   setPage,
   applyAddUpdate,
+  userId,
 }) => {
   const [applyList, setApplyList] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
+  const [currentPageUpdate, setCurrentPageUpdate] = useState(false);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     getList(page);
-  }, [page]);
+  }, [page, currentPageUpdate]);
 
   useEffect(() => {
     getEndList();
@@ -61,17 +67,42 @@ export const ApplyPagination = ({
     setApplyList(applyItem.contents);
   };
 
+  const deleteApplyItem = async (commentId) => {
+    try {
+      await commentApi.delete(commentId);
+
+      setCurrentPageUpdate((cur) => !cur);
+      addToast('답글이 삭제되었습니다', { appearance: 'success' });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
+    }
+  };
+
+  const editApplyItem = async (commentId, content) => {
+    try {
+      await commentApi.edit({ commentId, content: content });
+
+      setCurrentPageUpdate((cur) => !cur);
+      addToast('답글이 수정되었습니다', { appearance: 'success' });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
+    }
+  };
+
   return (
     <Wrapper>
       {applyList.map(
         ({ commentId, content, createdAt, nickName, memberId }) => (
           <ApplyItem
             key={commentId}
+            userId={userId}
             commentId={commentId}
             content={content}
             createdAt={createdAt}
             nickName={nickName}
             memberId={memberId}
+            deleteApplyItem={deleteApplyItem}
+            editApplyItem={editApplyItem}
           />
         ),
       )}

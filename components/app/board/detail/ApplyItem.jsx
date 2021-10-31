@@ -12,8 +12,16 @@ export const ApplyItem = ({
   createdAt,
   nickName,
   memberId,
+  userId,
+  deleteApplyItem,
+  editApplyItem,
 }) => {
-  const [AddApplyVisible, setAddApplyVisible] = useState(false);
+  const [editApplyVisible, setEditApplyVisible] = useState(false);
+
+  const editApply = (content) => {
+    editApplyItem(commentId, content);
+    setEditApplyVisible(false);
+  };
 
   return (
     <Wrapper>
@@ -37,11 +45,29 @@ export const ApplyItem = ({
               {moment(createdAt).format('YYYY-MM-DD')}
             </TypoGraphy>
           </Information>
-          <Content>
-            <TypoGraphy type="body2" color={customColor.black}>
-              {content}
-            </TypoGraphy>
-          </Content>
+          {editApplyVisible ? (
+            <CommentAddForm type="edit" onSubmit={editApply} />
+          ) : (
+            <Content>
+              <TypoGraphy type="body2" color={customColor.black}>
+                {content}
+              </TypoGraphy>
+            </Content>
+          )}
+          <ButtonForm>
+            {userId === memberId && (
+              <TypoGraphy type="body2" color={customColor.deepBlue}>
+                <Button onClick={() => deleteApplyItem(commentId)}>삭제</Button>
+              </TypoGraphy>
+            )}
+            {userId === memberId && (
+              <TypoGraphy type="body2" color={customColor.deepBlue}>
+                <Button onClick={() => setEditApplyVisible((cur) => !cur)}>
+                  {editApplyVisible ? '취소' : '수정'}
+                </Button>
+              </TypoGraphy>
+            )}
+          </ButtonForm>
         </ItemContainer>
       </ContentWrapper>
       <Divide />
@@ -93,6 +119,9 @@ const Button = styled.div`
   display: flex;
   cursor: pointer;
   margin-right: 16px;
+  &:hover {
+    color: ${customColor.blue};
+  }
 `;
 
 const AddApplyWrapper = styled.div`
