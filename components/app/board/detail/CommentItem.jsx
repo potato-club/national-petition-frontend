@@ -27,6 +27,7 @@ export const CommentItem = ({
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
   const [commentEditVisible, setCommentEditVisible] = useState(false);
   const [page, setPage] = useState(1);
+  const [applyAddUpdate, setApplyAddUpdate] = useState(false);
   const { addToast } = useToasts();
 
   const deleteComment = async () => {
@@ -34,7 +35,27 @@ export const CommentItem = ({
       await commentApi.delete(commentId);
 
       setCommentList((cur) =>
-        cur.filter(({ commentId: id }) => id !== commentId),
+        cur.map(
+          ({
+            commentId: id,
+            memberId,
+            content,
+            depth,
+            childrenCounts,
+            createdAt,
+            nickName,
+          }) => {
+            return {
+              commentId: id,
+              memberId: commentId === id ? null : memberId,
+              content: commentId === id ? '삭제된 메세지 입니다' : content,
+              depth,
+              childrenCounts,
+              createdAt,
+              nickName: commentId === id ? '' : nickName,
+            };
+          },
+        ),
       );
 
       addToast('댓글이 삭제되었습니다', { appearance: 'success' });
@@ -81,7 +102,7 @@ export const CommentItem = ({
     try {
       await commentApi.add(boardId, { content, parentId: commentId });
 
-      setPage(1);
+      setApplyAddUpdate((cur) => !cur);
       addToast('댓글이 추가되었습니다', { appearance: 'success' });
     } catch (e) {
       addToast(getErrorMessage(e), { appearance: 'error' });
@@ -181,8 +202,10 @@ export const CommentItem = ({
           <ApplyWrapper>
             <ApplyPagination
               commentId={commentId}
+              userId={userId}
               page={page}
               setPage={setPage}
+              applyAddUpdate={applyAddUpdate}
             />
           </ApplyWrapper>
         )}

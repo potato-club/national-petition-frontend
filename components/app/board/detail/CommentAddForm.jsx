@@ -6,6 +6,12 @@ import { TypoGraphy } from 'components/common';
 export const CommentAddForm = ({ onSubmit, type = 'add', content = '' }) => {
   const [comment, setComment] = useState(content);
 
+  const submitComment = async () => {
+    await onSubmit(comment);
+
+    setComment('');
+  };
+
   return (
     <Wrapper>
       <InputComment
@@ -14,7 +20,7 @@ export const CommentAddForm = ({ onSubmit, type = 'add', content = '' }) => {
         onChange={(e) => setComment(e.target.value)}
       />
       <Divider />
-      <AddButton onClick={() => onSubmit(comment)}>
+      <AddButton onClick={submitComment}>
         <TypoGraphy type="body1" color={customColor.white}>
           {type === 'add' ? '등록' : '수정'}
         </TypoGraphy>
