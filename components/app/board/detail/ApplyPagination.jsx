@@ -5,16 +5,24 @@ import { ApplyItem } from './ApplyItem';
 import { Pagination } from '@mui/material';
 import { commentApi } from 'apis';
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 5;
 
-export const ApplyPagination = ({ commentId, page, setPage }) => {
+export const ApplyPagination = ({
+  commentId,
+  page,
+  setPage,
+  applyAddUpdate,
+}) => {
   const [applyList, setApplyList] = useState([]);
   const [totalPage, setTotalPage] = useState(1);
 
   useEffect(() => {
     getList(page);
-    console.log('PAGE :: ', page);
   }, [page]);
+
+  useEffect(() => {
+    getEndList();
+  }, [applyAddUpdate]);
 
   const getList = async (page) => {
     const {
@@ -27,6 +35,30 @@ export const ApplyPagination = ({ commentId, page, setPage }) => {
 
     setApplyList(applyItem.contents);
     setTotalPage(applyItem.totalPages);
+  };
+
+  const getEndList = async () => {
+    const {
+      data: {
+        data: { totalPages },
+      },
+    } = await commentApi.applyList(commentId, {
+      page: 1,
+      size: PAGE_SIZE,
+      parentId: commentId,
+    });
+
+    const {
+      data: { data: applyItem },
+    } = await commentApi.applyList(commentId, {
+      page: totalPages,
+      size: PAGE_SIZE,
+      parentId: commentId,
+    });
+
+    setPage(applyItem.totalPages);
+    setTotalPage(applyItem.totalPages);
+    setApplyList(applyItem.contents);
   };
 
   return (

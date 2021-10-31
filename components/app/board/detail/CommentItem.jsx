@@ -27,6 +27,7 @@ export const CommentItem = ({
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
   const [commentEditVisible, setCommentEditVisible] = useState(false);
   const [page, setPage] = useState(1);
+  const [applyAddUpdate, setApplyAddUpdate] = useState(false);
   const { addToast } = useToasts();
 
   const deleteComment = async () => {
@@ -81,7 +82,7 @@ export const CommentItem = ({
     try {
       await commentApi.add(boardId, { content, parentId: commentId });
 
-      setPage(1);
+      setApplyAddUpdate((cur) => !cur);
       addToast('댓글이 추가되었습니다', { appearance: 'success' });
     } catch (e) {
       addToast(getErrorMessage(e), { appearance: 'error' });
@@ -183,6 +184,7 @@ export const CommentItem = ({
               commentId={commentId}
               page={page}
               setPage={setPage}
+              applyAddUpdate={applyAddUpdate}
             />
           </ApplyWrapper>
         )}
