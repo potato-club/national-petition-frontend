@@ -82,7 +82,7 @@ const list = () => {
       <Header />
       <TitleHeader title="국민청원 소통방" />
       <Container>
-        <ListUpperWrapper>
+        <SearchAndSortWrapper>
           <Search setSearchData={setSearchData} />
           <SortWrapper
             onClick={() => setHandleDrop((handleDrop) => !handleDrop)}>
@@ -132,8 +132,10 @@ const list = () => {
               </SortList>
             )}
           </SortWrapper>
-        </ListUpperWrapper>
-
+        </SearchAndSortWrapper>
+        <CategoryWrapper>
+          <Category>전체</Category>
+        </CategoryWrapper>
         <BoardList
           listData={boardList}
           handlePageChange={handlePageChange}
@@ -154,7 +156,7 @@ const Container = styled.div`
   margin-right: auto;
 `;
 
-const ListUpperWrapper = styled.div`
+const SearchAndSortWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 100px;
@@ -197,4 +199,10 @@ const SortButton = styled.div`
   }
 `;
 
+const CategoryWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const Category = styled.div``;
 export default list;

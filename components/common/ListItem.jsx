@@ -135,6 +135,9 @@ const MainTitle = styled.div`
   padding-bottom: 5px;
 `;
 const CommentWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 50px;
   margin-bottom: 2px;
 `;
 const SubTitle = styled.div`
