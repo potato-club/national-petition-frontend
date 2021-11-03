@@ -14,11 +14,11 @@ import { customColor } from 'constants/index';
 import { memberApi } from 'apis/index';
 import router from 'next/router';
 import { tokenHelper } from 'util/index';
+import { myInfo } from 'recoil/atom';
+import { useRecoilState } from 'recoil';
 
 const profile = () => {
-  const [userName, setUserName] = useState('사용자이름');
-  const [userNickName, setUserNickName] = useState('별명');
-  const [userEmail, setUserEmail] = useState('bigyou00@gmail.com');
+  const [userInfo, setUserInfo] = useRecoilState(myInfo);
 
   const [myPostList, setMyPostList] = useState([]);
   const [listCount, setListCount] = useState(0);
@@ -30,24 +30,7 @@ const profile = () => {
 
   const [logoutModal, setLogoutModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-
   const { addToast } = useToasts();
-
-  const fetchProfile = async () => {
-    try {
-      const {
-        data: { data: myInfo },
-      } = await memberApi.getInfo();
-      const { name, email, nickName } = myInfo;
-      setUserName(name);
-      setUserNickName(nickName);
-      setUserEmail(email);
-    } catch (error) {
-      addToast(getErrorMessage(e), '에러 발생', {
-        appearance: 'error',
-      });
-    }
-  };
 
   const fetchMyPost = async () => {
     try {
@@ -63,7 +46,7 @@ const profile = () => {
       setMyPostList(myList);
       setListCount(Math.ceil(totalSize / pageSize));
     } catch (error) {
-      addToast(getErrorMessage(e), '에러 발생', {
+      addToast(getErrorMessage(error), '에러 발생', {
         appearance: 'error',
       });
     }
@@ -75,9 +58,10 @@ const profile = () => {
       setDeleteModal(false);
       router.push('/user/login');
     } catch (error) {
-      addToast(getErrorMessage(e), '에러 발생', {
-        appearance: 'error',
-      });
+      // addToast(getErrorMessage(error), '에러 발생', {
+      //   appearance: 'error',
+      // });
+      console.log(error);
     }
   };
 
@@ -88,15 +72,11 @@ const profile = () => {
       setLogoutModal(false);
       router.push('/');
     } catch (error) {
-      addToast(getErrorMessage(e), '에러 발생', {
+      addToast(getErrorMessage(error), '에러 발생', {
         appearance: 'error',
       });
     }
   };
-
-  useEffect(() => {
-    fetchProfile();
-  }, []);
 
   useEffect(() => {
     fetchMyPost();
@@ -109,7 +89,7 @@ const profile = () => {
       <BoxHeader>
         <SayHi>
           <TypoGraphy type="Head" color={customColor.black}>
-            {userName}
+            {userInfo.name}
           </TypoGraphy>
           <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
             님, 안녕하세요!
@@ -128,7 +108,7 @@ const profile = () => {
           </Attribute>
           <Value>
             <TypoGraphy type="h1" color={customColor.black}>
-              {userName}
+              {userInfo.name}
             </TypoGraphy>
           </Value>
         </AttributeBox>
@@ -142,7 +122,7 @@ const profile = () => {
           </Attribute>
           <Value>
             <TypoGraphy type="h1" color={customColor.black}>
-              {userNickName}
+              {userInfo.nickName}
             </TypoGraphy>
           </Value>
         </AttributeBox>
@@ -156,7 +136,7 @@ const profile = () => {
 
           <Value>
             <TypoGraphy type="h1" color={customColor.black}>
-              {userEmail}
+              {userInfo.email}
             </TypoGraphy>
           </Value>
         </AttributeBox>

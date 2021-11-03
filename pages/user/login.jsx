@@ -12,12 +12,18 @@ import { GoogleLoginButton } from 'react-social-login-buttons';
 import { getQueryString, tokenHelper, isObjectEmpty } from 'util/index';
 import { RegisterModal } from 'components/app/user/login';
 import { memberApi } from 'apis/index';
+import { useToasts } from 'react-toast-notifications';
+import { getErrorMessage } from 'util/index';
+import { myInfo } from 'recoil/atom';
+import { useRecoilState } from 'recoil';
 
 const login = () => {
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [messageModalVisible, setMessageModalVisible] = useState(false);
   const [messageContent, setMessageContent] = useState('');
   const router = useRouter();
+  const { addToast } = useToasts();
+  const [userInfo, setUserInfo] = useRecoilState(myInfo);
 
   useEffect(() => {
     (() => {
@@ -29,11 +35,30 @@ const login = () => {
         if (register === 'false') {
           setRegisterModalVisible(true);
         } else {
+          // 이동하기 전에 user State 저장하기
+          setMyInfo();
           router.push('/board/list');
         }
       }
     })();
   }, []);
+
+  // recoil에 저장하기
+  const setMyInfo = async () => {
+    try {
+      const {
+        data: { data: myInfo },
+      } = await memberApi.getInfo();
+
+      const { name, email, nickName, memberId } = myInfo;
+
+      setUserInfo({ name, email, nickName, memberId });
+    } catch (error) {
+      addToast(getErrorMessage(e), '에러 발생', {
+        appearance: 'error',
+      });
+    }
+  };
 
   const signIn = () => {
     location.href = `${settings.apiUrl}/oauth2/authorization/google`;
@@ -51,6 +76,8 @@ const login = () => {
       } = await memberApi.addNickName({ nickName });
 
       if (result === 'success') {
+        // 성공시 받아오기
+        setMyInfo();
         router.push('/board/list');
       } else if (result === 'duplicate') {
         setMessageContent('중복된 닉네임입니다');
