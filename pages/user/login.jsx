@@ -14,7 +14,7 @@ import { RegisterModal } from 'components/app/user/login';
 import { memberApi } from 'apis/index';
 import { useToasts } from 'react-toast-notifications';
 import { getErrorMessage } from 'util/index';
-import { myInfo } from 'recoil/atom';
+import { myInformation } from 'recoil/atom';
 import { useRecoilState } from 'recoil';
 
 const login = () => {
@@ -23,7 +23,7 @@ const login = () => {
   const [messageContent, setMessageContent] = useState('');
   const router = useRouter();
   const { addToast } = useToasts();
-  const [userInfo, setUserInfo] = useRecoilState(myInfo);
+  const [userInfo, setUserInfo] = useRecoilState(myInformation);
 
   useEffect(() => {
     (() => {

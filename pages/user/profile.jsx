@@ -14,11 +14,11 @@ import { customColor } from 'constants/index';
 import { memberApi } from 'apis/index';
 import router from 'next/router';
 import { tokenHelper } from 'util/index';
-import { myInfo } from 'recoil/atom';
+import { myInformation } from 'recoil/atom';
 import { useRecoilState } from 'recoil';
 
 const profile = () => {
-  const [userInfo, setUserInfo] = useRecoilState(myInfo);
+  const [userInfo, setUserInfo] = useRecoilState(myInformation);
 
   const [myPostList, setMyPostList] = useState([]);
   const [listCount, setListCount] = useState(0);
@@ -61,7 +61,7 @@ const profile = () => {
       // addToast(getErrorMessage(error), '에러 발생', {
       //   appearance: 'error',
       // });
-      console.log(error);
+      alert(error);
     }
   };
 
