@@ -15,11 +15,10 @@ import { memberApi } from 'apis/index';
 import router from 'next/router';
 import { tokenHelper } from 'util/index';
 import { myInformation } from 'recoil/atom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 const profile = () => {
-  const [userInfo, setUserInfo] = useRecoilState(myInformation);
-
+  const userInfo = useRecoilValue(myInformation);
   const [myPostList, setMyPostList] = useState([]);
   const [listCount, setListCount] = useState(0);
   const [currentPost, setCurrentPost] = useState(1);
@@ -46,7 +45,7 @@ const profile = () => {
       setMyPostList(myList);
       setListCount(Math.ceil(totalSize / pageSize));
     } catch (error) {
-      addToast(getErrorMessage(error), '에러 발생', {
+      addToast(getErrorMessage(error), {
         appearance: 'error',
       });
     }
@@ -58,10 +57,9 @@ const profile = () => {
       setDeleteModal(false);
       router.push('/user/login');
     } catch (error) {
-      // addToast(getErrorMessage(error), '에러 발생', {
-      //   appearance: 'error',
-      // });
-      alert(error);
+      addToast(getErrorMessage(error), {
+        appearance: 'error',
+      });
     }
   };
 
@@ -72,7 +70,7 @@ const profile = () => {
       setLogoutModal(false);
       router.push('/');
     } catch (error) {
-      addToast(getErrorMessage(error), '에러 발생', {
+      addToast(getErrorMessage(error), {
         appearance: 'error',
       });
     }

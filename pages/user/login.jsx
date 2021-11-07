@@ -15,7 +15,7 @@ import { memberApi } from 'apis/index';
 import { useToasts } from 'react-toast-notifications';
 import { getErrorMessage } from 'util/index';
 import { myInformation } from 'recoil/atom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 const login = () => {
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
@@ -23,7 +23,7 @@ const login = () => {
   const [messageContent, setMessageContent] = useState('');
   const router = useRouter();
   const { addToast } = useToasts();
-  const [userInfo, setUserInfo] = useRecoilState(myInformation);
+  const setUserInfo = useSetRecoilState(myInformation);
 
   useEffect(() => {
     (() => {
@@ -35,7 +35,6 @@ const login = () => {
         if (register === 'false') {
           setRegisterModalVisible(true);
         } else {
-          // 이동하기 전에 user State 저장하기
           setMyInfo();
           router.push('/board/list');
         }
@@ -43,7 +42,6 @@ const login = () => {
     })();
   }, []);
 
-  // recoil에 저장하기
   const setMyInfo = async () => {
     try {
       const {
@@ -54,7 +52,7 @@ const login = () => {
 
       setUserInfo({ name, email, nickName, memberId });
     } catch (error) {
-      addToast(getErrorMessage(e), '에러 발생', {
+      addToast(getErrorMessage(error), {
         appearance: 'error',
       });
     }
