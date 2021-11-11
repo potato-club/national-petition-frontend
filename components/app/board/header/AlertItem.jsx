@@ -3,14 +3,25 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common/index';
 
-export const AlertItem = ({ title }) => {
+export const AlertItem = ({ title, time, state }) => {
   return (
     <DropDownItem>
-      <TitleWrapper>
-        <TypoGraphy type="body1" color={customColor.black}>
-          {title}
-        </TypoGraphy>
-      </TitleWrapper>
+      <TextWrapper>
+        <TitleWrapper>
+          <TypoGraphy
+            type="body1"
+            color={state == 1 ? customColor.black : customColor.grayBg}>
+            {title}
+          </TypoGraphy>
+        </TitleWrapper>
+        <TimeWrapper>
+          <TypoGraphy
+            type="body1"
+            color={state == 1 ? customColor.gray : customColor.grayBg}>
+            {time}
+          </TypoGraphy>
+        </TimeWrapper>
+      </TextWrapper>
       <Line />
     </DropDownItem>
   );
@@ -23,19 +34,29 @@ const DropDownItem = styled.div`
   flex-direction: column;
   :hover {
     background-color: ${customColor.grayBg};
-
-    border-radius: 10px;
   }
   width: 100%;
 `;
+const TextWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 90%;
+`;
 const TitleWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  width: 300px;
-  cursor: pointer;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  width: 80%;
+`;
+const TimeWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 20%;
 `;
 const Line = styled.div`
   width: 90%;
