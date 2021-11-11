@@ -16,6 +16,7 @@ import router from 'next/router';
 import { tokenHelper } from 'util/index';
 import { myInformation } from 'recoil/atom';
 import { useRecoilValue } from 'recoil';
+import { TotalNotification } from 'components/app/user/profile';
 
 const profile = () => {
   const userInfo = useRecoilValue(myInformation);
@@ -147,6 +148,9 @@ const profile = () => {
             탈퇴하기
           </Button>
         </ButtonBox>
+      </BoxBody>
+      <BoxBody>
+        <TotalNotification />
       </BoxBody>
       <BoxBody>
         <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
