@@ -4,7 +4,7 @@ import { customColor } from 'constants/index';
 import { TypoGraphy } from './TypoGraphy';
 import Link from 'next/link';
 import { memberApi } from 'apis/index';
-import { HeaderAlert } from './HeaderAlert';
+import { HeaderAlert } from '../app/board/header';
 type User = {
   name: string;
   email: string;
@@ -48,13 +48,18 @@ export const Header = () => {
         </Link>
         <Gap />
         {user ? (
-          <Link href="/user/profile">
-            <a>
-              <TypoGraphy type="h1" color={customColor.white}>
-                {user.nickName}
-              </TypoGraphy>
-            </a>
-          </Link>
+          <>
+            <Link href="/user/profile">
+              <a>
+                <TypoGraphy type="h1" color={customColor.white}>
+                  {user.nickName}
+                </TypoGraphy>
+              </a>
+            </Link>
+
+            <Gap />
+            <HeaderAlert />
+          </>
         ) : (
           <Link href="/user/login">
             <a>
