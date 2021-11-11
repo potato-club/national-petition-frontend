@@ -4,7 +4,7 @@ import { customColor } from 'constants/index';
 import { TypoGraphy } from './TypoGraphy';
 import Link from 'next/link';
 import { memberApi } from 'apis/index';
-
+import { HeaderAlert } from './HeaderAlert';
 type User = {
   name: string;
   email: string;
