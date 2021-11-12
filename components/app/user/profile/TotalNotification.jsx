@@ -6,9 +6,8 @@ import { Switch } from '@mui/material';
 import { TypoGraphy } from 'components/common';
 
 export const TotalNotification = () => {
-  // 초기값 true
   const [notice, setNotice] = useRecoilState(totalNotification);
-  console.log(`@@초기 노티스 ${notice}`);
+  const onChange = () => setNotice(!notice);
   return (
     <Box>
       <TypoGraphy type="body1" fontWeight="bold">
@@ -18,11 +17,7 @@ export const TotalNotification = () => {
         <TypoGraphy type="body1" fontWeight="bold">
           OFF
         </TypoGraphy>
-        <Switch
-          checked={notice}
-          onChange={() => setNotice(!notice)}
-          color="primary"
-        />
+        <Switch checked={notice} onChange={onChange} color="primary" />
         <TypoGraphy type="body1" fontWeight="bold">
           ON
         </TypoGraphy>
