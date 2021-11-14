@@ -17,6 +17,9 @@ import { tokenHelper } from 'util/index';
 import { myInformation } from 'recoil/atom';
 import { useRecoilValue } from 'recoil';
 import { TotalNotification } from 'components/app/user/profile';
+import { BsFillTagFill } from 'react-icons/bs';
+import { MdEmail } from 'react-icons/md';
+import { FaUserCircle, FaUserGraduate } from 'react-icons/fa';
 
 const profile = () => {
   const userInfo = useRecoilValue(myInformation);
@@ -85,61 +88,41 @@ const profile = () => {
     <LayoutContainer>
       <Header />
       <TitleHeader title="내 정보 보기" top5Visible={false} />
-      <BoxHeader>
-        <SayHi>
-          <TypoGraphy type="Head" color={customColor.black}>
-            {userInfo.name}
-          </TypoGraphy>
-          <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-            님, 안녕하세요!
-          </TypoGraphy>
-        </SayHi>
-        <TypoGraphy type="body1" color={customColor.gray}>
-          당신의 안녕을 기원합니다.
-        </TypoGraphy>
-      </BoxHeader>
       <BoxBody>
-        <AttributeBox>
-          <Attribute>
-            <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-              이 름 &nbsp;&nbsp;:{' '}
-            </TypoGraphy>
-          </Attribute>
-          <Value>
-            <TypoGraphy type="h1" color={customColor.black}>
-              {userInfo.name}
-            </TypoGraphy>
-          </Value>
-        </AttributeBox>
-
-        <Line />
-        <AttributeBox>
-          <Attribute>
-            <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-              닉네임 :{' '}
-            </TypoGraphy>
-          </Attribute>
-          <Value>
-            <TypoGraphy type="h1" color={customColor.black}>
-              {userInfo.nickName}
-            </TypoGraphy>
-          </Value>
-        </AttributeBox>
-        <Line />
-        <AttributeBox>
-          <Attribute>
-            <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
-              이메일 :{' '}
-            </TypoGraphy>
-          </Attribute>
-
-          <Value>
-            <TypoGraphy type="h1" color={customColor.black}>
-              {userInfo.email}
-            </TypoGraphy>
-          </Value>
-        </AttributeBox>
-        <Line />
+        <TotalNotification />
+      </BoxBody>
+      <BoxBody>
+        <FlexBox>
+          <ProfilePhotoBox>
+            <FaUserGraduate size="128" color={customColor.gray} />
+          </ProfilePhotoBox>
+          <ContentBox>
+            <AttributeBox>
+              <FaUserCircle size="24" color={customColor.gray} />
+              <Value>
+                <TypoGraphy type="h1" color={customColor.black}>
+                  {userInfo.name}
+                </TypoGraphy>
+              </Value>
+            </AttributeBox>
+            <AttributeBox>
+              <BsFillTagFill size="24" color={customColor.gray} />
+              <Value>
+                <TypoGraphy type="h1" color={customColor.black}>
+                  {userInfo.nickName}
+                </TypoGraphy>
+              </Value>
+            </AttributeBox>
+            <AttributeBox>
+              <MdEmail size="24" color={customColor.gray} />
+              <Value>
+                <TypoGraphy type="h1" color={customColor.black}>
+                  {userInfo.email}
+                </TypoGraphy>
+              </Value>
+            </AttributeBox>
+          </ContentBox>
+        </FlexBox>
         <ButtonBox>
           <Button logout onClick={() => setLogoutModal(true)}>
             로그아웃
@@ -150,13 +133,10 @@ const profile = () => {
         </ButtonBox>
       </BoxBody>
       <BoxBody>
-        <TotalNotification />
-      </BoxBody>
-      <BoxBody>
         <TypoGraphy type="h1" color={customColor.black} fontWeight="bold">
           내가 쓴 글
         </TypoGraphy>
-
+        <Gap />
         <BoardList
           listData={myPostList}
           handlePageChange={handlePageChange}
@@ -182,52 +162,22 @@ const profile = () => {
 
 export default profile;
 
-const ProfileBox = styled.div`
-  width: 1178px;
-  height: auto;
-  border: 1px solid ${customColor.gray};
-  margin: 80px auto;
-  border-radius: 4px;
-  user-select: none;
-  box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
-  background-color: ${customColor.grayBg};
-`;
-const BoxHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 32px auto;
-`;
-const SayHi = styled.div`
-  display: flex;
-  align-items: baseline;
-`;
-
 const BoxBody = styled.div`
-  width: 1000px;
-  padding: 20px;
+  width: 1024px;
+  padding: 24px;
   margin: 32px auto;
   border-radius: 4px;
   background-color: ${customColor.white};
-  border: 1px solid ${customColor.gray};
-  box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 5px 7px 11px -3px rgba(0, 0, 0, 0.75);
-  background-color: ${customColor.grayBg};
-`;
-
-const Line = styled.hr`
-  margin: 20px auto;
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.05);
 `;
 
 const ButtonBox = styled.div`
   width: 360px;
   display: flex;
   justify-content: space-between;
-  margin: 12px auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
 `;
 const Button = styled.button`
   cursor: pointer;
@@ -259,11 +209,36 @@ const Button = styled.button`
 
 const AttributeBox = styled.div`
   display: flex;
-  align-items: baseline;
+  align-items: center;
+
+  margin-bottom: 6px;
+  margin-top: 6px;
+  margin-right: auto;
 `;
 const Value = styled.div`
-  margin-left: 16px;
+  margin-left: 8px;
 `;
-const Attribute = styled.div`
-  width: 90px;
+
+const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Gap = styled.div`
+  margin-top: 24px;
+`;
+
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ProfilePhotoBox = styled.div`
+  border-radius: 4px;
+  padding: 8px;
+  margin-right: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
