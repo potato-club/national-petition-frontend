@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
+import { LikeUnlikeButton } from 'components/app/board/detail';
 import { customColor } from 'constants/index';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
@@ -138,7 +139,9 @@ export const CommentItem = ({
             </TypoGraphy>
           </Content>
         )}
-
+        {/* 내가만든 거 */}
+        {/* memberId 내가 클릭한 거에 필요할거같긴한데 고민 */}
+        <LikeUnlikeButton boardId={boardId} memberId={memberId} />
         <ButtonForm>
           {memberId !== null && (
             <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
@@ -152,7 +155,6 @@ export const CommentItem = ({
               </TypoGraphy>
             </Button>
           )}
-
           {userId === memberId && (
             <Button onClick={deleteComment}>
               <TypoGraphy type="body2" color={customColor.gray}>
