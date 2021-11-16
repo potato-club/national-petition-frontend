@@ -73,16 +73,16 @@ const Line = styled.div`
 
 const CircleWrapper = styled.div`
   position: absolute;
-  right: -15px;
-  top: -35%;
+  left: -20px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 5%;
+  height: 100%;
 `;
 const Circle = styled.div`
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background-color: ${customColor.skyBlue};
 `;
