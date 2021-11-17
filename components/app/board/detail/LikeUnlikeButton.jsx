@@ -4,94 +4,74 @@ import { customColor } from 'constants/index';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
 import { commentApi } from 'apis/index';
+import { useToasts } from 'react-toast-notifications';
 
 export const LikeUnlikeButton = ({ commentId }) => {
   // 현재 count관련 API는 없으니까 보류
-  // const [likeCount, setLikeCount] = useState(120);
+  const [likeCount, setLikeCount] = useState(120);
+  const [unLikeCount, setUnLikeCount] = useState(120);
 
   // 서버에서 내가 클릭했던 값을 가져와서 초기값으로 설정해야할듯
   const [likeSelected, setLikeSelected] = useState(false);
   const [unLikeSelected, setUnLikeSelected] = useState(false);
 
+  const { addToast } = useToasts();
   // useEffect로 처음렌더링시 내가 선택한 값 받아서 지정해야함
 
+  // useEffect로 likeCount, unLikeCount에 구독한다음에 변할때마다 값 가져와야함
+
+  // 해당 버튼 클릭시 count증가시켜야함
   const handleLikeButton = async () => {
     try {
-      // 둘다 false일때
       if (likeSelected === false && unLikeSelected === false) {
-        // 좋아요 등록
+        setLikeSelected((cur) => !cur);
         await commentApi.like({
           commentId,
           likeCommentStatus: 'LIKE',
         });
-        setLikeSelected((cur) => !cur);
-      }
-      // 상대가 true일때
-      else if (likeSelected === false && unLikeSelected) {
-        // 상대 false로 만들고 API취소하기
+      } else if (likeSelected === false && unLikeSelected) {
         setUnLikeSelected((cur) => !cur);
-        await commentApi.unlike({
-          commentId,
-          likeCommentStatus: 'UNLIKE',
-        });
-        // 나는 true로 하고 API등록하기
         setLikeSelected((cur) => !cur);
         await commentApi.like({
           commentId,
           likeCommentStatus: 'LIKE',
         });
-      }
-      // 내가 true일때
-      else if (likeSelected && unLikeSelected === false) {
-        // 나 취소하기
+      } else if (likeSelected && unLikeSelected === false) {
         setLikeSelected((cur) => !cur);
         await commentApi.unlike({
           commentId,
           likeCommentStatus: 'LIKE',
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
 
   const handleUnLikeButton = async () => {
     try {
-      // 둘다 false일때
       if (likeSelected === false && unLikeSelected === false) {
-        // 싫어요 등록
+        setUnLikeSelected((cur) => !cur);
         await commentApi.like({
-          commentId,
+          commentId: commentId,
           likeCommentStatus: 'UNLIKE',
         });
-        setUnLikeSelected((cur) => !cur);
-      }
-      // 상대가 true일때
-      else if (likeSelected && unLikeSelected === false) {
-        // 상대 false로 만들고 API취소하기
+      } else if (likeSelected && unLikeSelected === false) {
         setLikeSelected((cur) => !cur);
-        await commentApi.unlike({
-          commentId,
-          likeCommentStatus: 'LIKE',
-        });
-        // 나는 true로 하고 API등록하기
         setUnLikeSelected((cur) => !cur);
         await commentApi.like({
-          commentId,
+          commentId: commentId,
           likeCommentStatus: 'UNLIKE',
         });
-      }
-      // 내가 true일때
-      else if (likeSelected === false && unLikeSelected) {
-        // 나 취소하기
+      } else if (likeSelected === false && unLikeSelected) {
         setUnLikeSelected((cur) => !cur);
         await commentApi.unlike({
-          commentId,
+          commentId: commentId,
           likeCommentStatus: 'UNLIKE',
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
   return (
@@ -102,14 +82,14 @@ export const LikeUnlikeButton = ({ commentId }) => {
         selected={likeSelected}
         color={likeSelected ? customColor.skyBlue : 'black'}
       />
-      {/* count 생기면 하기  */}
-      {/* <TypoGraphy type="body2">{likeCount}</TypoGraphy> */}
+      <TypoGraphy type="body2">{likeCount}</TypoGraphy>
       <UnLikeButton
         size="20px"
         onClick={handleUnLikeButton}
         selected={unLikeSelected}
         color={unLikeSelected ? customColor.skyBlue : 'black'}
       />
+      <TypoGraphy type="body2">{unLikeCount}</TypoGraphy>
     </Wrapper>
   );
 };
@@ -120,6 +100,7 @@ const Wrapper = styled.div`
 `;
 
 const LikeButton = styled(AiOutlineLike)`
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
     transition-duration: 500ms;
@@ -129,6 +110,7 @@ const LikeButton = styled(AiOutlineLike)`
 
 const UnLikeButton = styled(AiOutlineDislike)`
   margin-left: 16px;
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
     transition-duration: 500ms;

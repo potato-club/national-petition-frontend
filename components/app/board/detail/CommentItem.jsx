@@ -109,7 +109,6 @@ export const CommentItem = ({
       addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
-
   return (
     <Wrapper>
       <ItemWrapper>
@@ -141,7 +140,7 @@ export const CommentItem = ({
         )}
         {/* 내가만든 거 */}
         {/* memberId 내가 클릭한 거에 필요할거같긴한데 고민 */}
-        <LikeUnlikeButton boardId={boardId} memberId={memberId} />
+        <LikeUnlikeButton commentId={commentId} memberId={memberId} />
         <ButtonForm>
           {memberId !== null && (
             <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
