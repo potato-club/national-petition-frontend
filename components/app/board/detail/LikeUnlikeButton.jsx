@@ -25,6 +25,7 @@ export const LikeUnlikeButton = ({ commentId }) => {
     try {
       if (likeSelected === false && unLikeSelected === false) {
         setLikeSelected((cur) => !cur);
+        setLikeCount(likeCount++);
         await commentApi.like({
           commentId,
           likeCommentStatus: 'LIKE',
@@ -32,12 +33,15 @@ export const LikeUnlikeButton = ({ commentId }) => {
       } else if (likeSelected === false && unLikeSelected) {
         setUnLikeSelected((cur) => !cur);
         setLikeSelected((cur) => !cur);
+        setLikeCount(likeCount++);
+        setUnLikeCount(unLikeCount--);
         await commentApi.like({
           commentId,
           likeCommentStatus: 'LIKE',
         });
       } else if (likeSelected && unLikeSelected === false) {
         setLikeSelected((cur) => !cur);
+        setLikeCount(likeCount--);
         await commentApi.unlike({
           commentId,
           likeCommentStatus: 'LIKE',
@@ -52,6 +56,7 @@ export const LikeUnlikeButton = ({ commentId }) => {
     try {
       if (likeSelected === false && unLikeSelected === false) {
         setUnLikeSelected((cur) => !cur);
+        setUnLikeCount(unLikeCount++);
         await commentApi.like({
           commentId: commentId,
           likeCommentStatus: 'UNLIKE',
@@ -59,19 +64,23 @@ export const LikeUnlikeButton = ({ commentId }) => {
       } else if (likeSelected && unLikeSelected === false) {
         setLikeSelected((cur) => !cur);
         setUnLikeSelected((cur) => !cur);
+        setUnLikeCount(unLikeCount++);
+        setLikeCount(likeCount--);
         await commentApi.like({
           commentId: commentId,
           likeCommentStatus: 'UNLIKE',
         });
       } else if (likeSelected === false && unLikeSelected) {
         setUnLikeSelected((cur) => !cur);
+        setUnLikeCount(unLikeCount--);
         await commentApi.unlike({
           commentId: commentId,
           likeCommentStatus: 'UNLIKE',
         });
       }
     } catch (e) {
-      addToast(getErrorMessage(e), { appearance: 'error' });
+      // addToast(getErrorMessage(e), { appearance: 'error' });
+      console.log(e);
     }
   };
   return (
@@ -82,14 +91,18 @@ export const LikeUnlikeButton = ({ commentId }) => {
         selected={likeSelected}
         color={likeSelected ? customColor.skyBlue : 'black'}
       />
-      <TypoGraphy type="body2">{likeCount}</TypoGraphy>
+      {likeCount === 0 ? null : (
+        <TypoGraphy type="body2">{likeCount}</TypoGraphy>
+      )}
       <UnLikeButton
         size="20px"
         onClick={handleUnLikeButton}
         selected={unLikeSelected}
         color={unLikeSelected ? customColor.skyBlue : 'black'}
       />
-      <TypoGraphy type="body2">{unLikeCount}</TypoGraphy>
+      {unLikeCount === 0 ? null : (
+        <TypoGraphy type="body2">{unLikeCount}</TypoGraphy>
+      )}
     </Wrapper>
   );
 };
