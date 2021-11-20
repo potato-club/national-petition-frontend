@@ -23,6 +23,6 @@ export const commentApi = {
     return await api.authDelete('/api/v1/comment/unlike', params);
   },
   applyList: async (commentId, params) => {
-    return await api.get(`/api/v1/replyComment/page/${commentId}`, params);
+    return await api.get(`/api/v1/reply-comment/page/${commentId}`, params);
   },
 };
