@@ -4,7 +4,6 @@ import {
   TypoGraphy,
   TitleHeader,
   Header,
-  HelperBot,
 } from 'components/common/index';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
@@ -176,7 +175,6 @@ const detail = ({ detailInfo }) => {
         </CommentInputForm>
         <CommentList boardId={boardId} commentReset={commentReset} />
       </Container>
-      <HelperBot />
     </LayoutContainer>
   );
 };
