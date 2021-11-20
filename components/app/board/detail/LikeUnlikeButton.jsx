@@ -6,16 +6,26 @@ import { TypoGraphy } from 'components/common';
 import { commentApi } from 'apis/index';
 import { useToasts } from 'react-toast-notifications';
 
-export const LikeUnlikeButton = ({ commentId }) => {
-  // 현재 count 값 넘어오면 초기값으로 지정하기
-  const [likeCount, setLikeCount] = useState(0);
-  const [unLikeCount, setUnLikeCount] = useState(10);
+export const LikeUnlikeButton = ({ commentId, likeComment }) => {
+  const { likeCounts, unLikeCounts, myCommentStatus } = likeComment;
+  console.log(`${commentId} : 좋아요 몇개인지? ${likeCounts}`);
+  console.log(`${commentId} : 싫어요 몇개인지? ${unLikeCounts}`);
+  console.log(`${commentId} : 뭐를 체크했는지? ${myCommentStatus}`);
 
-  // 서버에서 내가 클릭했던 값을 가져와서 초기값으로 설정해야할듯
+  const [likeCount, setLikeCount] = useState(likeCounts);
+  const [unLikeCount, setUnLikeCount] = useState(unLikeCounts);
+
   const [likeSelected, setLikeSelected] = useState(false);
   const [unLikeSelected, setUnLikeSelected] = useState(false);
 
   const { addToast } = useToasts();
+
+  // 상태값
+  if (myCommentStatus === 'LIKE') {
+    setLikeSelected(true);
+  } else if (myCommentStatus === 'UNLIKE') {
+    setUnLikeSelected(true);
+  }
 
   const handleLikeButton = async () => {
     try {
@@ -44,7 +54,8 @@ export const LikeUnlikeButton = ({ commentId }) => {
         });
       }
     } catch (e) {
-      addToast(getErrorMessage(e), { appearance: 'error' });
+      // addToast(getErrorMessage(e), { appearance: 'error' });
+      console.log(e);
     }
   };
 
@@ -75,7 +86,8 @@ export const LikeUnlikeButton = ({ commentId }) => {
         });
       }
     } catch (e) {
-      addToast(getErrorMessage(e), { appearance: 'error' });
+      // addToast(getErrorMessage(e), { appearance: 'error' });
+      console.log(e);
     }
   };
   return (

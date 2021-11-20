@@ -63,6 +63,7 @@ export const CommentList = ({ boardId, commentReset }) => {
             childrenCounts,
             createdAt,
             nickName,
+            likeComment,
           },
           index,
         ) => (
@@ -78,6 +79,7 @@ export const CommentList = ({ boardId, commentReset }) => {
             content={content}
             setCommentList={setCommentList}
             boardId={boardId}
+            likeComment={likeComment}
           />
         ),
       )}

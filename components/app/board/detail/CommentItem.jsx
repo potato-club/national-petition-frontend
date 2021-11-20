@@ -23,6 +23,7 @@ export const CommentItem = ({
   setCommentList,
   nickName,
   boardId,
+  likeComment,
 }) => {
   const [ApplyVisible, setApplyVisible] = useState(false);
   const [AddApplyVisible, setAddApplyVisible] = useState(false);
@@ -140,7 +141,7 @@ export const CommentItem = ({
         )}
         {/* 내가만든 거 */}
         {/* memberId 내가 클릭한 거에 필요할거같긴한데 고민 */}
-        <LikeUnlikeButton commentId={commentId} memberId={memberId} />
+        <LikeUnlikeButton commentId={commentId} likeComment={likeComment} />
         <ButtonForm>
           {memberId !== null && (
             <Button onClick={() => setAddApplyVisible((cur) => !cur)}>
