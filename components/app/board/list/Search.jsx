@@ -51,4 +51,7 @@ const SearchButton = styled.button`
 
   padding: 0;
   margin: 0;
+  :hover {
+    background-color: ${customColor.deepBlue};
+  }
 `;

@@ -10,7 +10,6 @@ import {
 import { customColor } from 'constants/index';
 import { Search, Category } from 'components/app/board/list';
 import { RiArrowDropDownLine } from 'react-icons/ri';
-// import dummy from '../../dummy/list.json';
 import { boardApi } from 'apis';
 
 //sort=viewCounts & sort=likeCounts
@@ -45,25 +44,6 @@ const list = () => {
     '문화/예술/체육/언론',
     '기타',
   ];
-  // 18개
-  // ALL
-  // POLITICS("정치개혁")
-  // DIPLOMACY("외교/통일/국방")
-  // JOB("일자리")
-  // FUTURE("미래")
-  // GROWTH("성장동력")
-  // FARM("농산어촌")
-  // HEALTH("보건복지")
-  // BABY("육아/교육")
-  // SAFE("안전/환경")
-  // AGING("저출산/고령화대책")
-  // ADMINISTRATION("행정")
-  // PET("반려동물")
-  // TRAFFIC("교통/건축/국토")
-  // ECONOMY("경제민주화")
-  // HUMAN("인권/성평등")
-  // CULTURE("문화/예술/체육/언론")
-  // ETC("기타");
 
   const handleSort = (e) => {
     if (e.target.innerText === '최신순') setSortBoardApi(undefined);
@@ -71,9 +51,7 @@ const list = () => {
     else if (e.target.innerText === '추천순') setSortBoardApi('likeCounts');
     setSortPosition(e.target.innerText);
   };
-  //예외처리
-  //1. 리스트 불러오지 못했을경우
-  //2. 검색결과가 없을경우
+
   useEffect(() => {
     (async () => {
       try {
