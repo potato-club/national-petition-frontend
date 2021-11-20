@@ -20,21 +20,27 @@ export const CommentList = ({ boardId, commentReset }) => {
   }, [commentReset]);
 
   const addPage = async () => {
-    const {
-      data: { data: list },
-    } = await commentApi.list(boardId, { page, size: PAGE_LIMIT, boardId });
+    if (commentList.length) {
+      const {
+        data: { data: list },
+      } = await commentApi.list(boardId, {
+        boardId,
+        size: PAGE_LIMIT,
+        lastId: commentList[commentList.length - 1].commentId,
+      });
 
-    setCommentList((cur) => cur.concat(...list.contents));
-    setPage((cur) => cur + 1);
+      setCommentList((cur) => cur.concat(...list));
+      setPage((cur) => cur + 1);
+    }
   };
 
   const init = async () => {
     const {
       data: { data: list },
-    } = await commentApi.list(boardId, { page: 1, size: PAGE_LIMIT, boardId });
+    } = await commentApi.list(boardId, { boardId, size: PAGE_LIMIT });
 
     setPage(2);
-    setCommentList(list.contents);
+    setCommentList(list);
 
     try {
       const {
