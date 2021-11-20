@@ -320,7 +320,7 @@ const SortButton = styled.div`
   }
 `;
 const CategorySection = styled.div`
-  border-top: 8px solid ${customColor.blue};
+  border-top: 6px solid ${customColor.blue};
   margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;

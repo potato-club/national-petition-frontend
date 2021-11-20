@@ -98,7 +98,7 @@ export const ListItem = ({
                 type="body1"
                 color={customColor.skyBlue}
                 textAlign="center">
-                {percent}%
+                {parseInt(percent)}%
               </TypoGraphy>
             </Percent>
           )}
@@ -119,10 +119,10 @@ const Wrapper = styled.div`
   }
 `;
 const Category = styled.div`
-  width: 13%;
+  width: 14%;
 `;
 const TitleWrapper = styled.div`
-  width: 61%;
+  width: 60%;
 
   display: flex;
   justify-content: center;
@@ -147,10 +147,10 @@ const SubTitle = styled.div`
 `;
 
 const SubNumber = styled.div`
-  width: 8%;
+  width: 7%;
 `;
 const Day = styled.div`
-  width: 8%;
+  width: 9%;
 `;
 const GraphWrapper = styled.div`
   display: flex;
@@ -162,7 +162,8 @@ const Bar = styled.div`
   display: flex;
   width: 80%;
   height: 15px;
-  background-color: ${customColor.grayBg};
+  background-color: ${customColor.gray};
+  border: 1px solid ${customColor.blue};
 `;
 const AgreeBar = styled.div`
   width: ${({ per }) => per + '%'};
@@ -172,7 +173,7 @@ const AgreeBar = styled.div`
 const DisagreeBar = styled.div`
   width: ${({ per }) => per + '%'};
   height: 100%;
-  background-color: ${customColor.gray};
+  background-color: ${customColor.white};
 `;
 
 const Percent = styled.div`
