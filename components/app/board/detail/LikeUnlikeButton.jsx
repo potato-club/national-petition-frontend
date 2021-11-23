@@ -11,6 +11,7 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
   console.log(`${commentId} : 좋아요 몇개인지? ${likeCounts}`);
   console.log(`${commentId} : 싫어요 몇개인지? ${unLikeCounts}`);
   console.log(`${commentId} : 뭐를 체크했는지? ${myCommentStatus}`);
+  console.log(`-------------------------------------`);
 
   const [likeCount, setLikeCount] = useState(likeCounts);
   const [unLikeCount, setUnLikeCount] = useState(unLikeCounts);
