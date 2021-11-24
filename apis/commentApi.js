@@ -5,11 +5,8 @@ export const commentApi = {
     return await api.authTextPut('/api/v1/comment', params);
   },
   list: async (boardId, params) => {
-    return await api.get(`/api/v1/comment/page/${boardId}`, params);
+    return await api.authGet(`/api/v1/comment/page/${boardId}`, params);
   },
-  // list: async (boardId, params) => {
-  //   return await api.authGet(`/api/v1/comment/page/${boardId}`, params);
-  // },
   add: async (boardId, params) => {
     return await api.authPost(`/api/v1/comment/${boardId}`, params);
   },

@@ -4,33 +4,36 @@ import { customColor } from 'constants/index';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { TypoGraphy } from 'components/common';
 
-export const RecommandButton = ({ selected, type, onClick, count }) => {
-  return (
-    <Wrapper>
-      <ButtonWrapper onClick={onClick} selected={selected}>
-        {type === 'like' ? (
-          <AiOutlineLike
-            size="56px"
-            color={selected ? customColor.white : customColor.blue}
-          />
-        ) : (
-          <AiOutlineDislike
-            size="56px"
-            color={selected ? customColor.white : customColor.blue}
-          />
-        )}
-      </ButtonWrapper>
-      <Gap />
-      <TypoGraphy
-        type="Title"
-        fontWeight="bold"
-        textAlign="center"
-        color={customColor.gray}>
-        {count}
-      </TypoGraphy>
-    </Wrapper>
-  );
-};
+export const RecommandButton = React.memo(
+  ({ selected, type, onClick, count }) => {
+    return (
+      <Wrapper>
+        {/* <ButtonWrapper onClick={onClick} selected={selected}> */}
+        <ButtonWrapper onClick={() => onClick()} selected={selected}>
+          {type === 'like' ? (
+            <AiOutlineLike
+              size="56px"
+              color={selected ? customColor.white : customColor.blue}
+            />
+          ) : (
+            <AiOutlineDislike
+              size="56px"
+              color={selected ? customColor.white : customColor.blue}
+            />
+          )}
+        </ButtonWrapper>
+        <Gap />
+        <TypoGraphy
+          type="Title"
+          fontWeight="bold"
+          textAlign="center"
+          color={customColor.gray}>
+          {count}
+        </TypoGraphy>
+      </Wrapper>
+    );
+  },
+);
 
 const Wrapper = styled.div`
   &:hover {

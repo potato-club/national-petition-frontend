@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai';
 import { customColor } from 'constants/index';
 import styled from '@emotion/styled';
@@ -7,12 +7,8 @@ import { commentApi } from 'apis/index';
 import { useToasts } from 'react-toast-notifications';
 import { getErrorMessage } from 'util/index';
 
-export const LikeUnlikeButton = ({ commentId, likeComment }) => {
+export const LikeUnlikeButton = React.memo(({ commentId, likeComment }) => {
   const { likeCounts, unLikeCounts, myCommentStatus } = likeComment;
-  console.log(`${commentId} : 좋아요 몇개인지? ${likeCounts}`);
-  console.log(`${commentId} : 싫어요 몇개인지? ${unLikeCounts}`);
-  console.log(`${commentId} : 뭐를 체크했는지? ${myCommentStatus}`);
-  console.log(`-------------------------------------`);
 
   const [likeCount, setLikeCount] = useState(likeCounts);
   const [unLikeCount, setUnLikeCount] = useState(unLikeCounts);
@@ -22,13 +18,15 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
 
   const { addToast } = useToasts();
 
-  if (myCommentStatus === 'LIKE') {
-    setLikeSelected(true);
-  } else if (myCommentStatus === 'UNLIKE') {
-    setUnLikeSelected(true);
-  }
+  useEffect(() => {
+    if (myCommentStatus === 'LIKE') {
+      setLikeSelected(true);
+    } else if (myCommentStatus === 'UNLIKE') {
+      setUnLikeSelected(true);
+    }
+  }, []);
 
-  const handleLikeButton = async () => {
+  const handleLikeButton = useCallback(async () => {
     try {
       if (likeSelected === false && unLikeSelected === false) {
         setLikeSelected((cur) => !cur);
@@ -57,9 +55,9 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
     } catch (e) {
       addToast(getErrorMessage(e), { appearance: 'error' });
     }
-  };
+  }, [likeSelected, unLikeSelected]);
 
-  const handleUnLikeButton = async () => {
+  const handleUnLikeButton = useCallback(async () => {
     try {
       if (likeSelected === false && unLikeSelected === false) {
         setUnLikeSelected((cur) => !cur);
@@ -88,14 +86,13 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
     } catch (e) {
       addToast(getErrorMessage(e), { appearance: 'error' });
     }
-  };
+  }, [likeSelected, unLikeSelected]);
   return (
     <Wrapper>
       <LikeBox>
         <LikeButton
           size="20px"
-          onClick={handleLikeButton}
-          selected={likeSelected}
+          onClick={() => handleLikeButton()}
           color={likeSelected ? customColor.skyBlue : 'black'}
         />
         {likeCount === 0 ? null : (
@@ -104,8 +101,7 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
       </LikeBox>
       <UnLikeButton
         size="20px"
-        onClick={handleUnLikeButton}
-        selected={unLikeSelected}
+        onClick={() => handleUnLikeButton()}
         color={unLikeSelected ? customColor.skyBlue : 'black'}
       />
       {unLikeCount === 0 ? null : (
@@ -113,7 +109,7 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
       )}
     </Wrapper>
   );
-};
+});
 
 const Wrapper = styled.div`
   display: flex;

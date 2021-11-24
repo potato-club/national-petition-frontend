@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common';
 
-export const CommentAddForm = ({ onSubmit, type = 'add', content = '' }) => {
+export const CommentAddForm = React.memo(({ onSubmit, type = 'add', content = '' }) => {
   const [comment, setComment] = useState(content);
 
   const submitComment = async () => {
@@ -20,14 +20,14 @@ export const CommentAddForm = ({ onSubmit, type = 'add', content = '' }) => {
         onChange={(e) => setComment(e.target.value)}
       />
       <Divider />
-      <AddButton onClick={submitComment}>
+      <AddButton onClick={() => submitComment()}>
         <TypoGraphy type="body1" color={customColor.white}>
           {type === 'add' ? '등록' : '수정'}
         </TypoGraphy>
       </AddButton>
     </Wrapper>
   );
-};
+});
 
 const Wrapper = styled.div`
   display: flex;

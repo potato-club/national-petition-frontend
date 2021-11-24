@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { ApplyItem } from './ApplyItem';
 import { Pagination } from '@mui/material';
+
 import { commentApi } from 'apis';
 import { useToasts } from 'react-toast-notifications';
 import { getErrorMessage } from 'util/index';
@@ -10,7 +11,7 @@ import { getErrorMessage } from 'util/index';
 const PAGE_SIZE = 5;
 const NONE_USER = -1;
 
-export const ApplyPagination = ({
+export const ApplyPagination = React.memo(({
   commentId,
   page,
   setPage,
@@ -118,7 +119,7 @@ export const ApplyPagination = ({
       </PaginationWrapper>
     </Wrapper>
   );
-};
+});
 
 const Wrapper = styled.div`
   background-color: ${customColor.grayBg};
