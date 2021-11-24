@@ -17,6 +17,7 @@ type TypoGraphyProps = {
   textAlign?: 'left' | 'center' | 'right';
   fontWeight?: string;
   fontHeight?: string;
+  fontHidden?: boolean;
 };
 
 type StyledTypoGraphyProps = {
@@ -36,6 +37,7 @@ type StyledTypoGraphyProps = {
   textAlign?: 'left' | 'center' | 'right';
   fontWeight?: string;
   fontHeight?: string;
+  fontHidden?: boolean;
 };
 
 export const TypoGraphy: React.FC<TypoGraphyProps> = ({
@@ -45,6 +47,7 @@ export const TypoGraphy: React.FC<TypoGraphyProps> = ({
   textAlign,
   fontWeight,
   fontHeight,
+  fontHidden = false,
 }) => {
   const changeTypeFontSize = useMemo(() => {
     switch (type) {
@@ -79,7 +82,8 @@ export const TypoGraphy: React.FC<TypoGraphyProps> = ({
       color={color || '#333333'}
       textAlign={textAlign || 'left'}
       fontWeight={fontWeight || 'normal'}
-      fontHeight={fontHeight || 'normal'}>
+      fontHeight={fontHeight || 'normal'}
+      fontHidden={fontHidden}>
       {children}
     </TypoGraphyText>
   );
@@ -93,4 +97,7 @@ const TypoGraphyText = styled.div<StyledTypoGraphyProps>`
   ${(props) =>
     props.fontHeight === 'normal' ? '' : `line-height: ${props.fontHeight};`}
   word-break: break-all;
+
+  ${(props) =>
+    props.fontHidden ? 'overflow: hidden;text-overflow: ellipsis;' : ''}
 `;

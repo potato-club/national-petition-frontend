@@ -116,7 +116,8 @@ export const Top5TextLoop = () => {
                   <TypoGraphy
                     type="body1"
                     color={customColor.black}
-                    textAlign="left">
+                    textAlign="left"
+                    fontHidden={true}>
                     <LinkBlueHouse
                       href={
                         'https://www1.president.go.kr/petitions/' +
@@ -151,7 +152,8 @@ export const Top5TextLoop = () => {
                   <TypoGraphy
                     type="body1"
                     color={customColor.black}
-                    textAlign="left">
+                    textAlign="left"
+                    fontHidden={true}>
                     <LinkBlueHouse
                       href={
                         'https://www1.president.go.kr/petitions/' +
@@ -186,7 +188,8 @@ export const Top5TextLoop = () => {
                   <TypoGraphy
                     type="body1"
                     color={customColor.black}
-                    textAlign="left">
+                    textAlign="left"
+                    fontHidden={true}>
                     <LinkBlueHouse
                       href={
                         'https://www1.president.go.kr/petitions/' +
@@ -221,7 +224,8 @@ export const Top5TextLoop = () => {
                   <TypoGraphy
                     type="body1"
                     color={customColor.black}
-                    textAlign="left">
+                    textAlign="left"
+                    fontHidden={true}>
                     <LinkBlueHouse
                       href={
                         'https://www1.president.go.kr/petitions/' +
@@ -256,7 +260,8 @@ export const Top5TextLoop = () => {
                   <TypoGraphy
                     type="body1"
                     color={customColor.black}
-                    textAlign="left">
+                    textAlign="left"
+                    fontHidden={true}>
                     <LinkBlueHouse
                       href={
                         'https://www1.president.go.kr/petitions/' +
@@ -306,7 +311,7 @@ const Top5ItemBox = styled.div`
   display: flex;
   justify-content: center;
   width: 600px;
-  height: ${({ handleDrop }) => (handleDrop ? `245px` : `45px`)};
+  height: ${({ handleDrop }) => (handleDrop ? `236px` : `44px`)};
   padding: ${({ handleDrop }) => (handleDrop ? `10px 10px` : `0px 10px`)};
   background-color: ${customColor.white};
   border-radius: 20px;
@@ -321,7 +326,7 @@ const ItemWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 540px;
-  height: 45px;
+  height: 44px;
 `;
 const ItemRanking = styled.div`
   display: flex;
@@ -330,7 +335,6 @@ const ItemRanking = styled.div`
   width: 8%;
 `;
 const ItemTitle = styled.div`
-  display: flex;
   align-items: center;
   width: 77%;
   overflow: hidden;
