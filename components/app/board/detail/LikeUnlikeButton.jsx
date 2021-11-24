@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
 import { commentApi } from 'apis/index';
 import { useToasts } from 'react-toast-notifications';
+import { getErrorMessage } from 'util/index';
 
 export const LikeUnlikeButton = ({ commentId, likeComment }) => {
   const { likeCounts, unLikeCounts, myCommentStatus } = likeComment;
@@ -21,7 +22,6 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
 
   const { addToast } = useToasts();
 
-  // 상태값
   if (myCommentStatus === 'LIKE') {
     setLikeSelected(true);
   } else if (myCommentStatus === 'UNLIKE') {
@@ -55,8 +55,7 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
         });
       }
     } catch (e) {
-      // addToast(getErrorMessage(e), { appearance: 'error' });
-      console.log(e);
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
 
@@ -66,7 +65,7 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
         setUnLikeSelected((cur) => !cur);
         setUnLikeCount((cur) => cur + 1);
         await commentApi.like({
-          commentId: commentId,
+          commentId,
           likeCommentStatus: 'UNLIKE',
         });
       } else if (likeSelected && unLikeSelected === false) {
@@ -75,20 +74,19 @@ export const LikeUnlikeButton = ({ commentId, likeComment }) => {
         setUnLikeCount((cur) => cur + 1);
         setLikeCount((cur) => cur - 1);
         await commentApi.like({
-          commentId: commentId,
+          commentId,
           likeCommentStatus: 'UNLIKE',
         });
       } else if (likeSelected === false && unLikeSelected) {
         setUnLikeSelected((cur) => !cur);
         setUnLikeCount((cur) => cur - 1);
         await commentApi.unlike({
-          commentId: commentId,
+          commentId,
           likeCommentStatus: 'UNLIKE',
         });
       }
     } catch (e) {
-      // addToast(getErrorMessage(e), { appearance: 'error' });
-      console.log(e);
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
   return (
