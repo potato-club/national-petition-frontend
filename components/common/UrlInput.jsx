@@ -3,14 +3,20 @@ import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { useRouter } from 'next/router';
+import { useToasts } from 'react-toast-notifications';
 
 export const UrlInput = () => {
   // 해당 url을 가지고 있는 state기억하기
   const [url, setUrl] = useState('');
   const router = useRouter();
+  const { addToast } = useToasts();
+
   const moveToAdd = () => {
-    // router에 쿼리로 url 넣어서 넘기고 그 페이지로 넘어가면 됨
-    router.push({ pathname: '/board/add', query: { url: url } });
+    if (url.includes('https://www1.president.go.kr/petitions/')) {
+      router.push({ pathname: '/board/add', query: { url: url } });
+    } else {
+      addToast('올바른 청원 url을 입력해주세요', { appearance: 'error' });
+    }
   };
 
   const onChangeUrl = (event) => {
