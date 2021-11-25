@@ -6,74 +6,78 @@ import { BsArrowReturnRight } from 'react-icons/bs';
 import moment from 'moment';
 import { CommentAddForm } from './CommentAddForm';
 
-export const ApplyItem = ({
-  commentId,
-  content,
-  createdAt,
-  nickName,
-  memberId,
-  userId,
-  deleteApplyItem,
-  editApplyItem,
-}) => {
-  const [editApplyVisible, setEditApplyVisible] = useState(false);
+export const ApplyItem = React.memo(
+  ({
+    commentId,
+    content,
+    createdAt,
+    nickName,
+    memberId,
+    userId,
+    deleteApplyItem,
+    editApplyItem,
+  }) => {
+    const [editApplyVisible, setEditApplyVisible] = useState(false);
 
-  const editApply = (content) => {
-    editApplyItem(commentId, content);
-    setEditApplyVisible(false);
-  };
+    const editApply = (content) => {
+      editApplyItem(commentId, content);
+      setEditApplyVisible(false);
+    };
 
-  return (
-    <Wrapper>
-      <ContentWrapper>
-        <Side>
-          <BsArrowReturnRight
-            size="16"
-            color={customColor.gray}
-            style={{ marginRight: 4 }}
-          />
-        </Side>
-        <ItemContainer>
-          <Information>
-            <TypoGraphy
-              type="body1"
-              color={customColor.black}
-              fontWeight="bold">
-              {nickName}
-            </TypoGraphy>
-            <TypoGraphy type="body1" color={customColor.gray}>
-              {moment(createdAt).format('YYYY-MM-DD')}
-            </TypoGraphy>
-          </Information>
-          {editApplyVisible ? (
-            <CommentAddForm type="edit" onSubmit={editApply} />
-          ) : (
-            <Content>
-              <TypoGraphy type="body2" color={customColor.black}>
-                {content}
+    return (
+      <Wrapper>
+        <ContentWrapper>
+          <Side>
+            <BsArrowReturnRight
+              size="16"
+              color={customColor.gray}
+              style={{ marginRight: 4 }}
+            />
+          </Side>
+          <ItemContainer>
+            <Information>
+              <TypoGraphy
+                type="body1"
+                color={customColor.black}
+                fontWeight="bold">
+                {nickName}
               </TypoGraphy>
-            </Content>
-          )}
-          <ButtonForm>
-            {userId === memberId && (
-              <TypoGraphy type="body2" color={customColor.deepBlue}>
-                <Button onClick={() => deleteApplyItem(commentId)}>삭제</Button>
+              <TypoGraphy type="body1" color={customColor.gray}>
+                {moment(createdAt).format('YYYY-MM-DD')}
               </TypoGraphy>
+            </Information>
+            {editApplyVisible ? (
+              <CommentAddForm type="edit" onSubmit={editApply} />
+            ) : (
+              <Content>
+                <TypoGraphy type="body2" color={customColor.black}>
+                  {content}
+                </TypoGraphy>
+              </Content>
             )}
-            {userId === memberId && (
-              <TypoGraphy type="body2" color={customColor.deepBlue}>
-                <Button onClick={() => setEditApplyVisible((cur) => !cur)}>
-                  {editApplyVisible ? '취소' : '수정'}
-                </Button>
-              </TypoGraphy>
-            )}
-          </ButtonForm>
-        </ItemContainer>
-      </ContentWrapper>
-      <Divide />
-    </Wrapper>
-  );
-};
+            <ButtonForm>
+              {userId === memberId && (
+                <TypoGraphy type="body2" color={customColor.deepBlue}>
+                  <Button onClick={() => deleteApplyItem(commentId)}>
+                    삭제
+                  </Button>
+                </TypoGraphy>
+              )}
+              {userId === memberId && (
+                <TypoGraphy type="body2" color={customColor.deepBlue}>
+                  <Button onClick={() => setEditApplyVisible((cur) => !cur)}>
+                    {editApplyVisible ? '취소' : '수정'}
+                  </Button>
+                </TypoGraphy>
+              )}
+            </ButtonForm>
+          </ItemContainer>
+        </ContentWrapper>
+        <Divide />
+      </Wrapper>
+    );
+  },
+);
 
 const Wrapper = styled.div`
   display: flex;

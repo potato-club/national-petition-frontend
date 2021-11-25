@@ -45,10 +45,8 @@ const add = () => {
       await boardApi.add({ title, content, petitionUrl });
       setModalContent('게시글을 등록했습니다.');
       setAddModal(true);
-    } catch (error) {
-      addToast(getErrorMessage(e), '에러 발생', {
-        appearance: 'error',
-      });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
 

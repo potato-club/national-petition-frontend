@@ -6,3 +6,4 @@ export { ApplyItem } from './ApplyItem';
 export { CommentList } from './CommentList';
 export { Information } from './Information';
 export { ApplyPagination } from './ApplyPagination';
+export { LikeUnlikeButton } from './LikeUnlikeButton';

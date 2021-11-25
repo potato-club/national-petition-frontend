@@ -48,7 +48,6 @@ const detail = ({ detailInfo }) => {
 
   const onRecommendSelect = async (state, type) => {
     // 추천수 응답 논의 필요
-
     if (!state) {
       const {
         data: { data: result },
@@ -156,6 +155,7 @@ const detail = ({ detailInfo }) => {
             ))}
           </TypoGraphy>
         </PepitionContent>
+        {/* 좋아요/싫어요 관련 */}
         <RecommandWrapper>
           <RecommandButton
             onClick={() => onRecommendSelect(likeSelected, 'like')}
@@ -173,6 +173,7 @@ const detail = ({ detailInfo }) => {
         <CommentInputForm>
           <CommentAddForm onSubmit={addComment} />
         </CommentInputForm>
+        {/* 댓글들 */}
         <CommentList boardId={boardId} commentReset={commentReset} />
       </Container>
     </LayoutContainer>

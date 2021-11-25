@@ -10,7 +10,7 @@ import { boardCommentList } from 'recoil/atom';
 const PAGE_LIMIT = 15;
 const NONE_USER = -1;
 
-export const CommentList = ({ boardId, commentReset }) => {
+export const CommentList = React.memo(({ boardId, commentReset }) => {
   const [page, setPage] = useState(1);
   const [commentList, setCommentList] = useRecoilState(boardCommentList);
   const [userId, setUserId] = useState(NONE_USER);
@@ -63,6 +63,7 @@ export const CommentList = ({ boardId, commentReset }) => {
             childrenCounts,
             createdAt,
             nickName,
+            likeComment,
           },
           index,
         ) => (
@@ -78,15 +79,17 @@ export const CommentList = ({ boardId, commentReset }) => {
             content={content}
             setCommentList={setCommentList}
             boardId={boardId}
+            likeComment={likeComment}
           />
         ),
       )}
-      <MoreCommentButton onClick={addPage}>
+      {/* <MoreCommentButton onClick={addPage}> */}
+      <MoreCommentButton onClick={() => addPage()}>
         <TypoGraphy color={customColor.white}>댓글 더보기</TypoGraphy>
       </MoreCommentButton>
     </Wrapper>
   );
-};
+});
 
 const Wrapper = styled.div``;
 

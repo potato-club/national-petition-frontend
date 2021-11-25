@@ -48,10 +48,8 @@ const profile = () => {
 
       setMyPostList(myList);
       setListCount(Math.ceil(totalSize / pageSize));
-    } catch (error) {
-      addToast(getErrorMessage(error), {
-        appearance: 'error',
-      });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
 
@@ -60,10 +58,8 @@ const profile = () => {
       await memberApi.delete();
       setDeleteModal(false);
       router.push('/user/login');
-    } catch (error) {
-      addToast(getErrorMessage(error), {
-        appearance: 'error',
-      });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
 
@@ -73,10 +69,8 @@ const profile = () => {
       tokenHelper.setIdToken('');
       setLogoutModal(false);
       router.push('/');
-    } catch (error) {
-      addToast(getErrorMessage(error), {
-        appearance: 'error',
-      });
+    } catch (e) {
+      addToast(getErrorMessage(e), { appearance: 'error' });
     }
   };
 
