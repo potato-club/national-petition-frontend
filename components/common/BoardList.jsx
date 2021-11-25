@@ -149,16 +149,16 @@ const ListNav = styled.div`
 `;
 
 const NavCategory = styled.div`
-  width: 13%;
+  width: 14%;
 `;
 const NavTitle = styled.div`
-  width: 61%;
+  width: 60%;
 `;
 const NavSubNumber = styled.div`
-  width: 8%;
+  width: 7%;
 `;
 const NavDay = styled.div`
-  width: 8%;
+  width: 9%;
 `;
 const NavGraph = styled.div`
   width: 10%;

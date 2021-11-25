@@ -3,15 +3,26 @@ import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common/index';
 import { customColor } from 'constants/index';
 import { useRouter } from 'next/router';
+import { useToasts } from 'react-toast-notifications';
 
 export const UrlInput = () => {
   // 해당 url을 가지고 있는 state기억하기
   const [url, setUrl] = useState('');
   const router = useRouter();
+  const { addToast } = useToasts();
+
   const moveToAdd = () => {
-    // router에 쿼리로 url 넣어서 넘기고 그 페이지로 넘어가면 됨
-    router.push({ pathname: '/board/add', query: { url: url } });
+    if (url.includes('https://www1.president.go.kr/petitions/')) {
+      router.push({ pathname: '/board/add', query: { url: url } });
+    } else {
+      addToast('올바른 청원 url을 입력해주세요', { appearance: 'error' });
+    }
   };
+
+  const onChangeUrl = (event) => {
+    setUrl(event.target.value);
+  };
+
   return (
     <EnrollmentWrapper>
       <UrlTitle>
@@ -22,8 +33,10 @@ export const UrlInput = () => {
       <InputUrl
         placeholder="청원 글의 URL을 넣어주세요."
         value={url}
-        onChange={(e) => setUrl(e.target.value)}></InputUrl>
-      <EnrollmentButton onClick={moveToAdd}>
+        onChange={(e) => onChangeUrl(e)}></InputUrl>
+      <EnrollmentButton
+        onClick={moveToAdd}
+        color={url !== '' ? customColor.deepBlue : customColor.skyBlue}>
         <TypoGraphy type="h3" color={customColor.white} textAlign="center">
           등록
         </TypoGraphy>
@@ -38,7 +51,7 @@ const EnrollmentWrapper = styled.div`
   align-items: center;
   width: 800px;
   height: 70px;
-  padding: 10px 15px;
+  padding: 10px;
   background-color: ${customColor.white};
   border-radius: 20px;
   margin-top: 20px;
@@ -64,8 +77,12 @@ const InputUrl = styled.input`
 const EnrollmentButton = styled.button`
   border: none;
   padding: 15px 25px;
-  background-color: ${customColor.skyBlue};
+  background-color: ${(props) => props.color};
   cursor: pointer;
   width: 13%;
-  border-radius: 20px;
+  border-radius: 16px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
