@@ -25,7 +25,6 @@ export const HeaderAlert = () => {
   }, []);
   const handleAlert = async (id) => {
     try {
-      console.log(id);
       const { data: OK } = await notificationApi.readStatus(id);
       const {
         data: { data: data },
@@ -46,13 +45,14 @@ export const HeaderAlert = () => {
       {onTap && (
         <DropDownBox>
           <DropDownItemWrapper>
-            {alertList.map(({ id, content, isRead }) => (
+            {alertList.map(({ id, content, isRead, boardId }) => (
               <AlertItem
                 handleAlert={handleAlert}
                 key={id}
                 id={id}
                 content={content}
                 isRead={isRead}
+                boardId={boardId}
               />
             ))}
             <Line />
