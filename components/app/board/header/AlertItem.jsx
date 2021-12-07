@@ -2,33 +2,36 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common/index';
+import Link from 'next/link';
 
-export const AlertItem = ({ id, content, isRead, handleAlert }) => {
+export const AlertItem = ({ id, content, isRead, handleAlert, boardId }) => {
   return (
-    <DropDownItem onClick={() => handleAlert(id)}>
-      <TextWrapper>
-        <TitleWrapper isRead={isRead}>
-          {isRead == false && (
-            <CircleWrapper>
-              <Circle />
-            </CircleWrapper>
-          )}
-          <TypoGraphy
-            type="body1"
-            color={isRead == false ? customColor.black : customColor.grayBg}>
-            {content}
-          </TypoGraphy>
-        </TitleWrapper>
-        {/* <TimeWrapper>
+    <Link href={`/board/detail/${boardId}`}>
+      <DropDownItem onClick={() => handleAlert(id)}>
+        <TextWrapper>
+          <TitleWrapper isRead={isRead}>
+            {isRead == false && (
+              <CircleWrapper>
+                <Circle />
+              </CircleWrapper>
+            )}
+            <TypoGraphy
+              type="body1"
+              color={isRead == false ? customColor.black : customColor.grayBg}>
+              {content}
+            </TypoGraphy>
+          </TitleWrapper>
+          {/* <TimeWrapper>
           <TypoGraphy
             type="body1"
             color={
               isRead == false ? customColor.gray : customColor.grayBg
             }></TypoGraphy>
         </TimeWrapper> */}
-      </TextWrapper>
-      <Line />
-    </DropDownItem>
+        </TextWrapper>
+        <Line />
+      </DropDownItem>
+    </Link>
   );
 };
 
