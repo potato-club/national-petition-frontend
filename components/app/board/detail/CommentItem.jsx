@@ -175,31 +175,33 @@ export const CommentItem = React.memo(
                 </TypoGraphy>
               </Button>
             )}
-            <Button onClick={() => setApplyVisible((cur) => !cur)}>
-              {ApplyVisible ? (
-                <ApplyViewWrapper>
-                  <RiArrowUpSFill
-                    size="16"
-                    color={customColor.blue}
-                    style={{ marginRight: 4 }}
-                  />
-                  <TypoGraphy type="body2" color={customColor.blue}>
-                    답글 {childrenCounts}개 접기
-                  </TypoGraphy>
-                </ApplyViewWrapper>
-              ) : (
-                <ApplyViewWrapper>
-                  <RiArrowDownSFill
-                    size="16"
-                    color={customColor.blue}
-                    style={{ marginRight: 4 }}
-                  />
-                  <TypoGraphy type="body2" color={customColor.blue}>
-                    답글 {childrenCounts}개 보기
-                  </TypoGraphy>
-                </ApplyViewWrapper>
-              )}
-            </Button>
+            {childrenCounts !== 0 && (
+              <Button onClick={() => setApplyVisible((cur) => !cur)}>
+                {ApplyVisible ? (
+                  <ApplyViewWrapper>
+                    <RiArrowUpSFill
+                      size="16"
+                      color={customColor.blue}
+                      style={{ marginRight: 4 }}
+                    />
+                    <TypoGraphy type="body2" color={customColor.blue}>
+                      답글 {childrenCounts}개 접기
+                    </TypoGraphy>
+                  </ApplyViewWrapper>
+                ) : (
+                  <ApplyViewWrapper>
+                    <RiArrowDownSFill
+                      size="16"
+                      color={customColor.blue}
+                      style={{ marginRight: 4 }}
+                    />
+                    <TypoGraphy type="body2" color={customColor.blue}>
+                      답글 {childrenCounts}개 보기
+                    </TypoGraphy>
+                  </ApplyViewWrapper>
+                )}
+              </Button>
+            )}
           </ButtonForm>
           {AddApplyVisible && (
             <AddApplyWrapper>
