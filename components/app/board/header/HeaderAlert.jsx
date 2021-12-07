@@ -1,49 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { BsFillBellFill } from 'react-icons/bs';
 import { AlertItem } from './index';
+import { notificationApi } from 'apis';
 
-const dummy = [
-  {
-    id: 1,
-    data: '냥이가 게시물에 댓글을 달았습니다.',
-    time: '1분전',
-    state: 1,
-  },
-  {
-    id: 2,
-    data: '멍이가 게시물에 댓글을 달았습니다.',
-    time: '4분전',
-    state: 1,
-  },
-  {
-    id: 3,
-    data: '장이가 댓글에 답글을 달았습니다.',
-    time: '1시간전',
-    state: 1,
-  },
-  {
-    id: 4,
-    data: '콩이가 게시물에 댓글을 달았습니다.',
-    time: '3시간전',
-    state: 1,
-  },
-  {
-    id: 5,
-    data: '맹이가 게시물에 댓글을 달았습니다.',
-    time: '1일전',
-    state: 0,
-  },
-  { id: 6, data: '짱이가 댓글에 답글을 달았습니다.', time: '3주전', state: 0 },
-];
 export const HeaderAlert = () => {
   const [onTap, setOnTap] = useState(false);
+  const [alertList, setAlertList] = useState([]);
+  const [alertCount, setAlertCount] = useState();
+  useEffect(() => {
+    (async () => {
+      try {
+        const {
+          data: { data: data },
+        } = await notificationApi.getList();
+        console.log(data);
+        setAlertList(data);
+        setAlertCount(data.length);
+      } catch (e) {
+        console.log('Alert 정보받기 실패', e);
+      }
+    })();
+  }, []);
   return (
     <Wrapper onClick={() => setOnTap((onTap) => !onTap)}>
       <AlertWrapper>
-        <BadgeIcon badgeContent={4} color="error" max={999}>
+        <BadgeIcon badgeContent={alertCount} color="error" max={999}>
           <BellIcon isActive={onTap} />
         </BadgeIcon>
       </AlertWrapper>
@@ -51,8 +35,8 @@ export const HeaderAlert = () => {
         <DropDownBox>
           <DropDownItemWrapper>
             <Line />
-            {dummy.map(({ data, id, time, state }) => (
-              <AlertItem key={id} title={data} time={time} state={state} />
+            {alertList.map(({ id, content, isRead }) => (
+              <AlertItem key={id} content={content} isRead={isRead} />
             ))}
           </DropDownItemWrapper>
         </DropDownBox>

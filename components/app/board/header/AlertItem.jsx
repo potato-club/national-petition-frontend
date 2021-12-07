@@ -3,27 +3,27 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common/index';
 
-export const AlertItem = ({ title, time, state }) => {
+export const AlertItem = ({ content, isRead }) => {
   return (
     <DropDownItem>
       <TextWrapper>
-        <TitleWrapper state={state}>
-          {state == 1 && (
+        <TitleWrapper isRead={isRead}>
+          {isRead == false && (
             <CircleWrapper>
               <Circle />
             </CircleWrapper>
           )}
           <TypoGraphy
             type="body1"
-            color={state == 1 ? customColor.black : customColor.grayBg}>
-            {title}
+            color={isRead == false ? customColor.black : customColor.grayBg}>
+            {content}
           </TypoGraphy>
         </TitleWrapper>
         <TimeWrapper>
           <TypoGraphy
             type="body1"
-            color={state == 1 ? customColor.gray : customColor.grayBg}>
-            {time}
+            color={isRead == false ? customColor.gray : customColor.grayBg}>
+            sss
           </TypoGraphy>
         </TimeWrapper>
       </TextWrapper>
@@ -57,7 +57,7 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: ${({ state }) => (state === 1 ? '80%' : '75%')};
+  width: ${({ isRead }) => (isRead === false ? '80%' : '75%')};
 `;
 const TimeWrapper = styled.div`
   display: flex;
