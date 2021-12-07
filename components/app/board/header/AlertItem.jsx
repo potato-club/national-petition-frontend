@@ -3,29 +3,29 @@ import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common/index';
 
-export const AlertItem = ({ title, time, state }) => {
+export const AlertItem = ({ id, content, isRead, handleAlert }) => {
   return (
-    <DropDownItem>
+    <DropDownItem onClick={() => handleAlert(id)}>
       <TextWrapper>
-        <TitleWrapper state={state}>
-          {state == 1 && (
+        <TitleWrapper isRead={isRead}>
+          {isRead == false && (
             <CircleWrapper>
               <Circle />
             </CircleWrapper>
           )}
           <TypoGraphy
             type="body1"
-            color={state == 1 ? customColor.black : customColor.grayBg}>
-            {title}
+            color={isRead == false ? customColor.black : customColor.grayBg}>
+            {content}
           </TypoGraphy>
         </TitleWrapper>
-        <TimeWrapper>
+        {/* <TimeWrapper>
           <TypoGraphy
             type="body1"
-            color={state == 1 ? customColor.gray : customColor.grayBg}>
-            {time}
-          </TypoGraphy>
-        </TimeWrapper>
+            color={
+              isRead == false ? customColor.gray : customColor.grayBg
+            }></TypoGraphy>
+        </TimeWrapper> */}
       </TextWrapper>
       <Line />
     </DropDownItem>
@@ -57,14 +57,14 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: ${({ state }) => (state === 1 ? '80%' : '75%')};
+  width: ${({ isRead }) => (isRead === false ? '100%' : '95%')};
 `;
-const TimeWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 20%;
-`;
+// const TimeWrapper = styled.div`
+//   display: flex;
+//   justify-content: flex-end;
+//   align-items: center;
+//   width: 20%;
+// `;
 const Line = styled.div`
   width: 90%;
   height: 1px;
