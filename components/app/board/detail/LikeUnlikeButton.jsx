@@ -8,10 +8,8 @@ import { useToasts } from 'react-toast-notifications';
 import { getErrorMessage } from 'util/index';
 
 export const LikeUnlikeButton = React.memo(({ commentId, likeComment }) => {
-  const { likeCounts, unLikeCounts, myCommentStatus } = likeComment;
-
-  const [likeCount, setLikeCount] = useState(likeCounts);
-  const [unLikeCount, setUnLikeCount] = useState(unLikeCounts);
+  const [likeCount, setLikeCount] = useState(0);
+  const [unLikeCount, setUnLikeCount] = useState(0);
 
   const [likeSelected, setLikeSelected] = useState(false);
   const [unLikeSelected, setUnLikeSelected] = useState(false);
@@ -19,12 +17,21 @@ export const LikeUnlikeButton = React.memo(({ commentId, likeComment }) => {
   const { addToast } = useToasts();
 
   useEffect(() => {
+    const { likeCounts, unLikeCounts, myCommentStatus } = likeComment;
+
+    setLikeCount(likeCounts);
+    setUnLikeCount(unLikeCounts);
+
     if (myCommentStatus === 'LIKE') {
       setLikeSelected(true);
     } else if (myCommentStatus === 'UNLIKE') {
       setUnLikeSelected(true);
     }
   }, []);
+
+  useEffect(() => {
+    console.log('LIKE_COMMENT :: ', likeComment);
+  });
 
   const handleLikeButton = useCallback(async () => {
     try {
