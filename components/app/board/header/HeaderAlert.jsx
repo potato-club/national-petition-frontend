@@ -16,14 +16,26 @@ export const HeaderAlert = () => {
         const {
           data: { data: data },
         } = await notificationApi.getList();
-        console.log(data);
         setAlertList(data);
-        setAlertCount(data.length);
+        setAlertCount(data.filter(({ isRead }) => !isRead).length);
       } catch (e) {
         console.log('Alert 정보받기 실패', e);
       }
     })();
   }, []);
+  const handleAlert = async (id) => {
+    try {
+      console.log(id);
+      const { data: OK } = await notificationApi.readStatus(id);
+      const {
+        data: { data: data },
+      } = await notificationApi.getList();
+      setAlertList(data);
+      setAlertCount(data.filter(({ isRead }) => !isRead).length);
+    } catch (e) {
+      console.log('실패', e);
+    }
+  };
   return (
     <Wrapper onClick={() => setOnTap((onTap) => !onTap)}>
       <AlertWrapper>
@@ -34,10 +46,16 @@ export const HeaderAlert = () => {
       {onTap && (
         <DropDownBox>
           <DropDownItemWrapper>
-            <Line />
             {alertList.map(({ id, content, isRead }) => (
-              <AlertItem key={id} content={content} isRead={isRead} />
+              <AlertItem
+                handleAlert={handleAlert}
+                key={id}
+                id={id}
+                content={content}
+                isRead={isRead}
+              />
             ))}
+            <Line />
           </DropDownItemWrapper>
         </DropDownBox>
       )}
@@ -79,7 +97,7 @@ const DropDownItemWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column-reverse;
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
