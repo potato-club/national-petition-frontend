@@ -29,6 +29,7 @@ export const CommentItem = React.memo(
     const [ApplyVisible, setApplyVisible] = useState(false);
     const [AddApplyVisible, setAddApplyVisible] = useState(false);
     const [commentEditVisible, setCommentEditVisible] = useState(false);
+    const [applyCount, setApplyCount] = useState(childrenCounts);
     const [page, setPage] = useState(1);
     const [applyAddUpdate, setApplyAddUpdate] = useState(false);
     const { addToast } = useToasts();
@@ -106,6 +107,7 @@ export const CommentItem = React.memo(
         await commentApi.add(boardId, { content, parentId: commentId });
 
         setApplyAddUpdate((cur) => !cur);
+        setApplyCount((cur) => cur + 1);
         addToast('댓글이 추가되었습니다', { appearance: 'success' });
       } catch (e) {
         addToast(getErrorMessage(e), { appearance: 'error' });
@@ -175,7 +177,7 @@ export const CommentItem = React.memo(
                 </TypoGraphy>
               </Button>
             )}
-            {childrenCounts !== 0 && (
+            {applyCount !== 0 && (
               <Button onClick={() => setApplyVisible((cur) => !cur)}>
                 {ApplyVisible ? (
                   <ApplyViewWrapper>
@@ -185,7 +187,7 @@ export const CommentItem = React.memo(
                       style={{ marginRight: 4 }}
                     />
                     <TypoGraphy type="body2" color={customColor.blue}>
-                      답글 {childrenCounts}개 접기
+                      답글 {applyCount}개 접기
                     </TypoGraphy>
                   </ApplyViewWrapper>
                 ) : (
@@ -196,7 +198,7 @@ export const CommentItem = React.memo(
                       style={{ marginRight: 4 }}
                     />
                     <TypoGraphy type="body2" color={customColor.blue}>
-                      답글 {childrenCounts}개 보기
+                      답글 {applyCount}개 보기
                     </TypoGraphy>
                   </ApplyViewWrapper>
                 )}
