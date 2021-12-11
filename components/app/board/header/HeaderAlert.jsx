@@ -45,7 +45,7 @@ export const HeaderAlert = () => {
       {onTap && (
         <DropDownBox>
           <DropDownItemWrapper>
-            {alertList.map(({ id, content, isRead, boardId }) => (
+            {alertList.map(({ id, content, isRead, boardId, createdDate }) => (
               <AlertItem
                 handleAlert={handleAlert}
                 key={id}
@@ -53,6 +53,7 @@ export const HeaderAlert = () => {
                 content={content}
                 isRead={isRead}
                 boardId={boardId}
+                createdDate={createdDate}
               />
             ))}
             <Line />
