@@ -1,33 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { customColor } from 'constants/index';
 import { TypoGraphy } from 'components/common/index';
 import Link from 'next/link';
 
-export const AlertItem = ({ id, content, isRead, handleAlert, boardId }) => {
+export const AlertItem = ({
+  id,
+  content,
+  isRead,
+  handleAlert,
+  boardId,
+  createdDate,
+}) => {
+  const arrival = new Date(createdDate);
+  const now = new Date();
+  const [dateText, setDateText] = useState('');
+
+  useEffect(() => {
+    if (arrival.getFullYear() !== now.getFullYear()) {
+      setDateText(now.getFullYear() - arrival.getFullYear() + '년전');
+    } else if (arrival.getMonth() !== now.getMonth()) {
+      setDateText(now.getMonth() - arrival.getMonth() + '개월전');
+    } else if (arrival.getDate() !== now.getDate()) {
+      setDateText(now.getDate() - arrival.getDate() + '일전');
+    } else if (arrival.getHours() !== now.getHours()) {
+      setDateText(now.getHours() - arrival.getHours() + '시간전');
+    } else if (arrival.getMinutes() !== now.getMinutes()) {
+      setDateText(now.getMinutes() - arrival.getMinutes() + '분전');
+    } else {
+      setDateText(now.getSeconds() - arrival.getSeconds() + '초전');
+    }
+  }, []);
+
   return (
     <Link href={`/board/detail/${boardId}`}>
       <DropDownItem onClick={() => handleAlert(id)}>
         <TextWrapper>
+          {isRead == false && (
+            <CircleWrapper>
+              <Circle />
+            </CircleWrapper>
+          )}
           <TitleWrapper isRead={isRead}>
-            {isRead == false && (
-              <CircleWrapper>
-                <Circle />
-              </CircleWrapper>
-            )}
             <TypoGraphy
               type="body1"
-              color={isRead == false ? customColor.black : customColor.grayBg}>
+              color={isRead == false ? customColor.skyBlue : customColor.gray}>
               {content}
             </TypoGraphy>
           </TitleWrapper>
-          {/* <TimeWrapper>
-          <TypoGraphy
-            type="body1"
-            color={
-              isRead == false ? customColor.gray : customColor.grayBg
-            }></TypoGraphy>
-        </TimeWrapper> */}
+          <DateWrapper>
+            <TypoGraphy
+              type="body1"
+              color={isRead == false ? customColor.skyBlue : customColor.gray}>
+              {dateText}
+            </TypoGraphy>
+          </DateWrapper>
         </TextWrapper>
         <Line />
       </DropDownItem>
@@ -54,20 +81,20 @@ const TextWrapper = styled.div`
   cursor: pointer;
   margin-top: 12px;
   margin-bottom: 12px;
-  width: 85%;
+  width: 87%;
 `;
 const TitleWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  width: ${({ isRead }) => (isRead === false ? '100%' : '95%')};
+  width: 80%;
 `;
-// const TimeWrapper = styled.div`
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: center;
-//   width: 20%;
-// `;
+const DateWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 20%;
+`;
 const Line = styled.div`
   width: 90%;
   height: 1px;
@@ -84,8 +111,8 @@ const CircleWrapper = styled.div`
   height: 100%;
 `;
 const Circle = styled.div`
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: ${customColor.skyBlue};
 `;
