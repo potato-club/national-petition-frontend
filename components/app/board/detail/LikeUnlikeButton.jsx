@@ -29,10 +29,6 @@ export const LikeUnlikeButton = React.memo(({ commentId, likeComment }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log('LIKE_COMMENT :: ', likeComment);
-  });
-
   const handleLikeButton = useCallback(async () => {
     try {
       if (likeSelected === false && unLikeSelected === false) {

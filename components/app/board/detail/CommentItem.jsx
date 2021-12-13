@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { TypoGraphy } from 'components/common';
 import { LikeUnlikeButton } from 'components/app/board/detail';
-import { customColor } from 'constants/index';
+import { customColor, socketKey } from 'constants/index';
 import { BsArrowReturnRight } from 'react-icons/bs';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { CommentAddForm } from './CommentAddForm';
@@ -108,7 +108,12 @@ export const CommentItem = React.memo(
 
         setApplyAddUpdate((cur) => !cur);
         setApplyCount((cur) => cur + 1);
-        addToast('댓글이 추가되었습니다', { appearance: 'success' });
+
+        socketManager.socket.emit(socketKey.CREATE_RE_COMMENT, {
+          memberId: detailInfo.memberId,
+        });
+
+        addToast('답글이 추가되었습니다', { appearance: 'success' });
       } catch (e) {
         addToast(getErrorMessage(e), { appearance: 'error' });
       }
