@@ -1,0 +1,4 @@
+export const socketKey = {
+  CREATE_COMMENT: 'CREATE_COMMENT',
+  CREATE_RE_COMMENT: 'CREATE_RE_COMMENT',
+};
