@@ -1,28 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 import Badge from '@mui/material/Badge';
 import styled from '@emotion/styled';
-import { customColor } from 'constants/index';
+import { customColor, socketKey } from 'constants/index';
 import { BsFillBellFill } from 'react-icons/bs';
 import { AlertItem } from './index';
 import { notificationApi } from 'apis';
+import { socketManager } from 'util/index';
+import { myInformation } from 'recoil/atom/index';
 
 export const HeaderAlert = () => {
   const [onTap, setOnTap] = useState(false);
   const [alertList, setAlertList] = useState([]);
   const [alertCount, setAlertCount] = useState();
+
+  const userInfo = useRecoilValue(myInformation);
+
   useEffect(() => {
     (async () => {
-      try {
-        const {
-          data: { data: data },
-        } = await notificationApi.getList();
-        setAlertList(data);
-        setAlertCount(data.filter(({ isRead }) => !isRead).length);
-      } catch (e) {
-        console.log('Alert 정보받기 실패', e);
-      }
+      getMyAlarmList();
+
+      socketManager.socket.on('connect', () => {
+        socketManager.socket.on(socketKey.CREATE_COMMENT, ({ memberId }) => {
+          if (userInfo.memberId === memberId) {
+            getMyAlarmList();
+          }
+        });
+        socketManager.socket.on(socketKey.CREATE_RE_COMMENT, ({ memberId }) => {
+          if (userInfo.memberId === memberId) {
+            getMyAlarmList();
+          }
+        });
+      });
     })();
+
+    return () => socketManager.disconnect();
   }, []);
+
+  const getMyAlarmList = async () => {
+    try {
+      const {
+        data: { data: data },
+      } = await notificationApi.getList();
+      setAlertList(data);
+      setAlertCount(data.filter(({ isRead }) => !isRead).length);
+    } catch (e) {
+      console.log('Alert 정보받기 실패', e);
+    }
+  };
+
   const handleAlert = async (id) => {
     try {
       const { data: OK } = await notificationApi.readStatus(id);

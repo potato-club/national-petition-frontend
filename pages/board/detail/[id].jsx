@@ -6,7 +6,7 @@ import {
   Header,
 } from 'components/common/index';
 import styled from '@emotion/styled';
-import { customColor } from 'constants/index';
+import { customColor, socketKey } from 'constants/index';
 import { boardApi, commentApi } from 'apis';
 import { FaUserEdit } from 'react-icons/fa';
 import {
@@ -18,7 +18,7 @@ import {
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { useToasts } from 'react-toast-notifications';
-import { getErrorMessage } from 'util/index';
+import { getErrorMessage, socketManager } from 'util/index';
 
 // test with :: 11789
 
@@ -90,6 +90,10 @@ const detail = ({ detailInfo }) => {
   const addComment = async (comment) => {
     try {
       await commentApi.add(boardId, { content: comment });
+
+      socketManager.socket.emit(socketKey.CREATE_COMMENT, {
+        memberId: detailInfo.memberId,
+      });
 
       setCommentReset((cur) => !cur);
       addToast('댓글이 작성되었습니다', { appearance: 'success' });
